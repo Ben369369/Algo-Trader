@@ -45,3 +45,29 @@
 2026-02-26 17:35:10 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
 2026-02-26 17:37:16 | INFO     | utils.logger:13 | Logger initialized
 2026-02-26 17:37:16 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-02-28 15:33:10 | INFO     | utils.logger:13 | Logger initialized
+2026-02-28 15:33:15 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-02-28 15:33:15 | INFO     | utils.broker:19 | Portfolio value : $100,000.00
+2026-02-28 15:33:15 | INFO     | utils.broker:20 | Cash            : $100,000.00
+2026-02-28 15:33:15 | INFO     | utils.broker:21 | Buying power    : $200,000.00
+2026-02-28 15:33:15 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-02-28 15:33:15 | INFO     | strategy.scanner:36 | Scanning 10 symbols...
+2026-02-28 15:38:08 | INFO     | utils.logger:13 | Logger initialized
+2026-02-28 15:38:08 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-02-28 15:38:09 | INFO     | data.pipeline:64 | AAPL: Stored 752 rows
+2026-02-28 15:38:09 | INFO     | data.pipeline:64 | MSFT: Stored 752 rows
+2026-02-28 15:38:09 | INFO     | data.pipeline:64 | GOOGL: Stored 752 rows
+2026-02-28 15:38:09 | INFO     | data.pipeline:64 | AMZN: Stored 752 rows
+2026-02-28 15:38:09 | INFO     | data.pipeline:64 | TSLA: Stored 752 rows
+2026-02-28 15:38:09 | INFO     | data.pipeline:64 | NVDA: Stored 752 rows
+2026-02-28 15:38:09 | INFO     | data.pipeline:64 | META: Stored 752 rows
+2026-02-28 15:38:09 | INFO     | data.pipeline:64 | JPM: Stored 752 rows
+2026-02-28 15:38:09 | INFO     | data.pipeline:64 | V: Stored 752 rows
+2026-02-28 15:38:09 | INFO     | data.pipeline:64 | SPY: Stored 752 rows
+2026-02-28 15:39:26 | INFO     | utils.logger:13 | Logger initialized
+2026-02-28 15:39:28 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-02-28 15:39:28 | INFO     | utils.broker:19 | Portfolio value : $100,000.00
+2026-02-28 15:39:28 | INFO     | utils.broker:20 | Cash            : $100,000.00
+2026-02-28 15:39:28 | INFO     | utils.broker:21 | Buying power    : $200,000.00
+2026-02-28 15:39:28 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-02-28 15:39:28 | INFO     | strategy.scanner:36 | Scanning 10 symbols...

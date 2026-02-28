@@ -3,43 +3,58 @@ from config.settings import Config
 from utils.logger import logger
 from utils.broker import BrokerConnection
 from data.pipeline import DataPipeline
+from strategy.scanner import MarketScanner
+from strategy.scorer import TradeScorer
 
 def run():
-    print("\n" + "="*55)
-    print("   ALGORITHMIC TRADING BOT v0.1 - PHASE 1 SETUP")
-    print("="*55)
+    print("\n" + "="*60)
+    print("   ALGORITHMIC TRADING BOT v0.2 - MARKET SCANNER")
+    print("="*60)
 
     print("\n[ STEP 1 ] Validating config...")
     if not Config.validate():
-        print("\n  Fix errors above, then re-run.")
         sys.exit(1)
 
     print("\n[ STEP 2 ] Connecting to Alpaca...")
     broker = BrokerConnection()
     acc = broker.get_account()
-    print(f"  Portfolio : {acc['portfolio_value']}")
-    print(f"  Cash      : {acc['cash']}")
-    print(f"  Status    : {acc['status'].upper()}")
-    print(f"  Market    : {'OPEN' if broker.is_market_open() else 'CLOSED - next open: ' + broker.next_market_open()}")
+    print(f"  Portfolio : ${acc['portfolio_value']:,.2f}")
+    print(f"  Cash      : ${acc['cash']:,.2f}")
+    print(f"  Market    : {'OPEN' if broker.is_market_open() else 'CLOSED'}")
 
-    print("\n[ STEP 3 ] Downloading historical data...")
-    pipeline = DataPipeline()
-    results = pipeline.download_all()
-    print(f"  Total rows downloaded: {sum(results.values()):,}")
+    print("\n[ STEP 3 ] Scanning all symbols...")
+    scanner = MarketScanner()
+    scan_results = scanner.scan_all()
 
-    print("\n[ STEP 4 ] Validating data...")
-    report = pipeline.validate_data()
-    for _, row in report.iterrows():
-        icon = "OK" if row["status"] == "OK" else "MISSING"
-        print(f"  {row['symbol']:<6} {icon:<8} {int(row['rows'] or 0):>6} rows  {row['start'] or 'N/A'} to {row['end'] or 'N/A'}")
+    print("\n[ STEP 4 ] Scoring and ranking opportunities...")
+    ranked = TradeScorer.score(scan_results)
 
-    print("\n[ STEP 5 ] Sample data (AAPL last 5 days)...")
-    df = pipeline.get_latest_bars("AAPL", n=5)
-    print(df[["open","high","low","close","volume"]].to_string())
+    print("\n" + "="*60)
+    print("   TODAY'S TRADE LEADERBOARD")
+    print("="*60)
+    print(f"\n  {'RANK':<6} {'SYMBOL':<8} {'PRICE':>8} {'DIRECTION':<10} {'SCORE':>7} {'RSI':>7} {'ZSCORE':>8}")
+    print(f"  {'----':<6} {'------':<8} {'-----':>8} {'---------':<10} {'-----':>7} {'---':>7} {'------':>8}")
 
-    print("\n" + "="*55)
-    print("  PHASE 1 COMPLETE! Ready for Phase 2.")
-    print("="*55 + "\n")
+    for rank, row in ranked.iterrows():
+        direction = row['direction']
+        arrow = "BUY  " if direction == "BUY" else "SELL " if direction == "SELL" else "     "
+        print(
+            f"  {rank:<6} "
+            f"{row['symbol']:<8} "
+            f"${row['price']:>7.2f} "
+            f"{arrow:<10} "
+            f"{row['score']:>7.4f} "
+            f"{row['rsi']:>7.2f} "
+            f"{row['zscore']:>8.3f}"
+        )
+
+    best = ranked.iloc[0]
+    print(f"\n  BEST OPPORTUNITY RIGHT NOW:")
+    print(f"  {best['symbol']} — Score: {best['score']} | Direction: {best['direction']} | RSI: {best['rsi']} | Price: ${best['price']}")
+
+    print("\n" + "="*60)
+    print("  Scan complete. Run again anytime to refresh.")
+    print("="*60 + "\n")
 
 if __name__ == "__main__":
     run()
