@@ -34,10 +34,43 @@ class BrokerConnection:
         }
 
     def get_positions(self):
-        return [{"symbol": p.symbol, "qty": float(p.qty),
-                 "unrealized_pl": float(p.unrealized_pl),
-                 "unrealized_plpc": float(p.unrealized_plpc)}
-                for p in self.api.list_positions()]
+        return [
+            {
+                "symbol":          p.symbol,
+                "qty":             float(p.qty),
+                "unrealized_pl":   float(p.unrealized_pl),
+                "unrealized_plpc": float(p.unrealized_plpc),
+            }
+            for p in self.api.list_positions()
+        ]
+
+    def place_market_order(self, symbol, qty, side, note=""):
+        if side not in ("buy", "sell"):
+            logger.error(f"Invalid side: {side}")
+            return None
+        if qty <= 0:
+            logger.error(f"Invalid quantity: {qty}")
+            return None
+        try:
+            logger.info(f"Placing {side.upper()} order: {qty} shares of {symbol} | {note}")
+            order = self.api.submit_order(
+                symbol=symbol,
+                qty=qty,
+                side=side,
+                type="market",
+                time_in_force="day",
+            )
+            logger.info(f"Order placed: {order.id} | {symbol} | {side} {qty}")
+            return {
+                "id":     order.id,
+                "symbol": order.symbol,
+                "side":   order.side,
+                "qty":    float(order.qty),
+                "status": order.status,
+            }
+        except Exception as e:
+            logger.error(f"Order failed for {symbol}: {e}")
+            return None
 
     def is_market_open(self):
         return self.api.get_clock().is_open
