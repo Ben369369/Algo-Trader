@@ -8,10 +8,15 @@ class Indicators:
         delta = close.diff()
         gain = delta.clip(lower=0)
         loss = -delta.clip(upper=0)
-        avg_gain = gain.rolling(period).mean()
-        avg_loss = loss.rolling(period).mean()
+        # Wilder's smoothing — correct RSI formula (EMA with alpha=1/period)
+        avg_gain = gain.ewm(com=period - 1, adjust=False).mean()
+        avg_loss = loss.ewm(com=period - 1, adjust=False).mean()
         rs = avg_gain / avg_loss
         return 100 - (100 / (1 + rs))
+
+    @staticmethod
+    def sma(close, period):
+        return close.rolling(period).mean()
 
     @staticmethod
     def macd(close, fast=12, slow=26, signal=9):

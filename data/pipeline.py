@@ -28,16 +28,37 @@ class DataPipeline:
         )
         init_database()
 
+    def _get_last_stored_date(self, symbol):
+        """Return the most recent timestamp stored for this symbol, or None."""
+        with sqlite3.connect(Config.DB_PATH) as conn:
+            row = conn.execute(
+                "SELECT MAX(timestamp) FROM ohlcv WHERE symbol=?", (symbol,)
+            ).fetchone()
+        return row[0] if row and row[0] else None
+
     def download_symbol(self, symbol):
-        end_date   = datetime.now()
-        start_date = end_date - timedelta(days=365 * Config.LOOKBACK_YEARS)
+        end_date = datetime.now()
+
+        # Only fetch bars we don't already have (incremental update)
+        last_stored = self._get_last_stored_date(symbol)
+        if last_stored:
+            start_date = datetime.fromisoformat(last_stored[:10]) + timedelta(days=1)
+            logger.info(f"{symbol}: Incremental fetch from {start_date.date()}")
+        else:
+            start_date = end_date - timedelta(days=365 * Config.LOOKBACK_YEARS)
+            logger.info(f"{symbol}: Full historical fetch from {start_date.date()}")
+
+        if start_date.date() > end_date.date():
+            logger.info(f"{symbol}: Already up to date — skipping download.")
+            return 0
+
         try:
             bars = self.api.get_bars(symbol, TimeFrame.Day,
                 start=start_date.strftime("%Y-%m-%d"),
                 end=end_date.strftime("%Y-%m-%d"),
                 adjustment="all", feed="iex").df
             if bars.empty:
-                logger.warning(f"{symbol}: No data returned")
+                logger.info(f"{symbol}: No new bars available yet.")
                 return 0
             bars = bars.reset_index()
             bars["symbol"] = symbol

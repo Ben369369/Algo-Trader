@@ -11,9 +11,9 @@ class MarketScanner:
 
     def scan_symbol(self, symbol):
         try:
-            df = self.pipeline.get_latest_bars(symbol, n=100)
-            if df.empty or len(df) < 30:
-                logger.warning(f"{symbol}: Not enough data")
+            df = self.pipeline.get_latest_bars(symbol, n=250)
+            if df.empty or len(df) < 210:
+                logger.warning(f"{symbol}: Not enough data for 200-day trend filter")
                 return None
             signals = SignalDetector.detect(df)
             latest = signals.iloc[-1]
@@ -23,6 +23,7 @@ class MarketScanner:
                 "rsi":          round(latest["rsi"], 2),
                 "zscore":       round(latest["zscore"], 3),
                 "bb_position":  round(latest["bb_position"], 3),
+                "macd_hist":    round(latest["macd_hist"], 4),
                 "buy_signal":   bool(latest["buy"]),
                 "sell_signal":  bool(latest["sell"]),
             }

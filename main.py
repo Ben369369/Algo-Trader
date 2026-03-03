@@ -37,8 +37,8 @@ def run():
     print("\n" + "="*60)
     print("   TRADE LEADERBOARD")
     print("="*60)
-    print(f"\n  {'RANK':<6} {'SYMBOL':<8} {'PRICE':>8} {'DIRECTION':<10} {'SCORE':>7} {'RSI':>7} {'ZSCORE':>8}")
-    print(f"  {'----':<6} {'------':<8} {'-----':>8} {'---------':<10} {'-----':>7} {'---':>7} {'------':>8}")
+    print(f"\n  {'RANK':<6} {'SYMBOL':<8} {'PRICE':>8} {'DIRECTION':<10} {'SCORE':>7} {'RSI':>7} {'ZSCORE':>8} {'MACD_H':>8}")
+    print(f"  {'----':<6} {'------':<8} {'-----':>8} {'---------':<10} {'-----':>7} {'---':>7} {'------':>8} {'------':>8}")
 
     for rank, row in ranked.iterrows():
         direction = row['direction']
@@ -49,7 +49,8 @@ def run():
             f"{direction:<10} "
             f"{row['score']:>7.4f} "
             f"{row['rsi']:>7.2f} "
-            f"{row['zscore']:>8.3f}"
+            f"{row['zscore']:>8.3f} "
+            f"{row['macd_hist']:>8.4f}"
         )
 
     print("\n[ STEP 6 ] Checking exit conditions on open positions...")
