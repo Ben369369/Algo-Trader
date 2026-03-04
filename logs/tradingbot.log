@@ -429,3 +429,79 @@
 2026-03-03 16:06:12 | INFO     | utils.broker:19 | Portfolio value : $100,037.95
 2026-03-03 16:06:12 | INFO     | utils.broker:20 | Cash            : $90,132.34
 2026-03-03 16:06:12 | INFO     | utils.broker:21 | Buying power    : $190,170.29
+2026-03-03 16:31:37 | INFO     | utils.logger:13 | Logger initialized
+2026-03-03 16:31:39 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-03-03 16:31:39 | INFO     | utils.broker:19 | Portfolio value : $100,042.24
+2026-03-03 16:31:39 | INFO     | utils.broker:20 | Cash            : $90,132.34
+2026-03-03 16:31:39 | INFO     | utils.broker:21 | Buying power    : $190,174.58
+2026-03-03 16:31:39 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-03-03 16:31:39 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-03-04
+2026-03-03 16:31:39 | INFO     | data.pipeline:52 | AAPL: Already up to date — skipping download.
+2026-03-03 16:31:39 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-03-04
+2026-03-03 16:31:39 | INFO     | data.pipeline:52 | MSFT: Already up to date — skipping download.
+2026-03-03 16:31:39 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-03-04
+2026-03-03 16:31:39 | INFO     | data.pipeline:52 | GOOGL: Already up to date — skipping download.
+2026-03-03 16:31:39 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-03-04
+2026-03-03 16:31:39 | INFO     | data.pipeline:52 | AMZN: Already up to date — skipping download.
+2026-03-03 16:31:39 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-03-04
+2026-03-03 16:31:39 | INFO     | data.pipeline:52 | TSLA: Already up to date — skipping download.
+2026-03-03 16:31:39 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-03-04
+2026-03-03 16:31:39 | INFO     | data.pipeline:52 | NVDA: Already up to date — skipping download.
+2026-03-03 16:31:39 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-03-04
+2026-03-03 16:31:39 | INFO     | data.pipeline:52 | META: Already up to date — skipping download.
+2026-03-03 16:31:39 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-03-04
+2026-03-03 16:31:39 | INFO     | data.pipeline:52 | JPM: Already up to date — skipping download.
+2026-03-03 16:31:39 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-03-04
+2026-03-03 16:31:39 | INFO     | data.pipeline:52 | V: Already up to date — skipping download.
+2026-03-03 16:31:39 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-03-04
+2026-03-03 16:31:39 | INFO     | data.pipeline:52 | SPY: Already up to date — skipping download.
+2026-03-03 16:31:39 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-03-03 16:31:39 | INFO     | strategy.scanner:37 | Scanning 10 symbols...
+2026-03-03 16:31:39 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-03-03 16:31:39 | INFO     | utils.broker:19 | Portfolio value : $100,042.24
+2026-03-03 16:31:39 | INFO     | utils.broker:20 | Cash            : $90,132.34
+2026-03-03 16:31:39 | INFO     | utils.broker:21 | Buying power    : $190,174.58
+2026-03-04 17:10:31 | INFO     | utils.logger:13 | Logger initialized
+2026-03-04 17:10:31 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-03-04 17:10:31 | INFO     | data.pipeline:49 | XOM: Full historical fetch from 2023-03-05
+2026-03-04 17:10:31 | INFO     | data.pipeline:85 | XOM: Stored 752 rows
+2026-03-04 17:10:31 | INFO     | data.pipeline:49 | CVX: Full historical fetch from 2023-03-05
+2026-03-04 17:10:31 | INFO     | data.pipeline:85 | CVX: Stored 752 rows
+2026-03-04 17:10:31 | INFO     | data.pipeline:49 | JNJ: Full historical fetch from 2023-03-05
+2026-03-04 17:10:31 | INFO     | data.pipeline:85 | JNJ: Stored 752 rows
+2026-03-04 17:10:31 | INFO     | data.pipeline:49 | UNH: Full historical fetch from 2023-03-05
+2026-03-04 17:10:32 | INFO     | data.pipeline:85 | UNH: Stored 752 rows
+2026-03-04 17:10:32 | INFO     | data.pipeline:49 | PFE: Full historical fetch from 2023-03-05
+2026-03-04 17:10:32 | INFO     | data.pipeline:85 | PFE: Stored 752 rows
+2026-03-04 17:10:32 | INFO     | data.pipeline:49 | BAC: Full historical fetch from 2023-03-05
+2026-03-04 17:10:32 | INFO     | data.pipeline:85 | BAC: Stored 752 rows
+2026-03-04 17:10:32 | INFO     | data.pipeline:49 | GS: Full historical fetch from 2023-03-05
+2026-03-04 17:10:32 | INFO     | data.pipeline:85 | GS: Stored 752 rows
+2026-03-04 17:10:32 | INFO     | data.pipeline:49 | WFC: Full historical fetch from 2023-03-05
+2026-03-04 17:10:32 | INFO     | data.pipeline:85 | WFC: Stored 752 rows
+2026-03-04 17:10:32 | INFO     | data.pipeline:49 | WMT: Full historical fetch from 2023-03-05
+2026-03-04 17:10:32 | INFO     | data.pipeline:85 | WMT: Stored 752 rows
+2026-03-04 17:10:32 | INFO     | data.pipeline:49 | PG: Full historical fetch from 2023-03-05
+2026-03-04 17:10:32 | INFO     | data.pipeline:85 | PG: Stored 752 rows
+2026-03-04 17:10:32 | INFO     | data.pipeline:49 | KO: Full historical fetch from 2023-03-05
+2026-03-04 17:10:32 | INFO     | data.pipeline:85 | KO: Stored 752 rows
+2026-03-04 17:10:32 | INFO     | data.pipeline:49 | MCD: Full historical fetch from 2023-03-05
+2026-03-04 17:10:32 | INFO     | data.pipeline:85 | MCD: Stored 752 rows
+2026-03-04 17:10:32 | INFO     | data.pipeline:49 | CAT: Full historical fetch from 2023-03-05
+2026-03-04 17:10:32 | INFO     | data.pipeline:85 | CAT: Stored 752 rows
+2026-03-04 17:10:32 | INFO     | data.pipeline:49 | BA: Full historical fetch from 2023-03-05
+2026-03-04 17:10:32 | INFO     | data.pipeline:85 | BA: Stored 752 rows
+2026-03-04 17:10:32 | INFO     | data.pipeline:49 | HON: Full historical fetch from 2023-03-05
+2026-03-04 17:10:33 | INFO     | data.pipeline:85 | HON: Stored 752 rows
+2026-03-04 17:10:33 | INFO     | data.pipeline:49 | AMD: Full historical fetch from 2023-03-05
+2026-03-04 17:10:33 | INFO     | data.pipeline:85 | AMD: Stored 752 rows
+2026-03-04 17:10:33 | INFO     | data.pipeline:49 | INTC: Full historical fetch from 2023-03-05
+2026-03-04 17:10:33 | INFO     | data.pipeline:85 | INTC: Stored 752 rows
+2026-03-04 17:10:33 | INFO     | data.pipeline:49 | AVGO: Full historical fetch from 2023-03-05
+2026-03-04 17:10:33 | INFO     | data.pipeline:85 | AVGO: Stored 752 rows
+2026-03-04 17:10:33 | INFO     | data.pipeline:49 | QQQ: Full historical fetch from 2023-03-05
+2026-03-04 17:10:33 | INFO     | data.pipeline:85 | QQQ: Stored 752 rows
+2026-03-04 17:10:33 | INFO     | data.pipeline:49 | IWM: Full historical fetch from 2023-03-05
+2026-03-04 17:10:33 | INFO     | data.pipeline:85 | IWM: Stored 752 rows
+2026-03-04 17:10:33 | INFO     | data.pipeline:49 | DIA: Full historical fetch from 2023-03-05
+2026-03-04 17:10:33 | INFO     | data.pipeline:85 | DIA: Stored 752 rows

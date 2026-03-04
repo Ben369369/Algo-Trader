@@ -2,7 +2,7 @@ from utils.logger import logger
 from utils.broker import BrokerConnection
 from strategy.sizer import PositionSizer
 
-STOP_LOSS_PCT    = 0.05   # 5% below entry
+STOP_LOSS_PCT    = 0.06   # 6% below entry
 TAKE_PROFIT_PCT  = 0.10   # 10% above entry
 
 class TradeExecutor:

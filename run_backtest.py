@@ -1,8 +1,10 @@
 """
-run_backtest.py — Phase 3 backtesting CLI
+run_backtest.py — Backtesting CLI
 
 Usage:
-    python run_backtest.py [--capital 100000]
+    python run_backtest.py                        # mean reversion vs SPY
+    python run_backtest.py --strategy momentum    # momentum vs mean reversion vs SPY
+    python run_backtest.py --capital 50000        # custom starting capital
 
 Does NOT require Alpaca API keys (reads from local SQLite only).
 """
@@ -11,8 +13,37 @@ import argparse
 import pandas as pd
 from backtest.engine  import BacktestEngine
 from backtest.metrics import compute_metrics
+from strategy.signals          import SignalDetector
+from strategy.momentum_signals import MomentumSignalDetector
 
 INITIAL_CAPITAL = 100_000.0
+
+# Strategy configurations
+STRATEGIES = {
+    "mean_reversion": {
+        "label":          "MEAN REVERSION",
+        "detector":       SignalDetector,
+        "stop_loss_pct":  0.06,
+        "take_profit_pct": 0.10,
+    },
+    "momentum": {
+        "label":          "MOMENTUM",
+        "detector":       MomentumSignalDetector,
+        "stop_loss_pct":  0.07,
+        "take_profit_pct": 0.15,
+    },
+}
+
+
+def _run_strategy(name, capital):
+    cfg    = STRATEGIES[name]
+    engine = BacktestEngine(
+        initial_capital  = capital,
+        stop_loss_pct    = cfg["stop_loss_pct"],
+        take_profit_pct  = cfg["take_profit_pct"],
+    )
+    equity_df, trades_df = engine.run(signal_detector_cls=cfg["detector"])
+    return engine, equity_df, trades_df
 
 
 def _fmt_metrics(m, label):
@@ -34,62 +65,134 @@ def _fmt_metrics(m, label):
     return header + "\n" + "\n".join(lines)
 
 
+def _fmt_comparison(results):
+    """Print a side-by-side comparison table for multiple strategies + SPY."""
+    keys = [
+        ("CAGR (%)",        "cagr"),
+        ("Total Return (%)", "total_return"),
+        ("Max Drawdown (%)", "max_drawdown"),
+        ("Sharpe Ratio",     "sharpe_ratio"),
+        ("# Trades",         "num_trades"),
+        ("Win Rate (%)",     "win_rate"),
+        ("Avg Win (%)",      "avg_win_pct"),
+        ("Avg Loss (%)",     "avg_loss_pct"),
+    ]
+    col_w   = 16
+    row_lbl = 22
+    names   = [r["label"] for r in results]
+
+    header_row = f"  {'Metric':<{row_lbl}}" + "".join(f"{n:>{col_w}}" for n in names)
+    sep        = "  " + "-" * (row_lbl + col_w * len(names))
+
+    lines = [f"\n{'='*60}", "  SIDE-BY-SIDE COMPARISON", f"{'='*60}",
+             header_row, sep]
+
+    for display, key in keys:
+        vals = []
+        for r in results:
+            v = r["metrics"][key]
+            vals.append(f"{v:>{col_w}.2f}" if isinstance(v, float) else f"{v:>{col_w}}")
+        lines.append(f"  {display:<{row_lbl}}" + "".join(vals))
+
+    # Alpha rows vs SPY
+    spy_cagr = next(r["metrics"]["cagr"] for r in results if r["label"] == "SPY")
+    lines.append(sep)
+    for r in results:
+        if r["label"] == "SPY":
+            continue
+        alpha = r["metrics"]["cagr"] - spy_cagr
+        lines.append(f"  {'Alpha vs SPY (' + r['label'] + ')':<{row_lbl}}{alpha:>+{col_w}.2f}%")
+
+    return "\n".join(lines)
+
+
+def _print_top_trades(trades_df, label, n=10):
+    if trades_df.empty:
+        print(f"\n  No completed trades for {label}.")
+        return
+    top = (trades_df
+           .assign(abs_pnl=trades_df["pnl"].abs())
+           .sort_values("abs_pnl", ascending=False)
+           .head(n)
+           .drop(columns=["abs_pnl"]))
+    print(f"\n{'='*45}")
+    print(f"  TOP {n} TRADES — {label}")
+    print(f"{'='*45}")
+    pd.set_option("display.max_columns", None)
+    pd.set_option("display.width", 130)
+    cols = ["symbol", "entry_date", "exit_date", "entry_price",
+            "exit_price", "shares", "pnl", "pnl_pct", "exit_reason"]
+    print(top[cols].to_string(index=False))
+
+
 def main():
-    parser = argparse.ArgumentParser(description="Run Phase 3 backtest")
-    parser.add_argument("--capital", type=float, default=INITIAL_CAPITAL,
-                        help="Starting capital (default: 100000)")
+    parser = argparse.ArgumentParser(description="Backtesting CLI")
+    parser.add_argument("--capital",  type=float, default=INITIAL_CAPITAL)
+    parser.add_argument("--strategy", choices=["mean_reversion", "momentum"],
+                        default="mean_reversion",
+                        help="Strategy to run. 'momentum' also shows mean reversion for comparison.")
     args = parser.parse_args()
 
     capital = args.capital
-    print(f"\nRunning backtest with ${capital:,.0f} starting capital …")
+    print(f"\nRunning backtest with ${capital:,.0f} starting capital ...")
 
-    engine = BacktestEngine(initial_capital=capital)
+    # Determine which strategies to run
+    run_names = (["momentum", "mean_reversion"]
+                 if args.strategy == "momentum"
+                 else ["mean_reversion"])
 
-    # --- Strategy run ---
-    equity_df, trades_df = engine.run()
+    all_results = []
 
-    if equity_df.empty:
-        print("ERROR: No equity data generated. Check that the database has data.")
+    for name in run_names:
+        label = STRATEGIES[name]["label"]
+        print(f"  Computing {label} ...")
+        engine, equity_df, trades_df = _run_strategy(name, capital)
+
+        if equity_df.empty:
+            print(f"  ERROR: No data for {label}. Skipping.")
+            continue
+
+        metrics = compute_metrics(equity_df, trades_df, capital)
+        all_results.append({
+            "label":     label,
+            "metrics":   metrics,
+            "equity_df": equity_df,
+            "trades_df": trades_df,
+            "engine":    engine,
+        })
+
+    if not all_results:
+        print("ERROR: No results generated.")
         sys.exit(1)
 
-    strat_metrics = compute_metrics(equity_df, trades_df, capital)
-
-    # --- SPY benchmark ---
-    spy_equity = engine.spy_benchmark(equity_df)
+    # SPY benchmark — aligned to first strategy's date range
+    ref_equity = all_results[0]["equity_df"]
+    spy_equity = all_results[0]["engine"].spy_benchmark(ref_equity)
+    spy_trades = pd.DataFrame(columns=["pnl", "pnl_pct", "exit_reason"])
     if spy_equity is not None and not spy_equity.empty:
-        spy_trades = pd.DataFrame(columns=["pnl", "pnl_pct", "exit_reason"])
         spy_metrics = compute_metrics(spy_equity, spy_trades, capital)
+        all_results.append({
+            "label":     "SPY",
+            "metrics":   spy_metrics,
+            "equity_df": spy_equity,
+            "trades_df": spy_trades,
+            "engine":    None,
+        })
     else:
-        spy_metrics = None
+        print("  SPY benchmark unavailable (no SPY data in database).")
 
-    # --- Print strategy metrics ---
-    print(_fmt_metrics(strat_metrics, "STRATEGY METRICS"))
+    # Print full detail blocks
+    for r in all_results:
+        print(_fmt_metrics(r["metrics"], r["label"]))
 
-    # --- Print SPY benchmark ---
-    if spy_metrics:
-        print(_fmt_metrics(spy_metrics, "SPY BUY-AND-HOLD BENCHMARK"))
-        alpha = strat_metrics["cagr"] - spy_metrics["cagr"]
-        print(f"\n  Alpha (Strategy CAGR - SPY CAGR): {alpha:+.2f}%")
-    else:
-        print("\n  SPY benchmark unavailable (no SPY data in database).")
+    # Comparison table (only meaningful when multiple strategies shown)
+    if len(all_results) > 1:
+        print(_fmt_comparison(all_results))
 
-    # --- Top 10 trades by absolute P&L ---
-    if not trades_df.empty:
-        top10 = (trades_df
-                 .assign(abs_pnl=trades_df["pnl"].abs())
-                 .sort_values("abs_pnl", ascending=False)
-                 .head(10)
-                 .drop(columns=["abs_pnl"]))
-        print(f"\n{'='*45}")
-        print("  TOP 10 TRADES BY ABSOLUTE P&L")
-        print(f"{'='*45}")
-        pd.set_option("display.max_columns", None)
-        pd.set_option("display.width", 120)
-        cols = ["symbol", "entry_date", "exit_date", "entry_price",
-                "exit_price", "shares", "pnl", "pnl_pct", "exit_reason"]
-        print(top10[cols].to_string(index=False))
-    else:
-        print("\n  No completed trades in the backtest period.")
+    # Top trades per strategy
+    for r in all_results:
+        if r["label"] != "SPY":
+            _print_top_trades(r["trades_df"], r["label"])
 
     print()
 

@@ -27,8 +27,9 @@ class SignalDetector:
         # Buy: oversold + below mean + MACD momentum turning up + in uptrend
         # Uses "rising histogram" instead of "histogram > 0" — catches the turn earlier
         signals['buy'] = (
-            (signals['rsi'] < 35) &
-            (signals['zscore'] < -1.2) &
+            (signals['rsi'] < 42) &
+            (signals['zscore'] < -0.7) &
+            (signals['bb_position'] < 0.3) &
             signals['macd_rising'] &
             trend_up
         )
