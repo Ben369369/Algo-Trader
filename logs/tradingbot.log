@@ -505,3 +505,68 @@
 2026-03-04 17:10:33 | INFO     | data.pipeline:85 | IWM: Stored 752 rows
 2026-03-04 17:10:33 | INFO     | data.pipeline:49 | DIA: Full historical fetch from 2023-03-05
 2026-03-04 17:10:33 | INFO     | data.pipeline:85 | DIA: Stored 752 rows
+2026-03-04 22:32:24 | INFO     | utils.logger:13 | Logger initialized
+2026-03-04 22:32:27 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-03-04 22:32:27 | INFO     | utils.broker:19 | Portfolio value : $99,966.34
+2026-03-04 22:32:27 | INFO     | utils.broker:20 | Cash            : $90,132.34
+2026-03-04 22:32:27 | INFO     | utils.broker:21 | Buying power    : $190,098.68
+2026-03-04 22:32:27 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-03-04 22:32:27 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-03-04
+2026-03-04 22:32:28 | INFO     | data.pipeline:85 | AAPL: Stored 1 rows
+2026-03-04 22:32:28 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-03-04
+2026-03-04 22:32:28 | INFO     | data.pipeline:85 | MSFT: Stored 1 rows
+2026-03-04 22:32:28 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-03-04
+2026-03-04 22:32:28 | INFO     | data.pipeline:85 | GOOGL: Stored 1 rows
+2026-03-04 22:32:28 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-03-04
+2026-03-04 22:32:28 | INFO     | data.pipeline:85 | AMZN: Stored 1 rows
+2026-03-04 22:32:28 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-03-04
+2026-03-04 22:32:28 | INFO     | data.pipeline:85 | TSLA: Stored 1 rows
+2026-03-04 22:32:28 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-03-04
+2026-03-04 22:32:28 | INFO     | data.pipeline:85 | NVDA: Stored 1 rows
+2026-03-04 22:32:28 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-03-04
+2026-03-04 22:32:29 | INFO     | data.pipeline:85 | META: Stored 1 rows
+2026-03-04 22:32:29 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-03-04
+2026-03-04 22:32:29 | INFO     | data.pipeline:85 | JPM: Stored 1 rows
+2026-03-04 22:32:29 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-03-04
+2026-03-04 22:32:29 | INFO     | data.pipeline:85 | V: Stored 1 rows
+2026-03-04 22:32:29 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-03-04
+2026-03-04 22:32:29 | INFO     | data.pipeline:85 | SPY: Stored 1 rows
+2026-03-04 22:32:29 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-03-04 22:32:29 | INFO     | strategy.scanner:37 | Scanning 10 symbols...
+2026-03-04 22:32:30 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-03-04 22:32:30 | INFO     | utils.broker:19 | Portfolio value : $99,966.34
+2026-03-04 22:32:30 | INFO     | utils.broker:20 | Cash            : $90,132.34
+2026-03-04 22:32:30 | INFO     | utils.broker:21 | Buying power    : $190,098.68
+2026-03-05 10:47:06 | INFO     | utils.logger:13 | Logger initialized
+2026-03-05 10:47:15 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-03-05 10:47:15 | INFO     | utils.broker:19 | Portfolio value : $99,869.98
+2026-03-05 10:47:15 | INFO     | utils.broker:20 | Cash            : $90,132.34
+2026-03-05 10:47:15 | INFO     | utils.broker:21 | Buying power    : $190,002.32
+2026-03-05 10:47:15 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-03-05 10:47:15 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-03-05
+2026-03-05 10:47:16 | INFO     | data.pipeline:85 | AAPL: Stored 1 rows
+2026-03-05 10:47:16 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-03-05
+2026-03-05 10:47:16 | INFO     | data.pipeline:85 | MSFT: Stored 1 rows
+2026-03-05 10:47:16 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-03-05
+2026-03-05 10:47:16 | INFO     | data.pipeline:85 | GOOGL: Stored 1 rows
+2026-03-05 10:47:16 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-03-05
+2026-03-05 10:47:16 | INFO     | data.pipeline:85 | AMZN: Stored 1 rows
+2026-03-05 10:47:16 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-03-05
+2026-03-05 10:47:16 | INFO     | data.pipeline:85 | TSLA: Stored 1 rows
+2026-03-05 10:47:16 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-03-05
+2026-03-05 10:47:16 | INFO     | data.pipeline:85 | NVDA: Stored 1 rows
+2026-03-05 10:47:16 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-03-05
+2026-03-05 10:47:16 | INFO     | data.pipeline:85 | META: Stored 1 rows
+2026-03-05 10:47:16 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-03-05
+2026-03-05 10:47:17 | INFO     | data.pipeline:85 | JPM: Stored 1 rows
+2026-03-05 10:47:17 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-03-05
+2026-03-05 10:47:17 | INFO     | data.pipeline:85 | V: Stored 1 rows
+2026-03-05 10:47:17 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-03-05
+2026-03-05 10:47:17 | INFO     | data.pipeline:85 | SPY: Stored 1 rows
+2026-03-05 10:47:17 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-03-05 10:47:17 | INFO     | strategy.scanner:37 | Scanning 10 symbols...
+2026-03-05 10:47:18 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-03-05 10:47:18 | INFO     | utils.broker:19 | Portfolio value : $99,872.19
+2026-03-05 10:47:18 | INFO     | utils.broker:20 | Cash            : $90,132.34
+2026-03-05 10:47:18 | INFO     | utils.broker:21 | Buying power    : $190,004.53
+2026-03-05 10:47:18 | INFO     | strategy.executor:23 | No actionable signals right now — holding cash.
