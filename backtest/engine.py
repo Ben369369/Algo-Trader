@@ -11,25 +11,48 @@ TAKE_PROFIT_PCT  = 0.10
 RISK_PCT         = 0.02
 MAX_POSITION_PCT = 0.10
 MAX_POSITIONS    = 10
+MAX_HOLD_DAYS    = 30   # force-exit after 30 calendar days to prevent dead-weight positions
+
+# Realistic transaction cost model
+COMMISSION_PER_SHARE = 0.005   # $0.005/share
+MIN_COMMISSION       = 1.00    # minimum $1 per order
+SLIPPAGE_PCT         = 0.0005  # 0.05% market impact on entry and exit
 
 
-def _score_row(rsi, zscore, macd_hist, price):
-    """Rank candidates by composite score — works for both strategies."""
+def _score_row(rsi, zscore, macd_hist, price, volume_ratio=1.0):
+    """Rank candidates by composite score."""
     rsi_score    = abs(rsi - 50) / 50
     zscore_score = min(abs(zscore), 3) / 3
     macd_score   = min(abs(macd_hist) / price * 100, 1) if price > 0 else 0
-    return round(rsi_score * 0.35 + zscore_score * 0.40 + macd_score * 0.25, 4)
+    volume_score = min(max(volume_ratio - 1.0, 0), 2) / 2
+    return round(
+        rsi_score    * 0.30 +
+        zscore_score * 0.35 +
+        macd_score   * 0.20 +
+        volume_score * 0.15,
+        4,
+    )
 
 
-def _size_shares(portfolio_value, price, stop_loss_pct):
+def _size_shares(portfolio_value, price, atr=None, stop_loss_pct=STOP_LOSS_PCT,
+                 atr_multiplier=2.0):
     """Position size: risk RISK_PCT of portfolio, capped at MAX_POSITION_PCT."""
     if price <= 0:
         return 0
-    max_risk_dollars   = portfolio_value * RISK_PCT
-    risk_per_share     = price * stop_loss_pct
+    max_risk_dollars = portfolio_value * RISK_PCT
+    if atr and atr > 0:
+        risk_per_share = atr * atr_multiplier
+    else:
+        risk_per_share = price * stop_loss_pct
+    if risk_per_share <= 0:
+        return 0
     shares             = max_risk_dollars / risk_per_share
     max_shares_by_size = (portfolio_value * MAX_POSITION_PCT) / price
     return math.floor(min(shares, max_shares_by_size))
+
+
+def _commission(shares):
+    return max(shares * COMMISSION_PER_SHARE, MIN_COMMISSION)
 
 
 def _load_symbol(symbol, db_path):
@@ -51,12 +74,13 @@ class BacktestEngine:
 
     def __init__(self, initial_capital=100_000.0, db_path=None,
                  stop_loss_pct=STOP_LOSS_PCT, take_profit_pct=TAKE_PROFIT_PCT,
-                 trail_stop_pct=0.0):
+                 trail_stop_pct=0.0, atr_multiplier=2.0):
         self.initial_capital = initial_capital
         self.db_path         = db_path or Config.DB_PATH
         self.stop_loss_pct   = stop_loss_pct
         self.take_profit_pct = take_profit_pct
-        self.trail_stop_pct  = trail_stop_pct  # 0 = disabled; e.g. 0.07 = 7% trailing
+        self.trail_stop_pct  = trail_stop_pct   # 0 = disabled; e.g. 0.07 = 7% trailing
+        self.atr_multiplier  = atr_multiplier
 
     # ------------------------------------------------------------------
     # Main entry point
@@ -72,8 +96,8 @@ class BacktestEngine:
 
         Returns
         -------
-        equity_df : pd.DataFrame  — daily portfolio value (index = date)
-        trades_df : pd.DataFrame  — one row per closed trade
+        equity_df : pd.DataFrame  -- daily portfolio value (index = date)
+        trades_df : pd.DataFrame  -- one row per closed trade
         """
         if signal_detector_cls is None:
             signal_detector_cls = SignalDetector
@@ -94,43 +118,51 @@ class BacktestEngine:
         if not all_signals:
             raise RuntimeError("No symbol data found in the database.")
 
-        # 2. Build SPY regime filter (SPY close > 50-day SMA → uptrend)
+        # 2. Build SPY regime filter (SPY close > 50-day SMA -> uptrend)
         spy_df = _load_symbol("SPY", self.db_path)
         if spy_df is not None and len(spy_df) >= 50:
             spy_sma50   = spy_df["close"].rolling(50).mean()
             spy_uptrend = (spy_df["close"] > spy_sma50).reindex(spy_df.index)
         else:
-            spy_uptrend = None  # no filter if SPY data is missing
+            spy_uptrend = None
 
         # 3. Determine common trading calendar
         all_dates = sorted(set.union(*[set(s.index) for s in all_signals.values()]))
 
         # 4. Simulation state
         cash        = self.initial_capital
-        positions   = {}  # sym -> {shares, entry_price, stop, target, entry_date}
-        pending     = []  # syms queued for next open (up to MAX_POSITIONS)
+        positions   = {}  # sym -> {shares, entry_price, stop, target, entry_date, high_since_entry}
+        pending     = []  # (sym, atr) tuples queued for next open
         equity_rows = []
         trade_log   = []
 
         for today in all_dates:
             # --- Step 1: Execute pending entries at today's open ---
-            for sym in pending:
+            for sym, entry_atr in pending:
                 if len(positions) >= MAX_POSITIONS:
                     break
                 if sym not in all_ohlcv or today not in all_ohlcv[sym].index:
                     continue
                 if sym in positions:
                     continue
-                open_px = all_ohlcv[sym].loc[today, "open"]
-                shares  = _size_shares(cash, open_px, self.stop_loss_pct)
-                cost    = shares * open_px
+                raw_open = all_ohlcv[sym].loc[today, "open"]
+                # Slippage: pay slightly more on entry (market impact)
+                open_px = round(raw_open * (1 + SLIPPAGE_PCT), 4)
+                shares  = _size_shares(cash, open_px, atr=entry_atr,
+                                       stop_loss_pct=self.stop_loss_pct,
+                                       atr_multiplier=self.atr_multiplier)
+                cost    = shares * open_px + _commission(shares)
                 if shares > 0 and cost <= cash:
                     cash -= cost
+                    if entry_atr and entry_atr > 0:
+                        stop = round(open_px - entry_atr * self.atr_multiplier, 4)
+                    else:
+                        stop = round(open_px * (1 - self.stop_loss_pct), 4)
                     positions[sym] = {
                         "shares":           shares,
                         "entry_price":      open_px,
                         "entry_date":       today,
-                        "stop":             round(open_px * (1 - self.stop_loss_pct),   4),
+                        "stop":             stop,
                         "target":           round(open_px * (1 + self.take_profit_pct), 4),
                         "high_since_entry": open_px,
                     }
@@ -141,13 +173,18 @@ class BacktestEngine:
             for sym, pos in positions.items():
                 if sym not in all_ohlcv or today not in all_ohlcv[sym].index:
                     continue
-                row     = all_ohlcv[sym].loc[today]
-                stop    = pos["stop"]
-                target  = pos["target"]
+                row    = all_ohlcv[sym].loc[today]
+                stop   = pos["stop"]
+                target = pos["target"]
                 reason  = None
                 exit_px = None
 
-                if row["low"] <= stop:
+                # Time-based exit: force out after MAX_HOLD_DAYS
+                days_held = (today - pos["entry_date"]).days
+                if days_held >= MAX_HOLD_DAYS:
+                    exit_px = row["open"]
+                    reason  = "time_exit"
+                elif row["low"] <= stop:
                     # Gap-down protection: exit at min(open, stop)
                     exit_px = min(row["open"], stop)
                     reason  = "stop_loss"
@@ -165,7 +202,9 @@ class BacktestEngine:
             for sym, exit_px, reason in to_exit:
                 pos      = positions.pop(sym)
                 shares   = pos["shares"]
-                proceeds = shares * exit_px
+                # Slippage on exits: receive slightly less
+                adj_exit = round(exit_px * (1 - SLIPPAGE_PCT), 4)
+                proceeds = shares * adj_exit - _commission(shares)
                 cash    += proceeds
                 pnl      = proceeds - shares * pos["entry_price"]
                 trade_log.append({
@@ -173,7 +212,7 @@ class BacktestEngine:
                     "entry_date":  pos["entry_date"],
                     "exit_date":   today,
                     "entry_price": pos["entry_price"],
-                    "exit_price":  exit_px,
+                    "exit_price":  adj_exit,
                     "shares":      shares,
                     "pnl":         round(pnl, 2),
                     "pnl_pct":     round(pnl / (shares * pos["entry_price"]) * 100, 2),
@@ -201,7 +240,7 @@ class BacktestEngine:
 
             equity_rows.append({"date": today, "equity": portfolio_value})
 
-            # --- Step 4: Find top-N buy candidates → queue for tomorrow ---
+            # --- Step 4: Find top-N buy candidates -> queue for tomorrow ---
             # Skip all buys when SPY is below its 50-day MA (market downtrend)
             spy_is_uptrend = (
                 spy_uptrend is None or
@@ -218,15 +257,18 @@ class BacktestEngine:
                     row = sig.loc[today]
                     if not row["buy"]:
                         continue
+                    vol_ratio = float(row["volume_ratio"]) if "volume_ratio" in row.index else 1.0
                     score = _score_row(
                         rsi=row["rsi"],
                         zscore=row["zscore"],
                         macd_hist=row["macd_hist"],
                         price=row["close"],
+                        volume_ratio=vol_ratio,
                     )
-                    candidates.append((score, sym))
+                    atr_val = float(row["atr"]) if "atr" in row.index else 0
+                    candidates.append((score, sym, atr_val))
                 candidates.sort(reverse=True)
-                pending = [sym for _, sym in candidates[:open_slots]]
+                pending = [(sym, atr_val) for _, sym, atr_val in candidates[:open_slots]]
 
         equity_df = pd.DataFrame(equity_rows).set_index("date")
         trades_df = pd.DataFrame(trade_log) if trade_log else pd.DataFrame(

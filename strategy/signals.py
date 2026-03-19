@@ -20,6 +20,14 @@ class SignalDetector:
         upper, mid, lower = Indicators.bollinger_bands(df['close'])
         signals['bb_position'] = (df['close'] - lower) / (upper - lower)
 
+        # ATR — used for dynamic stop sizing downstream
+        signals['atr'] = Indicators.atr(df)
+
+        # Volume confirmation — buy signals are more reliable on above-average volume
+        vol_ma = df['volume'].rolling(20).mean()
+        signals['volume_ratio'] = df['volume'] / vol_ma
+        high_volume = signals['volume_ratio'] > 1.1  # at least 10% above 20-day avg
+
         # Trend filters for mean reversion:
         # - Price above 200-day SMA: long-term uptrend intact
         # - SMA50 still above SMA200 (golden cross): medium-term trend not broken
@@ -30,6 +38,7 @@ class SignalDetector:
 
         # Buy: oversold + below mean + MACD momentum turning up + in long-term uptrend
         # + bounce confirmation: today's close is above yesterday's (reversal started)
+        # + volume confirmation: above-average volume validates the move
         bounce = df['close'] > df['close'].shift(1)
 
         signals['buy'] = (
@@ -38,7 +47,8 @@ class SignalDetector:
             (signals['bb_position'] < 0.3) &
             signals['macd_rising'] &
             trend_up &
-            bounce
+            bounce &
+            high_volume
         )
 
         # Sell: overbought + above mean + MACD momentum rolling over

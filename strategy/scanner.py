@@ -24,6 +24,8 @@ class MarketScanner:
                 "zscore":       round(latest["zscore"], 3),
                 "bb_position":  round(latest["bb_position"], 3),
                 "macd_hist":    round(latest["macd_hist"], 4),
+                "atr":          round(float(latest["atr"]), 4),
+                "volume_ratio": round(float(latest["volume_ratio"]), 3),
                 "buy_signal":   bool(latest["buy"]),
                 "sell_signal":  bool(latest["sell"]),
             }

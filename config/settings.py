@@ -19,6 +19,12 @@ class Config:
     DB_PATH      = Path(__file__).parent.parent / "data" / "market_data.db"
     LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
     LOG_FILE  = os.getenv("LOG_FILE", "logs/tradingbot.log")
+    USE_EARNINGS_FILTER  = os.getenv("USE_EARNINGS_FILTER",  "false").lower() == "true"
+    USE_SENTIMENT_FILTER = os.getenv("USE_SENTIMENT_FILTER", "false").lower() == "true"
+    ATR_PERIOD           = int(os.getenv("ATR_PERIOD", "14"))
+    ATR_STOP_MULT        = float(os.getenv("ATR_STOP_MULT", "2.0"))   # stop = ATR_STOP_MULT x ATR below entry
+    TRAIL_STOP_PCT       = float(os.getenv("TRAIL_STOP_PCT", "0.07")) # 7% trailing stop below high-water mark
+    MAX_HOLD_DAYS        = int(os.getenv("MAX_HOLD_DAYS", "30"))       # force-exit after N calendar days
 
     @classmethod
     def alpaca_base_url(cls):

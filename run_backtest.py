@@ -5,8 +5,10 @@ Usage:
     python run_backtest.py                        # mean reversion vs SPY
     python run_backtest.py --strategy momentum    # momentum vs mean reversion vs SPY
     python run_backtest.py --capital 50000        # custom starting capital
+    python run_backtest.py --filters              # enable earnings + sentiment filters
+                                                  # (requires Alpaca API keys in .env)
 
-Does NOT require Alpaca API keys (reads from local SQLite only).
+Does NOT require Alpaca API keys unless --filters is used.
 """
 import sys
 import argparse
@@ -37,13 +39,17 @@ STRATEGIES = {
 }
 
 
-def _run_strategy(name, capital):
+def _run_strategy(name, capital, news_filter=None,
+                  use_earnings_filter=False, use_sentiment_filter=False):
     cfg    = STRATEGIES[name]
     engine = BacktestEngine(
-        initial_capital  = capital,
-        stop_loss_pct    = cfg["stop_loss_pct"],
-        take_profit_pct  = cfg["take_profit_pct"],
-        trail_stop_pct   = cfg["trail_stop_pct"],
+        initial_capital      = capital,
+        stop_loss_pct        = cfg["stop_loss_pct"],
+        take_profit_pct      = cfg["take_profit_pct"],
+        trail_stop_pct       = cfg["trail_stop_pct"],
+        news_filter          = news_filter,
+        use_earnings_filter  = use_earnings_filter,
+        use_sentiment_filter = use_sentiment_filter,
     )
     equity_df, trades_df = engine.run(signal_detector_cls=cfg["detector"])
     return engine, equity_df, trades_df
@@ -109,6 +115,36 @@ def _fmt_comparison(results):
     return "\n".join(lines)
 
 
+def _print_filter_comparison(m_base, m_filt, label):
+    """Print a before/after table showing the impact of news filters."""
+    keys = [
+        ("CAGR (%)",         "cagr"),
+        ("Total Return (%)", "total_return"),
+        ("Max Drawdown (%)", "max_drawdown"),
+        ("Sharpe Ratio",     "sharpe_ratio"),
+        ("# Trades",         "num_trades"),
+        ("Win Rate (%)",     "win_rate"),
+        ("Avg Win (%)",      "avg_win_pct"),
+        ("Avg Loss (%)",     "avg_loss_pct"),
+    ]
+    col_w = 16
+    row_w = 22
+    print(f"\n{'='*56}")
+    print(f"  {label} — FILTER IMPACT")
+    print(f"{'='*56}")
+    print(f"  {'Metric':<{row_w}} {'No Filters':>{col_w}} {'With Filters':>{col_w}} {'Delta':>{col_w}}")
+    print("  " + "-" * (row_w + col_w * 3))
+    for display, key in keys:
+        b = m_base[key]
+        f = m_filt[key]
+        if isinstance(b, float):
+            delta = f - b
+            print(f"  {display:<{row_w}} {b:>{col_w}.2f} {f:>{col_w}.2f} {delta:>+{col_w}.2f}")
+        else:
+            delta = f - b
+            print(f"  {display:<{row_w}} {b:>{col_w}} {f:>{col_w}} {delta:>+{col_w}}")
+
+
 def _print_top_trades(trades_df, label, n=10):
     if trades_df.empty:
         print(f"\n  No completed trades for {label}.")
@@ -134,10 +170,24 @@ def main():
     parser.add_argument("--strategy", choices=["mean_reversion", "momentum"],
                         default="mean_reversion",
                         help="Strategy to run. 'momentum' also shows mean reversion for comparison.")
+    parser.add_argument("--filters", action="store_true",
+                        help="Enable earnings + sentiment news filters (requires Alpaca API keys).")
     args = parser.parse_args()
 
     capital = args.capital
-    print(f"\nRunning backtest with ${capital:,.0f} starting capital ...")
+
+    # Set up news filter if requested
+    news_filter = None
+    use_earnings  = False
+    use_sentiment = False
+    if args.filters:
+        from strategy.news_filter import NewsFilter
+        news_filter   = NewsFilter()
+        use_earnings  = True
+        use_sentiment = True
+        print(f"\nRunning backtest WITH news filters (earnings + sentiment) ...")
+    else:
+        print(f"\nRunning backtest with ${capital:,.0f} starting capital ...")
 
     # Determine which strategies to run
     run_names = (["momentum", "mean_reversion"]
@@ -148,6 +198,35 @@ def main():
 
     for name in run_names:
         label = STRATEGIES[name]["label"]
+        if args.filters:
+            # Run once WITHOUT filters, once WITH — for direct comparison
+            print(f"\n  Computing {label} (no filters) ...")
+            engine_base, eq_base, tr_base = _run_strategy(name, capital)
+            m_base = compute_metrics(eq_base, tr_base, capital)
+
+            print(f"  Computing {label} (with news filters) ...")
+            engine_filt, eq_filt, tr_filt = _run_strategy(
+                name, capital,
+                news_filter=news_filter,
+                use_earnings_filter=use_earnings,
+                use_sentiment_filter=use_sentiment,
+            )
+            m_filt = compute_metrics(eq_filt, tr_filt, capital)
+
+            # Print side-by-side for this strategy
+            _print_filter_comparison(m_base, m_filt, label)
+            _print_top_trades(tr_filt, f"{label} + FILTERS")
+
+            # Keep the filtered version in all_results for SPY benchmark
+            all_results.append({
+                "label":     label + " + FILTERS",
+                "metrics":   m_filt,
+                "equity_df": eq_filt,
+                "trades_df": tr_filt,
+                "engine":    engine_filt,
+            })
+            continue
+
         print(f"  Computing {label} ...")
         engine, equity_df, trades_df = _run_strategy(name, capital)
 
@@ -183,6 +262,15 @@ def main():
         })
     else:
         print("  SPY benchmark unavailable (no SPY data in database).")
+
+    # When --filters was used we already printed per-strategy comparisons in the loop.
+    # Just show final SPY benchmark context.
+    if args.filters:
+        spy_r = next((r for r in all_results if r["label"] == "SPY"), None)
+        if spy_r:
+            print(_fmt_metrics(spy_r["metrics"], "SPY BENCHMARK"))
+        print()
+        return
 
     # Print full detail blocks
     for r in all_results:

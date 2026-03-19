@@ -1,4 +1,4 @@
-﻿import sys
+import sys
 import time
 import datetime
 import schedule
@@ -11,9 +11,11 @@ from strategy.scanner import MarketScanner
 from strategy.scorer import TradeScorer
 from strategy.executor import TradeExecutor
 
-def run():
+
+def run(execute_entries=True):
     print("\n" + "="*60)
-    print("   ALGORITHMIC TRADING BOT v0.3 - FULL AUTO")
+    label = "FULL RUN" if execute_entries else "EXIT CHECK"
+    print(f"   ALGORITHMIC TRADING BOT v0.4 -- {label}")
     print("="*60)
 
     print("\n[ STEP 1 ] Validating config...")
@@ -25,6 +27,7 @@ def run():
     acc = broker.get_account()
     print(f"  Portfolio : ${acc['portfolio_value']:,.2f}")
     print(f"  Cash      : ${acc['cash']:,.2f}")
+    print(f"  P&L Today : ${acc['pnl_today']:+,.2f}")
     print(f"  Market    : {'OPEN' if broker.is_market_open() else 'CLOSED'}")
 
     print("\n[ STEP 3 ] Refreshing market data...")
@@ -41,76 +44,91 @@ def run():
     print("\n" + "="*60)
     print("   TRADE LEADERBOARD")
     print("="*60)
-    print(f"\n  {'RANK':<6} {'SYMBOL':<8} {'PRICE':>8} {'DIRECTION':<10} {'SCORE':>7} {'RSI':>7} {'ZSCORE':>8} {'MACD_H':>8}")
-    print(f"  {'----':<6} {'------':<8} {'-----':>8} {'---------':<10} {'-----':>7} {'---':>7} {'------':>8} {'------':>8}")
+    print(f"\n  {'RANK':<6} {'SYMBOL':<8} {'PRICE':>8} {'DIR':<8} {'SCORE':>7} {'RSI':>7} {'ZSCORE':>8} {'VOL_R':>7}")
+    print(f"  {'----':<6} {'------':<8} {'-----':>8} {'---':<8} {'-----':>7} {'---':>7} {'------':>8} {'-----':>7}")
 
     for rank, row in ranked.iterrows():
-        direction = row['direction']
         print(
             f"  {rank:<6} "
             f"{row['symbol']:<8} "
             f"${row['price']:>7.2f} "
-            f"{direction:<10} "
+            f"{row['direction']:<8} "
             f"{row['score']:>7.4f} "
             f"{row['rsi']:>7.2f} "
             f"{row['zscore']:>8.3f} "
-            f"{row['macd_hist']:>8.4f}"
+            f"{row['volume_ratio']:>7.2f}x"
         )
 
     print("\n[ STEP 6 ] Checking exit conditions on open positions...")
     executor = TradeExecutor()
     executor.check_exits(ranked)
 
-    print("\n[ STEP 7 ] Executing best trade opportunity...")
-    if broker.is_market_open():
-        order = executor.execute_best(ranked)
-        if order:
-            print(f"\n  ORDER PLACED: {order['side'].upper()} {order['qty']} shares of {order['symbol']}")
+    if execute_entries:
+        print("\n[ STEP 7 ] Executing best trade opportunity...")
+        if broker.is_market_open():
+            order = executor.execute_best(ranked)
+            if order:
+                print(f"\n  ORDER PLACED: {order['side'].upper()} {order['qty']} shares of {order['symbol']}")
+            else:
+                print("\n  No trade executed -- no actionable signals or circuit breaker active.")
         else:
-            print("\n  No trade executed — no actionable signals or already in position.")
-    else:
-        print("\n  Market is closed — no orders placed.")
-        print("  Run this again during market hours to execute trades.")
+            print("\n  Market is closed -- no orders placed.")
 
     print("\n[ STEP 8 ] Portfolio summary...")
     positions = broker.get_positions()
     if positions:
         print(f"\n  Open Positions:")
-        print(f"  {'SYMBOL':<8} {'SHARES':>8} {'P&L':>12} {'P&L %':>8}")
-        print(f"  {'------':<8} {'------':>8} {'---':>12} {'-----':>8}")
+        print(f"  {'SYMBOL':<8} {'SHARES':>8} {'ENTRY':>9} {'P&L':>12} {'P&L %':>8}")
+        print(f"  {'------':<8} {'------':>8} {'-----':>9} {'---':>12} {'-----':>8}")
         for p in positions:
             print(
                 f"  {p['symbol']:<8} "
                 f"{p['qty']:>8.2f} "
+                f"${p['avg_entry_price']:>8.2f} "
                 f"${p['unrealized_pl']:>+11.2f} "
                 f"{p['unrealized_plpc']*100:>+7.2f}%"
             )
     else:
         print("\n  No open positions.")
 
-    print("\n" + "="*60)
-    print("  PHASE 2 COMPLETE — Bot is fully operational.")
-    print("="*60 + "\n")
+    print("\n" + "="*60 + "\n")
+
+
+def _is_weekday():
+    est = pytz.timezone("America/New_York")
+    return datetime.datetime.now(est).weekday() < 5
+
 
 def scheduled_run():
-    est = pytz.timezone("America/New_York")
-    now = datetime.datetime.now(est)
-    if now.weekday() >= 5:  # Saturday=5, Sunday=6
-        print(f"  Skipping — today is {now.strftime('%A')}.")
-        return
-    run()
+    if _is_weekday():
+        run(execute_entries=True)
+
+
+def scheduled_exit_check():
+    if _is_weekday():
+        run(execute_entries=False)
+
+
+def _add_daily_job(time_str, func):
+    schedule.every().monday.at(time_str).do(func)
+    schedule.every().tuesday.at(time_str).do(func)
+    schedule.every().wednesday.at(time_str).do(func)
+    schedule.every().thursday.at(time_str).do(func)
+    schedule.every().friday.at(time_str).do(func)
 
 
 if __name__ == "__main__":
     # Run once immediately on startup
     scheduled_run()
 
-    # Schedule every weekday at 9:30am EST
-    schedule.every().monday.at("09:30").do(scheduled_run)
-    schedule.every().tuesday.at("09:30").do(scheduled_run)
-    schedule.every().wednesday.at("09:30").do(scheduled_run)
-    schedule.every().thursday.at("09:30").do(scheduled_run)
-    schedule.every().friday.at("09:30").do(scheduled_run)
+    # 9:30am EST -- full run: data refresh + scan + exits + new entries
+    _add_daily_job("09:30", scheduled_run)
+
+    # 12:00pm EST -- mid-session: catch deteriorating signals before afternoon
+    _add_daily_job("12:00", scheduled_exit_check)
+
+    # 3:30pm EST -- pre-close: exit weak positions before end of day
+    _add_daily_job("15:30", scheduled_exit_check)
 
     est = pytz.timezone("America/New_York")
     while True:

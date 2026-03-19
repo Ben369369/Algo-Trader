@@ -38,6 +38,7 @@ class BrokerConnection:
             {
                 "symbol":          p.symbol,
                 "qty":             float(p.qty),
+                "avg_entry_price": float(p.avg_entry_price),
                 "unrealized_pl":   float(p.unrealized_pl),
                 "unrealized_plpc": float(p.unrealized_plpc),
             }

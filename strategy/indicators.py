@@ -40,3 +40,16 @@ class Indicators:
         mean = close.rolling(period).mean()
         std = close.rolling(period).std()
         return (close - mean) / std
+
+    @staticmethod
+    def atr(df, period=14):
+        """Average True Range — adapts stop distances to each stock's actual volatility."""
+        high  = df['high']
+        low   = df['low']
+        close = df['close']
+        tr = pd.concat([
+            high - low,
+            (high - close.shift(1)).abs(),
+            (low  - close.shift(1)).abs(),
+        ], axis=1).max(axis=1)
+        return tr.ewm(com=period - 1, adjust=False).mean()

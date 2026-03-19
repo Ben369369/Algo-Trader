@@ -17,12 +17,16 @@ class TradeScorer:
         # (a $1 MACD hist on a $10 stock is much more significant than on a $500 stock)
         df["macd_score"] = (df["macd_hist"].abs() / df["price"] * 100).clip(0, 1)
 
+        # Volume score — higher when above-average volume confirms the signal
+        # volume_ratio = today's volume / 20-day avg; clip at 3x to prevent outliers dominating
+        df["volume_score"] = (df["volume_ratio"].fillna(1.0) - 1.0).clip(0, 2) / 2
+
         # Combined score — weighted average
-        # bb_score removed: Bollinger position is mathematically redundant with zscore
         df["score"] = (
-            df["rsi_score"]    * 0.35 +
-            df["zscore_score"] * 0.40 +
-            df["macd_score"]   * 0.25
+            df["rsi_score"]    * 0.30 +
+            df["zscore_score"] * 0.35 +
+            df["macd_score"]   * 0.20 +
+            df["volume_score"] * 0.15
         ).round(4)
 
         # Tag direction
@@ -36,5 +40,5 @@ class TradeScorer:
 
         return df[[
             "symbol", "price", "direction",
-            "score", "rsi", "zscore", "macd_hist"
+            "score", "rsi", "zscore", "macd_hist", "atr", "volume_ratio"
         ]]
