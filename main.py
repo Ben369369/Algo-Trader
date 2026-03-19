@@ -1,4 +1,8 @@
 ﻿import sys
+import time
+import datetime
+import schedule
+import pytz
 from config.settings import Config
 from utils.logger import logger
 from utils.broker import BrokerConnection
@@ -88,5 +92,31 @@ def run():
     print("  PHASE 2 COMPLETE — Bot is fully operational.")
     print("="*60 + "\n")
 
-if __name__ == "__main__":
+def scheduled_run():
+    est = pytz.timezone("America/New_York")
+    now = datetime.datetime.now(est)
+    if now.weekday() >= 5:  # Saturday=5, Sunday=6
+        print(f"  Skipping — today is {now.strftime('%A')}.")
+        return
     run()
+
+
+if __name__ == "__main__":
+    # Run once immediately on startup
+    scheduled_run()
+
+    # Schedule every weekday at 9:30am EST
+    schedule.every().monday.at("09:30").do(scheduled_run)
+    schedule.every().tuesday.at("09:30").do(scheduled_run)
+    schedule.every().wednesday.at("09:30").do(scheduled_run)
+    schedule.every().thursday.at("09:30").do(scheduled_run)
+    schedule.every().friday.at("09:30").do(scheduled_run)
+
+    est = pytz.timezone("America/New_York")
+    while True:
+        schedule.run_pending()
+        next_run = schedule.next_run()
+        if next_run:
+            next_run_est = next_run.astimezone(est) if next_run.tzinfo else next_run
+            print(f"  Waiting... next run at {next_run_est.strftime('%Y-%m-%d %H:%M %Z')}", end="\r")
+        time.sleep(60)

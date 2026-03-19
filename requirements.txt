@@ -5,6 +5,7 @@ ta
 sqlalchemy
 websocket-client
 schedule
+pytz
 python-dotenv
 loguru
 requests
