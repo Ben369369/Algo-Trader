@@ -30,7 +30,11 @@ class Config:
 
     @classmethod
     def symbols(cls):
-        raw = os.getenv("SYMBOLS", "AAPL,MSFT,GOOGL,AMZN,TSLA,NVDA,META,JPM,V,SPY")
+        raw = os.getenv("SYMBOLS", (
+            "AAPL,MSFT,GOOGL,AMZN,TSLA,NVDA,META,JPM,V,"
+            "AMD,AVGO,BA,BAC,CAT,CVX,GS,HON,INTC,"
+            "JNJ,KO,MCD,PFE,PG,UNH,WFC,WMT,XOM"
+        ))
         return [s.strip() for s in raw.split(",") if s.strip()]
 
     @classmethod

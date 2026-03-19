@@ -21,16 +21,18 @@ INITIAL_CAPITAL = 100_000.0
 # Strategy configurations
 STRATEGIES = {
     "mean_reversion": {
-        "label":          "MEAN REVERSION",
-        "detector":       SignalDetector,
-        "stop_loss_pct":  0.06,
+        "label":           "MEAN REVERSION",
+        "detector":        SignalDetector,
+        "stop_loss_pct":   0.06,
         "take_profit_pct": 0.10,
+        "trail_stop_pct":  0.0,
     },
     "momentum": {
-        "label":          "MOMENTUM",
-        "detector":       MomentumSignalDetector,
-        "stop_loss_pct":  0.07,
-        "take_profit_pct": 0.15,
+        "label":           "MOMENTUM",
+        "detector":        MomentumSignalDetector,
+        "stop_loss_pct":   0.07,
+        "take_profit_pct": 0.20,   # wider target — trailing stop handles downside
+        "trail_stop_pct":  0.07,   # 7% trailing stop locks in gains
     },
 }
 
@@ -41,6 +43,7 @@ def _run_strategy(name, capital):
         initial_capital  = capital,
         stop_loss_pct    = cfg["stop_loss_pct"],
         take_profit_pct  = cfg["take_profit_pct"],
+        trail_stop_pct   = cfg["trail_stop_pct"],
     )
     equity_df, trades_df = engine.run(signal_detector_cls=cfg["detector"])
     return engine, equity_df, trades_df

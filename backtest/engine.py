@@ -10,7 +10,7 @@ STOP_LOSS_PCT    = 0.06
 TAKE_PROFIT_PCT  = 0.10
 RISK_PCT         = 0.02
 MAX_POSITION_PCT = 0.10
-MAX_POSITIONS    = 5
+MAX_POSITIONS    = 10
 
 
 def _score_row(rsi, zscore, macd_hist, price):
@@ -50,11 +50,13 @@ def _load_symbol(symbol, db_path):
 class BacktestEngine:
 
     def __init__(self, initial_capital=100_000.0, db_path=None,
-                 stop_loss_pct=STOP_LOSS_PCT, take_profit_pct=TAKE_PROFIT_PCT):
+                 stop_loss_pct=STOP_LOSS_PCT, take_profit_pct=TAKE_PROFIT_PCT,
+                 trail_stop_pct=0.0):
         self.initial_capital = initial_capital
         self.db_path         = db_path or Config.DB_PATH
         self.stop_loss_pct   = stop_loss_pct
         self.take_profit_pct = take_profit_pct
+        self.trail_stop_pct  = trail_stop_pct  # 0 = disabled; e.g. 0.07 = 7% trailing
 
     # ------------------------------------------------------------------
     # Main entry point
@@ -125,11 +127,12 @@ class BacktestEngine:
                 if shares > 0 and cost <= cash:
                     cash -= cost
                     positions[sym] = {
-                        "shares":      shares,
-                        "entry_price": open_px,
-                        "entry_date":  today,
-                        "stop":        round(open_px * (1 - self.stop_loss_pct),   4),
-                        "target":      round(open_px * (1 + self.take_profit_pct), 4),
+                        "shares":           shares,
+                        "entry_price":      open_px,
+                        "entry_date":       today,
+                        "stop":             round(open_px * (1 - self.stop_loss_pct),   4),
+                        "target":           round(open_px * (1 + self.take_profit_pct), 4),
+                        "high_since_entry": open_px,
                     }
             pending = []
 
@@ -176,6 +179,18 @@ class BacktestEngine:
                     "pnl_pct":     round(pnl / (shares * pos["entry_price"]) * 100, 2),
                     "exit_reason": reason,
                 })
+
+            # --- Step 2b: Update trailing stops for remaining positions ---
+            if self.trail_stop_pct > 0:
+                for sym, pos in positions.items():
+                    if sym not in all_ohlcv or today not in all_ohlcv[sym].index:
+                        continue
+                    high_today = all_ohlcv[sym].loc[today, "high"]
+                    if high_today > pos["high_since_entry"]:
+                        pos["high_since_entry"] = high_today
+                        new_trail_stop = round(high_today * (1 - self.trail_stop_pct), 4)
+                        if new_trail_stop > pos["stop"]:
+                            pos["stop"] = new_trail_stop
 
             # --- Step 3: Mark portfolio to market (close prices) ---
             portfolio_value = cash
