@@ -40,10 +40,11 @@ class TradeExecutor:
     # Entry execution
     # ------------------------------------------------------------------
 
-    def execute_best(self, ranked_df):
+    def execute_best(self, ranked_df, max_entries=3):
         """
-        Finds the highest-scored actionable BUY signal and executes it.
+        Finds the top N highest-scored actionable BUY signals and executes them.
         Uses ATR-based stops; enforces a portfolio drawdown circuit breaker.
+        Returns list of placed orders.
         """
         account   = self.broker.get_account()
         portfolio = account["portfolio_value"]
@@ -61,67 +62,77 @@ class TradeExecutor:
                 f"Portfolio drawdown {drawdown:.1%} exceeds limit "
                 f"{Config.MAX_DRAWDOWN_LIMIT:.0%} — halting new entries."
             )
-            return None
+            return []
 
         # Filter to confirmed buy signals only
         actionable = ranked_df[ranked_df["direction"] == "BUY"]
         if actionable.empty:
             logger.info("No actionable BUY signals — holding cash.")
-            return None
+            return []
 
-        best   = actionable.iloc[0]
-        symbol = best["symbol"]
-        price  = best["price"]
-        score  = best["score"]
-        atr    = best.get("atr", None)
+        positions    = self.broker.get_positions()
+        held_symbols = {p["symbol"] for p in positions}
+        orders       = []
 
-        logger.info(f"Best trade: BUY {symbol} @ ${price} | Score: {score} | ATR: {atr}")
+        for _, candidate in actionable.iterrows():
+            if len(orders) >= max_entries:
+                break
 
-        # Skip if already holding
-        positions = self.broker.get_positions()
-        if any(p["symbol"] == symbol for p in positions):
-            logger.info(f"Already holding {symbol} — skipping buy.")
-            return None
+            symbol = candidate["symbol"]
+            price  = candidate["price"]
+            score  = candidate["score"]
+            atr    = candidate.get("atr", None)
 
-        # Use live price for accurate bracket levels
-        live_price = self.broker.get_latest_price(symbol)
-        if live_price:
-            logger.info(f"{symbol}: Using live price ${live_price:.2f} (last close was ${price:.2f})")
-            price = live_price
+            if symbol in held_symbols:
+                logger.info(f"Already holding {symbol} — skipping.")
+                continue
 
-        shares = PositionSizer.calculate(
-            portfolio, price,
-            risk_pct=Config.MAX_RISK_PER_TRADE,
-            atr=atr,
-            atr_multiplier=Config.ATR_STOP_MULT,
-        )
-        if shares <= 0:
-            logger.warning(f"{symbol}: Position size calculated as 0 — skipping.")
-            return None
+            logger.info(f"Candidate: BUY {symbol} @ ${price} | Score: {score} | ATR: {atr}")
 
-        stop   = PositionSizer.stop_price(price, atr=atr, atr_multiplier=Config.ATR_STOP_MULT)
-        target = round(price * (1 + TAKE_PROFIT_PCT), 2)
+            # Use live price for accurate bracket levels
+            live_price = self.broker.get_latest_price(symbol)
+            if live_price:
+                logger.info(f"{symbol}: Using live price ${live_price:.2f} (last close was ${price:.2f})")
+                price = live_price
 
-        order = self.broker.place_bracket_order(
-            symbol=symbol,
-            qty=shares,
-            side="buy",
-            stop_price=stop,
-            take_profit_price=target,
-        )
+            shares = PositionSizer.calculate(
+                portfolio, price,
+                risk_pct=Config.MAX_RISK_PER_TRADE,
+                atr=atr,
+                atr_multiplier=Config.ATR_STOP_MULT,
+            )
+            if shares <= 0:
+                logger.warning(f"{symbol}: Position size calculated as 0 — skipping.")
+                continue
 
-        if order:
-            self._state[symbol] = {
-                "entry_date":      str(datetime.date.today()),
-                "entry_price":     price,
-                "stop_price":      stop,
-                "target_price":    target,
-                "high_water_mark": price,
-            }
-            self._save_state()
-            logger.info(f"State saved for {symbol}: entry=${price:.2f} stop=${stop:.2f} target=${target:.2f}")
+            stop   = PositionSizer.stop_price(price, atr=atr, atr_multiplier=Config.ATR_STOP_MULT)
+            target = round(price * (1 + TAKE_PROFIT_PCT), 2)
 
-        return order
+            order = self.broker.place_bracket_order(
+                symbol=symbol,
+                qty=shares,
+                side="buy",
+                stop_price=stop,
+                take_profit_price=target,
+            )
+
+            if order:
+                self._state[symbol] = {
+                    "entry_date":      str(datetime.date.today()),
+                    "entry_price":     price,
+                    "stop_price":      stop,
+                    "target_price":    target,
+                    "high_water_mark": price,
+                }
+                self._save_state()
+                logger.info(f"State saved for {symbol}: entry=${price:.2f} stop=${stop:.2f} target=${target:.2f}")
+                held_symbols.add(symbol)
+                orders.append(order)
+
+        if not orders:
+            logger.info("No orders placed.")
+
+        return orders
 
     # ------------------------------------------------------------------
     # Exit management
@@ -165,6 +176,17 @@ class TradeExecutor:
                 state["high_water_mark"] = live_price
                 self._state[symbol] = state
                 self._save_state()
+
+            # 0. Breakdown exit — price fell >4% below entry (gap down, news, fast crash)
+            #    Fires before the broker hard stop to get a cleaner fill
+            entry_price = state.get("entry_price", 0)
+            if live_price and entry_price and live_price < entry_price * (1 - Config.BREAKDOWN_PCT):
+                logger.warning(
+                    f"{symbol}: Breakdown exit — "
+                    f"price ${live_price:.2f} is >{Config.BREAKDOWN_PCT:.0%} below entry ${entry_price:.2f}"
+                )
+                self._exit_position(symbol, position, f"breakdown exit (${live_price:.2f} vs entry ${entry_price:.2f})")
+                continue
 
             # 1. Time-based exit
             entry_date_str = state.get("entry_date", "")

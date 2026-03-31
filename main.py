@@ -64,11 +64,12 @@ def run(execute_entries=True):
     executor.check_exits(ranked)
 
     if execute_entries:
-        print("\n[ STEP 7 ] Executing best trade opportunity...")
+        print("\n[ STEP 7 ] Executing top trade opportunities (up to 3)...")
         if broker.is_market_open():
-            order = executor.execute_best(ranked)
-            if order:
-                print(f"\n  ORDER PLACED: {order['side'].upper()} {order['qty']} shares of {order['symbol']}")
+            orders = executor.execute_best(ranked, max_entries=3)
+            if orders:
+                for order in orders:
+                    print(f"\n  ORDER PLACED: {order['side'].upper()} {order['qty']} shares of {order['symbol']}")
             else:
                 print("\n  No trade executed -- no actionable signals or circuit breaker active.")
         else:
@@ -106,7 +107,7 @@ def scheduled_run():
 
 def scheduled_exit_check():
     if _is_weekday():
-        run(execute_entries=False)
+        run(execute_entries=True)
 
 
 def _add_daily_job(time_str, func):

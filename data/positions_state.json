@@ -1,0 +1,16 @@
+{
+  "GS": {
+    "entry_date": "2026-03-23",
+    "entry_price": 812.91,
+    "stop_price": 764.14,
+    "target_price": 894.2,
+    "high_water_mark": 845.7
+  },
+  "JPM": {
+    "entry_date": "2026-03-23",
+    "entry_price": 299.02,
+    "stop_price": 281.08,
+    "target_price": 328.92,
+    "high_water_mark": 299.02
+  }
+}
