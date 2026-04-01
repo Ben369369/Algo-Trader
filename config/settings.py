@@ -25,6 +25,7 @@ class Config:
     ATR_STOP_MULT        = float(os.getenv("ATR_STOP_MULT", "2.0"))   # stop = ATR_STOP_MULT x ATR below entry
     TRAIL_STOP_PCT       = float(os.getenv("TRAIL_STOP_PCT", "0.07")) # 7% trailing stop below high-water mark
     MAX_HOLD_DAYS        = int(os.getenv("MAX_HOLD_DAYS", "30"))       # force-exit after N calendar days
+    BREAKDOWN_PCT        = float(os.getenv("BREAKDOWN_PCT", "0.04"))   # sell immediately if price drops >4% below entry
 
     @classmethod
     def alpaca_base_url(cls):
