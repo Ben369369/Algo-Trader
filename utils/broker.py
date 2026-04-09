@@ -94,7 +94,7 @@ class BrokerConnection:
                 qty=qty,
                 side=side,
                 type="market",
-                time_in_force="day",
+                time_in_force="gtc",
                 order_class="bracket",
                 stop_loss={"stop_price": round(stop_price, 2)},
                 take_profit={"limit_price": round(take_profit_price, 2)},
