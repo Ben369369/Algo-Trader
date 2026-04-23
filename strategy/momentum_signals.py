@@ -51,15 +51,15 @@ class MomentumSignalDetector:
         golden_cross = sma50 > sma200
 
         # Buy: breakout near 20d high, RSI in the momentum sweet spot (50-75),
-        # MACD positive and rising, volume confirming, price in uptrend,
-        # and stock outperforming SPY over the last 20 days
+        # MACD positive and rising, price in uptrend, and stock outperforming
+        # SPY over the last 20 days. Volume is soft-weighted in the scorer
+        # rather than used as a hard gate here.
         signals["buy"] = (
             (signals["rsi"] >= 50) &
             (signals["rsi"] <= 75) &
             signals["near_high_20"] &
             (hist > 0) &
             signals["macd_rising"] &
-            (signals["volume_ratio"] > 0.8) &
             above_sma50 &
             golden_cross &
             (signals["rel_strength"] > 0)
