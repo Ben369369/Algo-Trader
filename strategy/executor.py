@@ -72,7 +72,15 @@ class TradeExecutor:
 
         positions    = self.broker.get_positions()
         held_symbols = {p["symbol"] for p in positions}
-        orders       = []
+
+        # Count how many open positions exist per sector
+        sector_map = Config.SECTOR_MAP
+        held_sectors: dict[str, int] = {}
+        for p in positions:
+            sector = sector_map.get(p["symbol"], "Other")
+            held_sectors[sector] = held_sectors.get(sector, 0) + 1
+
+        orders = []
 
         for _, candidate in actionable.iterrows():
             if len(orders) >= max_entries:
@@ -85,6 +93,15 @@ class TradeExecutor:
 
             if symbol in held_symbols:
                 logger.info(f"Already holding {symbol} — skipping.")
+                continue
+
+            # Sector concentration guard
+            sector = sector_map.get(symbol, "Other")
+            if held_sectors.get(sector, 0) >= Config.MAX_POSITIONS_PER_SECTOR:
+                logger.info(
+                    f"{symbol}: Sector '{sector}' already has "
+                    f"{held_sectors[sector]} position(s) — skipping to avoid concentration."
+                )
                 continue
 
             logger.info(f"Candidate: BUY {symbol} @ ${price} | Score: {score} | ATR: {atr}")
@@ -127,6 +144,7 @@ class TradeExecutor:
                 self._save_state()
                 logger.info(f"State saved for {symbol}: entry=${price:.2f} stop=${stop:.2f} target=${target:.2f}")
                 held_symbols.add(symbol)
+                held_sectors[sector] = held_sectors.get(sector, 0) + 1
                 orders.append(order)
 
         if not orders:

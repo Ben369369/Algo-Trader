@@ -4,6 +4,7 @@ from data.pipeline import DataPipeline
 from strategy.signals import SignalDetector
 from strategy.momentum_signals import MomentumSignalDetector
 from strategy.regime import RegimeDetector
+from utils.earnings import is_near_earnings
 from utils.logger import logger
 
 class MarketScanner:
@@ -13,6 +14,11 @@ class MarketScanner:
 
     def scan_symbol(self, symbol):
         try:
+            from config.settings import Config
+            if Config.USE_EARNINGS_FILTER and is_near_earnings(
+                symbol, Config.EARNINGS_DAYS_BEFORE, Config.EARNINGS_DAYS_AFTER
+            ):
+                return None
             df = self.pipeline.get_latest_bars(symbol, n=250)
             if df.empty or len(df) < 210:
                 logger.warning(f"{symbol}: Not enough data for 200-day trend filter")
@@ -53,6 +59,11 @@ class MarketScanner:
 
     def scan_symbol_momentum(self, symbol, spy_return_20d=None):
         try:
+            from config.settings import Config
+            if Config.USE_EARNINGS_FILTER and is_near_earnings(
+                symbol, Config.EARNINGS_DAYS_BEFORE, Config.EARNINGS_DAYS_AFTER
+            ):
+                return None
             df = self.pipeline.get_latest_bars(symbol, n=250)
             if df.empty or len(df) < 210:
                 logger.warning(f"{symbol}: Not enough data for momentum scan")

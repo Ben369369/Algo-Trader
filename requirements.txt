@@ -13,3 +13,4 @@ tqdm
 matplotlib
 plotly
 pytest
+yfinance

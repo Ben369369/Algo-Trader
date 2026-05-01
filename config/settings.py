@@ -19,8 +19,22 @@ class Config:
     DB_PATH      = Path(__file__).parent.parent / "data" / "market_data.db"
     LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
     LOG_FILE  = os.getenv("LOG_FILE", "logs/tradingbot.log")
-    USE_EARNINGS_FILTER  = os.getenv("USE_EARNINGS_FILTER",  "false").lower() == "true"
-    USE_SENTIMENT_FILTER = os.getenv("USE_SENTIMENT_FILTER", "false").lower() == "true"
+    USE_EARNINGS_FILTER   = os.getenv("USE_EARNINGS_FILTER",  "true").lower() == "true"
+    EARNINGS_DAYS_BEFORE  = int(os.getenv("EARNINGS_DAYS_BEFORE", "5"))
+    EARNINGS_DAYS_AFTER   = int(os.getenv("EARNINGS_DAYS_AFTER",  "2"))
+    USE_SENTIMENT_FILTER  = os.getenv("USE_SENTIMENT_FILTER", "false").lower() == "true"
+    MAX_POSITIONS_PER_SECTOR = int(os.getenv("MAX_POSITIONS_PER_SECTOR", "1"))
+
+    # Sector groupings — used by executor to prevent correlated entries
+    SECTOR_MAP = {
+        "AAPL": "Tech",   "MSFT": "Tech",  "GOOGL": "Tech",  "AMZN": "Tech",
+        "NVDA": "Tech",   "META": "Tech",  "AMD":   "Tech",  "AVGO": "Tech",  "INTC": "Tech",
+        "TSLA": "Consumer", "MCD": "Consumer", "KO": "Consumer", "WMT": "Consumer", "PG": "Consumer",
+        "JPM":  "Finance",  "BAC": "Finance",  "GS":  "Finance", "V":   "Finance",  "WFC": "Finance",
+        "JNJ":  "Healthcare", "PFE": "Healthcare", "UNH": "Healthcare",
+        "CAT":  "Industrial", "BA": "Industrial",  "HON": "Industrial",
+        "CVX":  "Energy",     "XOM": "Energy",
+    }
     ATR_PERIOD           = int(os.getenv("ATR_PERIOD", "14"))
     ATR_STOP_MULT        = float(os.getenv("ATR_STOP_MULT", "2.0"))   # stop = ATR_STOP_MULT x ATR below entry
     TRAIL_STOP_PCT       = float(os.getenv("TRAIL_STOP_PCT", "0.07")) # 7% trailing stop below high-water mark
