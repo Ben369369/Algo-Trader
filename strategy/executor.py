@@ -141,10 +141,13 @@ class TradeExecutor:
     def check_exits(self, ranked_df):
         """
         Check all open positions for exit conditions in priority order:
-          1. Time-based exit   — held > MAX_HOLD_DAYS calendar days
-          2. Trailing stop     — price fell Config.TRAIL_STOP_PCT below high-water mark
-          3. Signal-based exit — SELL signal from scanner
-        Hard stop-loss and take-profit are still enforced by the broker's bracket OCO orders.
+          0. Breakdown exit    — price dropped >BREAKDOWN_PCT below entry (fast crash)
+          1. Soft take-profit  — price >= target_price (fallback if broker bracket is gone)
+          2. Time-based exit   — held > MAX_HOLD_DAYS calendar days
+          3. Trailing stop     — price fell Config.TRAIL_STOP_PCT below high-water mark
+          4. Signal-based exit — SELL signal from scanner
+        Hard stop-loss and take-profit are also enforced by the broker's bracket OCO orders
+        when present. The soft take-profit here acts as a safety net if those orders disappear.
         """
         positions = self.broker.get_positions()
         if not positions:
@@ -188,7 +191,18 @@ class TradeExecutor:
                 self._exit_position(symbol, position, f"breakdown exit (${live_price:.2f} vs entry ${entry_price:.2f})")
                 continue
 
-            # 1. Time-based exit
+            # 1. Soft take-profit — fires if broker bracket order is missing
+            target_price = state.get("target_price", 0)
+            if live_price and target_price and live_price >= target_price:
+                pnl_pct = position["unrealized_plpc"] * 100
+                logger.info(
+                    f"{symbol}: Soft take-profit hit — "
+                    f"price ${live_price:.2f} >= target ${target_price:.2f} | P&L: {pnl_pct:.2f}%"
+                )
+                self._exit_position(symbol, position, f"soft take-profit ${target_price:.2f}")
+                continue
+
+            # 2. Time-based exit
             entry_date_str = state.get("entry_date", "")
             if entry_date_str:
                 try:
@@ -200,7 +214,7 @@ class TradeExecutor:
                 except ValueError:
                     pass
 
-            # 2. Trailing stop
+            # 3. Trailing stop
             hwm = state.get("high_water_mark", 0)
             if hwm > 0 and live_price:
                 trail_stop = round(hwm * (1 - Config.TRAIL_STOP_PCT), 2)
@@ -212,7 +226,7 @@ class TradeExecutor:
                     self._exit_position(symbol, position, f"trailing stop ${trail_stop:.2f}")
                     continue
 
-            # 3. Signal-based exit
+            # 4. Signal-based exit
             match = ranked_df[ranked_df["symbol"] == symbol]
             if match.empty:
                 continue

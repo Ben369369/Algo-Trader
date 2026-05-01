@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 from data.pipeline import DataPipeline
 from strategy.signals import SignalDetector
+from strategy.momentum_signals import MomentumSignalDetector
+from strategy.regime import RegimeDetector
 from utils.logger import logger
 
 class MarketScanner:
@@ -43,3 +45,55 @@ class MarketScanner:
             if result:
                 results.append(result)
         return pd.DataFrame(results)
+
+    def detect_regime(self):
+        """Detect current market regime from SPY data."""
+        spy_df = self.pipeline.get_latest_bars("SPY", n=250)
+        return RegimeDetector.detect(spy_df)
+
+    def scan_symbol_momentum(self, symbol, spy_return_20d=None):
+        try:
+            df = self.pipeline.get_latest_bars(symbol, n=250)
+            if df.empty or len(df) < 210:
+                logger.warning(f"{symbol}: Not enough data for momentum scan")
+                return None
+            signals = MomentumSignalDetector.detect(df, spy_return_20d)
+            latest = signals.iloc[-1]
+            return {
+                "symbol":       symbol,
+                "price":        round(latest["close"], 2),
+                "rsi":          round(latest["rsi"], 2),
+                "macd_hist":    round(latest["macd_hist"], 4),
+                "atr":          round(float(latest["atr"]), 4),
+                "volume_ratio": round(float(latest["volume_ratio"]), 3),
+                "rel_strength": round(float(latest["rel_strength"]), 4),
+                "bb_position":  round(float(latest["bb_position"]), 3),
+                "near_high_20": bool(latest["near_high_20"]),
+                "buy_signal":   bool(latest["buy"]),
+                "sell_signal":  bool(latest["sell"]),
+            }
+        except Exception as e:
+            logger.error(f"{symbol}: Momentum scan failed -- {e}")
+            return None
+
+    def scan_all_momentum(self):
+        """
+        Run momentum scan on all symbols.
+        Returns (results_df, regime_string).
+        """
+        from config.settings import Config
+        spy_df = self.pipeline.get_latest_bars("SPY", n=250)
+        regime = RegimeDetector.detect(spy_df)
+
+        spy_return_20d = None
+        if not spy_df.empty and len(spy_df) >= 21:
+            spy_return_20d = (spy_df["close"].iloc[-1] / spy_df["close"].iloc[-21]) - 1
+
+        symbols = [s for s in Config.symbols() if s not in ("SPY", "QQQ", "IWM", "DIA")]
+        logger.info(f"Momentum scan: {len(symbols)} symbols | Regime: {regime}")
+        results = []
+        for symbol in symbols:
+            result = self.scan_symbol_momentum(symbol, spy_return_20d)
+            if result:
+                results.append(result)
+        return pd.DataFrame(results), regime

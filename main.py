@@ -34,30 +34,59 @@ def run(execute_entries=True):
     pipeline = DataPipeline()
     pipeline.download_all()
 
-    print("\n[ STEP 4 ] Scanning all symbols...")
+    print("\n[ STEP 4 ] Detecting market regime and scanning symbols...")
     scanner = MarketScanner()
-    scan_results = scanner.scan_all()
+    regime = scanner.detect_regime()
+    print(f"  Regime: {regime}")
+
+    if regime == "TRENDING_UP":
+        print("  Strategy: MOMENTUM (buying breakouts)")
+        scan_results, _ = scanner.scan_all_momentum()
+        ranked = TradeScorer.score_momentum(scan_results)
+        leaderboard_cols = ("RANK", "SYMBOL", "PRICE", "DIR", "SCORE", "RSI", "REL_STR", "VOL_R")
+        leaderboard_fmt  = ("----", "------", "-----", "---", "-----", "---", "-------", "-----")
+    else:
+        label = "MEAN-REVERSION (buying dips)" if regime == "RANGING" else "CASH ONLY (death cross -- no new entries)"
+        print(f"  Strategy: {label}")
+        scan_results = scanner.scan_all()
+        ranked = TradeScorer.score(scan_results)
+        leaderboard_cols = ("RANK", "SYMBOL", "PRICE", "DIR", "SCORE", "RSI", "ZSCORE", "VOL_R")
+        leaderboard_fmt  = ("----", "------", "-----", "---", "-----", "---", "------", "-----")
 
     print("\n[ STEP 5 ] Scoring and ranking...")
-    ranked = TradeScorer.score(scan_results)
 
     print("\n" + "="*60)
     print("   TRADE LEADERBOARD")
     print("="*60)
-    print(f"\n  {'RANK':<6} {'SYMBOL':<8} {'PRICE':>8} {'DIR':<8} {'SCORE':>7} {'RSI':>7} {'ZSCORE':>8} {'VOL_R':>7}")
-    print(f"  {'----':<6} {'------':<8} {'-----':>8} {'---':<8} {'-----':>7} {'---':>7} {'------':>8} {'-----':>7}")
 
-    for rank, row in ranked.iterrows():
-        print(
-            f"  {rank:<6} "
-            f"{row['symbol']:<8} "
-            f"${row['price']:>7.2f} "
-            f"{row['direction']:<8} "
-            f"{row['score']:>7.4f} "
-            f"{row['rsi']:>7.2f} "
-            f"{row['zscore']:>8.3f} "
-            f"{row['volume_ratio']:>7.2f}x"
-        )
+    if regime == "TRENDING_UP":
+        print(f"\n  {leaderboard_cols[0]:<6} {leaderboard_cols[1]:<8} {leaderboard_cols[2]:>8} {leaderboard_cols[3]:<8} {leaderboard_cols[4]:>7} {leaderboard_cols[5]:>7} {leaderboard_cols[6]:>8} {leaderboard_cols[7]:>7}")
+        print(f"  {leaderboard_fmt[0]:<6} {leaderboard_fmt[1]:<8} {leaderboard_fmt[2]:>8} {leaderboard_fmt[3]:<8} {leaderboard_fmt[4]:>7} {leaderboard_fmt[5]:>7} {leaderboard_fmt[6]:>8} {leaderboard_fmt[7]:>7}")
+        for rank, row in ranked.iterrows():
+            print(
+                f"  {rank:<6} "
+                f"{row['symbol']:<8} "
+                f"${row['price']:>7.2f} "
+                f"{row['direction']:<8} "
+                f"{row['score']:>7.4f} "
+                f"{row['rsi']:>7.2f} "
+                f"{row['rel_strength']:>8.3f} "
+                f"{row['volume_ratio']:>7.2f}x"
+            )
+    else:
+        print(f"\n  {leaderboard_cols[0]:<6} {leaderboard_cols[1]:<8} {leaderboard_cols[2]:>8} {leaderboard_cols[3]:<8} {leaderboard_cols[4]:>7} {leaderboard_cols[5]:>7} {leaderboard_cols[6]:>8} {leaderboard_cols[7]:>7}")
+        print(f"  {leaderboard_fmt[0]:<6} {leaderboard_fmt[1]:<8} {leaderboard_fmt[2]:>8} {leaderboard_fmt[3]:<8} {leaderboard_fmt[4]:>7} {leaderboard_fmt[5]:>7} {leaderboard_fmt[6]:>8} {leaderboard_fmt[7]:>7}")
+        for rank, row in ranked.iterrows():
+            print(
+                f"  {rank:<6} "
+                f"{row['symbol']:<8} "
+                f"${row['price']:>7.2f} "
+                f"{row['direction']:<8} "
+                f"{row['score']:>7.4f} "
+                f"{row['rsi']:>7.2f} "
+                f"{row['zscore']:>8.3f} "
+                f"{row['volume_ratio']:>7.2f}x"
+            )
 
     print("\n[ STEP 6 ] Checking exit conditions on open positions...")
     executor = TradeExecutor()
@@ -65,7 +94,9 @@ def run(execute_entries=True):
 
     if execute_entries:
         print("\n[ STEP 7 ] Executing top trade opportunities (up to 3)...")
-        if broker.is_market_open():
+        if regime == "TRENDING_DOWN":
+            print("\n  Death cross detected -- no new entries, exits only.")
+        elif broker.is_market_open():
             orders = executor.execute_best(ranked, max_entries=3)
             if orders:
                 for order in orders:
@@ -107,7 +138,7 @@ def scheduled_run():
 
 def scheduled_exit_check():
     if _is_weekday():
-        run(execute_entries=True)
+        run(execute_entries=False)
 
 
 def _add_daily_job(time_str, func):

@@ -42,3 +42,46 @@ class TradeScorer:
             "symbol", "price", "direction",
             "score", "rsi", "zscore", "macd_hist", "atr", "volume_ratio"
         ]]
+
+    @staticmethod
+    def score_momentum(scan_df):
+        """
+        Score momentum candidates. Unlike mean-reversion, higher RSI is better here
+        (we want strength, not oversold conditions).
+        """
+        df = scan_df.copy()
+
+        # RSI score: sweet spot is 55-65, peaks at 60, falls off toward 50 and 70
+        df["rsi_score"] = (1 - abs(df["rsi"] - 60) / 20).clip(0, 1)
+
+        # Relative strength: how much the stock is outperforming SPY (capped at 15%)
+        df["rs_score"] = df["rel_strength"].clip(0, 0.15) / 0.15
+
+        # MACD score: normalized by price for cross-stock comparability
+        df["macd_score"] = (df["macd_hist"].abs() / df["price"] * 100).clip(0, 1)
+
+        # Volume score: above-average volume confirms the breakout
+        df["volume_score"] = (df["volume_ratio"].fillna(1.0) - 1.0).clip(0, 2) / 2
+
+        # Bollinger position: for momentum, price near upper band is positive
+        df["bb_score"] = df["bb_position"].clip(0, 1)
+
+        df["score"] = (
+            df["rsi_score"]    * 0.25 +
+            df["rs_score"]     * 0.30 +
+            df["macd_score"]   * 0.20 +
+            df["volume_score"] * 0.15 +
+            df["bb_score"]     * 0.10
+        ).round(4)
+
+        df["direction"] = "NEUTRAL"
+        df.loc[df["buy_signal"]  == True, "direction"] = "BUY"
+        df.loc[df["sell_signal"] == True, "direction"] = "SELL"
+
+        df = df.sort_values("score", ascending=False).reset_index(drop=True)
+        df.index += 1
+
+        return df[[
+            "symbol", "price", "direction",
+            "score", "rsi", "macd_hist", "atr", "volume_ratio", "rel_strength"
+        ]]
