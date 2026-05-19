@@ -1,23 +1,23 @@
 {
   "CAT": {
-    "entry_date": "2026-04-23",
-    "entry_price": 836.745,
-    "stop_price": 790.62,
-    "target_price": 920.42,
-    "high_water_mark": 893.07
+    "entry_date": "2026-05-06",
+    "entry_price": 922.17,
+    "stop_price": 872.34,
+    "target_price": 1014.39,
+    "high_water_mark": 929.09
   },
   "AVGO": {
     "entry_date": "2026-05-01",
     "entry_price": 421.09,
     "stop_price": 396.37,
     "target_price": 463.2,
-    "high_water_mark": 421.21
+    "high_water_mark": 430.1
   },
   "AAPL": {
     "entry_date": "2026-05-01",
     "entry_price": 284.42,
     "stop_price": 272.71,
     "target_price": 312.86,
-    "high_water_mark": 284.42
+    "high_water_mark": 290.83
   }
 }
