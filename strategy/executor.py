@@ -257,11 +257,16 @@ class TradeExecutor:
     def _exit_position(self, symbol, position, reason):
         """Cancel bracket legs and place a clean market exit."""
         self.broker.cancel_orders_for_symbol(symbol)
-        self.broker.place_market_order(
+        order = self.broker.place_market_order(
             symbol=symbol,
             qty=abs(int(position["qty"])),
             side="sell",
             note=reason,
         )
-        self._state.pop(symbol, None)
-        self._save_state()
+        if order:
+            self._state.pop(symbol, None)
+            self._save_state()
+        else:
+            logger.warning(
+                f"{symbol}: Sell order failed — keeping state so next run retries."
+            )

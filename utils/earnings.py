@@ -30,12 +30,23 @@ def _fetch_nearest_earnings(symbol: str, today: datetime.date):
     try:
         import yfinance as yf
         cal = yf.Ticker(symbol).calendar
-        if cal is None or (hasattr(cal, "empty") and cal.empty):
+
+        if cal is None:
             return None
-        # calendar columns are Timestamps representing upcoming earnings dates
-        dates = list(cal.columns)
+
+        # yfinance >= 1.0: calendar is a dict  e.g. {'Earnings Date': [Timestamp, ...], ...}
+        if isinstance(cal, dict):
+            raw = cal.get("Earnings Date", [])
+            dates = [d for d in raw if hasattr(d, "date")]
+        # older yfinance: calendar is a DataFrame with dates as columns
+        elif hasattr(cal, "columns"):
+            dates = list(cal.columns)
+        else:
+            return None
+
         if not dates:
             return None
+
         nearest = min(dates, key=lambda d: abs((d.date() - today).days))
         return nearest.date()
     except Exception as e:
