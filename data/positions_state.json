@@ -1,23 +1,30 @@
 {
-  "CAT": {
-    "entry_date": "2026-05-06",
-    "entry_price": 922.17,
-    "stop_price": 872.34,
-    "target_price": 1014.39,
-    "high_water_mark": 929.09
+  "GS": {
+    "entry_date": "2026-05-21",
+    "entry_price": 990.5,
+    "stop_price": 944.59,
+    "target_price": 1089.55,
+    "high_water_mark": 997.97
+  },
+  "HON": {
+    "entry_date": "2026-05-22",
+    "entry_price": 227.925,
+    "stop_price": 219.07,
+    "target_price": 250.72,
+    "high_water_mark": 227.925
   },
   "AVGO": {
     "entry_date": "2026-05-01",
-    "entry_price": 421.09,
-    "stop_price": 396.37,
-    "target_price": 463.2,
-    "high_water_mark": 430.1
+    "entry_price": 421.1,
+    "stop_price": 395.83,
+    "target_price": 463.21,
+    "high_water_mark": 446.7699890136719
   },
   "AAPL": {
     "entry_date": "2026-05-01",
-    "entry_price": 284.42,
-    "stop_price": 272.71,
-    "target_price": 312.86,
-    "high_water_mark": 290.83
+    "entry_price": 284.47,
+    "stop_price": 267.4,
+    "target_price": 312.92,
+    "high_water_mark": 312.05999755859375
   }
 }
