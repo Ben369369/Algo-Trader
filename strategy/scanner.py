@@ -54,6 +54,7 @@ class MarketScanner:
 
     def detect_regime(self):
         """Detect current market regime from SPY data."""
+        self.pipeline.download_symbol("SPY")
         spy_df = self.pipeline.get_latest_bars("SPY", n=250)
         return RegimeDetector.detect(spy_df)
 
@@ -93,6 +94,7 @@ class MarketScanner:
         Returns (results_df, regime_string).
         """
         from config.settings import Config
+        self.pipeline.download_symbol("SPY")
         spy_df = self.pipeline.get_latest_bars("SPY", n=250)
         regime = RegimeDetector.detect(spy_df)
 

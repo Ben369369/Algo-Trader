@@ -15,10 +15,22 @@ class TradeExecutor:
     def __init__(self):
         self.broker = BrokerConnection()
         self._state = self._load_state()
+        self._reconcile_state()
 
     # ------------------------------------------------------------------
     # State file — tracks entry metadata for trailing stops & time exits
     # ------------------------------------------------------------------
+
+    def _reconcile_state(self):
+        """Remove state entries for positions Alpaca no longer holds (e.g. bracket stop auto-executed)."""
+        held = {p["symbol"] for p in self.broker.get_positions()}
+        stale = [s for s in self._state if not s.startswith("__") and s not in held]
+        if stale:
+            for sym in stale:
+                logger.info(f"{sym}: Removing stale state — bracket order closed this position.")
+            for sym in stale:
+                self._state.pop(sym)
+            self._save_state()
 
     def _load_state(self):
         if STATE_FILE.exists():

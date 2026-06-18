@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from strategy.tiger_parser import load_tiger_boosts
 
 class TradeScorer:
 
@@ -27,7 +28,14 @@ class TradeScorer:
             df["zscore_score"] * 0.35 +
             df["macd_score"]   * 0.20 +
             df["volume_score"] * 0.15
-        ).round(4)
+        )
+
+        # Tiger Capital research boost — applied after base score, clipped to [0, 1]
+        tiger_boosts = load_tiger_boosts()
+        if tiger_boosts:
+            df["tiger_boost"] = df["symbol"].map(tiger_boosts).fillna(0.0)
+            df["score"] = (df["score"] + df["tiger_boost"]).clip(0, 1)
+        df["score"] = df["score"].round(4)
 
         # Tag direction
         df["direction"] = "NEUTRAL"
@@ -72,7 +80,13 @@ class TradeScorer:
             df["macd_score"]   * 0.20 +
             df["volume_score"] * 0.15 +
             df["bb_score"]     * 0.10
-        ).round(4)
+        )
+
+        tiger_boosts = load_tiger_boosts()
+        if tiger_boosts:
+            df["tiger_boost"] = df["symbol"].map(tiger_boosts).fillna(0.0)
+            df["score"] = (df["score"] + df["tiger_boost"]).clip(0, 1)
+        df["score"] = df["score"].round(4)
 
         df["direction"] = "NEUTRAL"
         df.loc[df["buy_signal"]  == True, "direction"] = "BUY"

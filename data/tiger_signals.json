@@ -1,0 +1,28 @@
+{
+  "issue": 5,
+  "issue_date": "2026-06-14",
+  "expiry_date": "2026-06-15",
+  "regime": "Sticky-Headline Soft-Core Inflation — Range-Bound Into FOMC",
+  "regime_bias": "risk_off",
+  "signals": {
+    "JPM":  { "direction": "bullish", "conviction": "high",   "boost": 0.15, "reason": "Financials rate-beneficiary, rotation leader" },
+    "BAC":  { "direction": "bullish", "conviction": "high",   "boost": 0.15, "reason": "Financials rate-beneficiary, rotation leader" },
+    "GS":   { "direction": "bullish", "conviction": "high",   "boost": 0.15, "reason": "Financials rate-beneficiary, rotation leader" },
+    "V":    { "direction": "bullish", "conviction": "high",   "boost": 0.15, "reason": "Financials rate-beneficiary, rotation leader" },
+    "WFC":  { "direction": "bullish", "conviction": "high",   "boost": 0.15, "reason": "Financials rate-beneficiary, rotation leader" },
+    "CAT":  { "direction": "bullish", "conviction": "medium", "boost": 0.10, "reason": "Cyclicals favored in rotation trade" },
+    "HON":  { "direction": "bullish", "conviction": "medium", "boost": 0.10, "reason": "Cyclicals favored in rotation trade" },
+    "BA":   { "direction": "bullish", "conviction": "medium", "boost": 0.10, "reason": "Cyclicals favored in rotation trade" },
+    "CVX":  { "direction": "bullish", "conviction": "low",    "boost": 0.05, "reason": "Energy capex super-cycle structural hold" },
+    "XOM":  { "direction": "bullish", "conviction": "low",    "boost": 0.05, "reason": "Energy capex super-cycle structural hold" },
+    "AAPL": { "direction": "bearish", "conviction": "high",   "boost": -0.15, "reason": "Long-duration tech penalized in higher-for-longer regime" },
+    "MSFT": { "direction": "bearish", "conviction": "high",   "boost": -0.15, "reason": "Long-duration tech penalized in higher-for-longer regime" },
+    "GOOGL":{ "direction": "bearish", "conviction": "high",   "boost": -0.15, "reason": "Long-duration tech penalized in higher-for-longer regime" },
+    "AMZN": { "direction": "bearish", "conviction": "high",   "boost": -0.15, "reason": "Long-duration tech penalized in higher-for-longer regime" },
+    "NVDA": { "direction": "bearish", "conviction": "high",   "boost": -0.15, "reason": "Long-duration tech/chips penalized in higher-for-longer regime" },
+    "META": { "direction": "bearish", "conviction": "high",   "boost": -0.15, "reason": "Long-duration tech penalized in higher-for-longer regime" },
+    "AMD":  { "direction": "bearish", "conviction": "high",   "boost": -0.15, "reason": "Long-duration tech/chips penalized in higher-for-longer regime" },
+    "AVGO": { "direction": "bearish", "conviction": "high",   "boost": -0.15, "reason": "Long-duration tech/chips penalized in higher-for-longer regime" },
+    "INTC": { "direction": "bearish", "conviction": "high",   "boost": -0.15, "reason": "Long-duration tech/chips penalized in higher-for-longer regime" }
+  }
+}

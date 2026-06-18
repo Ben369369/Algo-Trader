@@ -37,7 +37,7 @@ class MomentumSignalDetector:
 
         # 20-day high breakout: price within 2% of its 20-day rolling high
         rolling_high_20 = close.rolling(20).max()
-        signals["near_high_20"] = close >= rolling_high_20 * 0.98
+        signals["near_high_20"] = close >= rolling_high_20 * 0.95
 
         # Relative strength vs SPY over 20 days
         stock_return_20d = close.pct_change(20)
@@ -58,7 +58,6 @@ class MomentumSignalDetector:
             (signals["rsi"] >= 50) &
             (signals["rsi"] <= 75) &
             signals["near_high_20"] &
-            (hist > 0) &
             signals["macd_rising"] &
             above_sma50 &
             golden_cross &

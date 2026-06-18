@@ -97,7 +97,7 @@ def run(execute_entries=True):
         if regime == "TRENDING_DOWN":
             print("\n  Death cross detected -- no new entries, exits only.")
         elif broker.is_market_open():
-            orders = executor.execute_best(ranked, max_entries=3)
+            orders = executor.execute_best(ranked, max_entries=5)
             if orders:
                 for order in orders:
                     print(f"\n  ORDER PLACED: {order['side'].upper()} {order['qty']} shares of {order['symbol']}")
