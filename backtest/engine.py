@@ -74,7 +74,8 @@ class BacktestEngine:
 
     def __init__(self, initial_capital=100_000.0, db_path=None,
                  stop_loss_pct=STOP_LOSS_PCT, take_profit_pct=TAKE_PROFIT_PCT,
-                 trail_stop_pct=0.0, atr_multiplier=2.0):
+                 trail_stop_pct=0.0, atr_multiplier=2.0,
+                 news_filter=None, use_earnings_filter=False, use_sentiment_filter=False):
         self.initial_capital = initial_capital
         self.db_path         = db_path or Config.DB_PATH
         self.stop_loss_pct   = stop_loss_pct
@@ -258,9 +259,10 @@ class BacktestEngine:
                     if not row["buy"]:
                         continue
                     vol_ratio = float(row["volume_ratio"]) if "volume_ratio" in row.index else 1.0
+                    zscore_val = float(row["zscore"]) if "zscore" in row.index else 0.0
                     score = _score_row(
                         rsi=row["rsi"],
-                        zscore=row["zscore"],
+                        zscore=zscore_val,
                         macd_hist=row["macd_hist"],
                         price=row["close"],
                         volume_ratio=vol_ratio,
