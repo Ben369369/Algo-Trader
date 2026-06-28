@@ -81,6 +81,7 @@ class MarketScanner:
                 "rel_strength": round(float(latest["rel_strength"]), 4),
                 "bb_position":  round(float(latest["bb_position"]), 3),
                 "near_high_20": bool(latest["near_high_20"]),
+                "mom_12_1":     round(float(latest["mom_12_1"]) if pd.notna(latest["mom_12_1"]) else 0.0, 4),
                 "buy_signal":   bool(latest["buy"]),
                 "sell_signal":  bool(latest["sell"]),
             }

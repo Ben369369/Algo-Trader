@@ -27,13 +27,34 @@ class Config:
 
     # Sector groupings — used by executor to prevent correlated entries
     SECTOR_MAP = {
-        "AAPL": "Tech",   "MSFT": "Tech",  "GOOGL": "Tech",  "AMZN": "Tech",
-        "NVDA": "Tech",   "META": "Tech",  "AMD":   "Tech",  "AVGO": "Tech",  "INTC": "Tech",
-        "TSLA": "Consumer", "MCD": "Consumer", "KO": "Consumer", "WMT": "Consumer", "PG": "Consumer",
-        "JPM":  "Finance",  "BAC": "Finance",  "GS":  "Finance", "V":   "Finance",  "WFC": "Finance",
-        "JNJ":  "Healthcare", "PFE": "Healthcare", "UNH": "Healthcare",
-        "CAT":  "Industrial", "BA": "Industrial",  "HON": "Industrial",
-        "CVX":  "Energy",     "XOM": "Energy",
+        # Tech
+        "AAPL": "Tech",  "MSFT": "Tech",  "GOOGL": "Tech", "AMZN": "Tech",
+        "NVDA": "Tech",  "META": "Tech",  "AMD":   "Tech", "AVGO": "Tech",
+        "INTC": "Tech",  "NOW":  "Tech",  "CRWD":  "Tech", "CRM":  "Tech",
+        "ORCL": "Tech",  "QCOM": "Tech",  "AMAT":  "Tech",
+        # Consumer
+        "TSLA": "Consumer", "MCD":  "Consumer", "KO":   "Consumer",
+        "WMT":  "Consumer", "PG":   "Consumer", "COST": "Consumer",
+        "NKE":  "Consumer", "SBUX": "Consumer", "TGT":  "Consumer", "LULU": "Consumer",
+        # Finance
+        "JPM": "Finance", "BAC": "Finance", "GS":  "Finance", "V":   "Finance",
+        "WFC": "Finance", "MS":  "Finance", "AXP": "Finance", "C":   "Finance",
+        "BLK": "Finance", "CME": "Finance",
+        # Healthcare
+        "JNJ":  "Healthcare", "PFE":  "Healthcare", "UNH":  "Healthcare",
+        "MRK":  "Healthcare", "ABBV": "Healthcare", "TMO":  "Healthcare",
+        "ISRG": "Healthcare", "DHR":  "Healthcare",
+        # Industrial
+        "CAT": "Industrial", "BA":  "Industrial", "HON": "Industrial",
+        "GE":  "Industrial", "LMT": "Industrial", "RTX": "Industrial",
+        "DE":  "Industrial", "ETN": "Industrial",
+        # Energy
+        "CVX": "Energy", "XOM": "Energy", "SLB": "Energy",
+        "COP": "Energy", "OXY": "Energy",
+        # Materials
+        "LIN": "Materials", "APD": "Materials", "FCX": "Materials", "NEM": "Materials",
+        # REIT
+        "AMT": "REIT", "PLD": "REIT", "EQIX": "REIT",
     }
     ATR_PERIOD           = int(os.getenv("ATR_PERIOD", "14"))
     ATR_STOP_MULT        = float(os.getenv("ATR_STOP_MULT", "2.0"))   # stop = ATR_STOP_MULT x ATR below entry
@@ -52,9 +73,22 @@ class Config:
     @classmethod
     def symbols(cls):
         raw = os.getenv("SYMBOLS", (
-            "AAPL,MSFT,GOOGL,AMZN,TSLA,NVDA,META,JPM,V,"
-            "AMD,AVGO,BA,BAC,CAT,CVX,GS,HON,INTC,"
-            "JNJ,KO,MCD,PFE,PG,UNH,WFC,WMT,XOM"
+            # Tech (15)
+            "AAPL,MSFT,GOOGL,AMZN,NVDA,META,AMD,AVGO,INTC,NOW,CRWD,CRM,ORCL,QCOM,AMAT,"
+            # Consumer (10)
+            "TSLA,MCD,KO,WMT,PG,COST,NKE,SBUX,TGT,LULU,"
+            # Finance (10)
+            "JPM,BAC,GS,V,WFC,MS,AXP,C,BLK,CME,"
+            # Healthcare (8)
+            "JNJ,PFE,UNH,MRK,ABBV,TMO,ISRG,DHR,"
+            # Industrial (8)
+            "CAT,BA,HON,GE,LMT,RTX,DE,ETN,"
+            # Energy (5)
+            "CVX,XOM,SLB,COP,OXY,"
+            # Materials (4)
+            "LIN,APD,FCX,NEM,"
+            # REIT (3)
+            "AMT,PLD,EQIX"
         ))
         return [s.strip() for s in raw.split(",") if s.strip()]
 

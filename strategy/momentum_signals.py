@@ -46,6 +46,10 @@ class MomentumSignalDetector:
         else:
             signals["rel_strength"] = stock_return_20d
 
+        # Cross-sectional 12-1 momentum: return from ~12 months ago to ~1 month ago.
+        # Skip the most recent month to avoid short-term reversal contamination.
+        signals["mom_12_1"] = close.shift(21) / close.shift(252) - 1
+
         # Trend alignment
         above_sma50  = close > sma50
         golden_cross = sma50 > sma200
