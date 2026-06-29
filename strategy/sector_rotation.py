@@ -5,10 +5,14 @@ hold the top N. Rebalance whenever the ranking changes materially.
 Academic basis: sectors trend for months due to economic cycles, making momentum
 a much cleaner signal than on individual stocks (Moskowitz & Grinblatt, 1999).
 """
+import json
 import sqlite3
+import datetime
 import pandas as pd
 import numpy as np
+from pathlib import Path
 from config.settings import Config
+from utils.logger import logger
 
 SECTOR_ETFS = ["XLK", "XLF", "XLE", "XLV", "XLI", "XLY", "XLP", "XLB", "XLRE", "XLC", "XLU"]
 
@@ -86,3 +90,119 @@ def top_sectors(n=TOP_N, db_path=None):
     if ranked.empty:
         return []
     return ranked.head(n)["symbol"].tolist()
+
+
+# ---------------------------------------------------------------------------
+# Live execution
+# ---------------------------------------------------------------------------
+
+class SectorRotationExecutor:
+    """
+    Monthly rebalancer for sector ETF rotation.
+    Shares positions_state.json with TradeExecutor so trailing stops
+    are managed consistently. Sector ETF entries are flagged with
+    is_sector_etf=True so check_exits skips breakdown and time exits.
+    """
+    ALLOCATION_PCT  = 0.15   # 15% of portfolio per sector ETF
+    TOP_N           = 3
+    REBALANCE_DAYS  = 25     # rebalance ~monthly
+
+    _STATE_FILE = Path(__file__).parent.parent / "data" / "positions_state.json"
+
+    def __init__(self):
+        from utils.broker import BrokerConnection
+        self.broker = BrokerConnection()
+        self._state = self._load_state()
+
+    def _load_state(self):
+        if self._STATE_FILE.exists():
+            try:
+                with open(self._STATE_FILE) as f:
+                    return json.load(f)
+            except Exception:
+                return {}
+        return {}
+
+    def _save_state(self):
+        with open(self._STATE_FILE, "w") as f:
+            json.dump(self._state, f, indent=2)
+
+    def _is_rebalance_due(self):
+        last_str = self._state.get("__sector_rebalance__")
+        if not last_str:
+            return True
+        last = datetime.date.fromisoformat(last_str)
+        return (datetime.date.today() - last).days >= self.REBALANCE_DAYS
+
+    def rebalance(self):
+        if not self._is_rebalance_due():
+            last = datetime.date.fromisoformat(self._state["__sector_rebalance__"])
+            days_left = self.REBALANCE_DAYS - (datetime.date.today() - last).days
+            logger.info(f"Sector rotation: Next rebalance in ~{days_left} days.")
+            return []
+
+        logger.info("Sector rotation: Monthly rebalance triggered.")
+
+        positions  = self.broker.get_positions()
+        held_etfs  = {p["symbol"]: p for p in positions if p["symbol"] in SECTOR_ETFS}
+
+        ranked = rank_sectors()
+        if ranked.empty:
+            logger.warning("Sector rotation: No ranking data — skipping rebalance.")
+            return []
+
+        targets = ranked.head(self.TOP_N)["symbol"].tolist()
+        logger.info(f"Sector rotation: Top {self.TOP_N} sectors = {targets}")
+
+        acc            = self.broker.get_account()
+        portfolio_val  = float(acc["portfolio_value"])
+        cash           = float(acc["cash"])
+        orders         = []
+
+        # --- Exit ETFs that dropped out of the top N ---
+        for sym, pos in held_etfs.items():
+            if sym not in targets:
+                qty = abs(int(float(pos["qty"])))
+                self.broker.cancel_orders_for_symbol(sym)
+                order = self.broker.place_market_order(sym, qty, "sell",
+                                                       note="sector rotation exit")
+                if order:
+                    self._state.pop(sym, None)
+                    orders.append({"symbol": sym, "side": "sell", "qty": qty})
+                    logger.info(f"Sector rotation: EXIT {sym} ({qty} shares)")
+
+        self._save_state()
+
+        # --- Enter ETFs newly in the top N ---
+        alloc = portfolio_val * self.ALLOCATION_PCT
+        for sym in targets:
+            if sym in held_etfs:
+                logger.info(f"Sector rotation: Holding {sym} — no change.")
+                continue
+            price = self.broker.get_latest_price(sym)
+            if not price:
+                logger.warning(f"Sector rotation: Could not price {sym} — skipping.")
+                continue
+            shares = int(alloc / price)
+            if shares <= 0 or shares * price > cash:
+                logger.warning(f"Sector rotation: Insufficient cash for {sym}.")
+                continue
+            order = self.broker.place_market_order(sym, shares, "buy",
+                                                   note="sector rotation entry")
+            if order:
+                cash -= shares * price
+                self._state[sym] = {
+                    "entry_date":      str(datetime.date.today()),
+                    "entry_price":     price,
+                    "stop_price":      round(price * 0.93, 2),
+                    "target_price":    round(price * 5.0, 2),  # unreachably high — no fixed take-profit
+                    "high_water_mark": price,
+                    "is_sector_etf":   True,
+                }
+                orders.append({"symbol": sym, "side": "buy", "qty": shares})
+                logger.info(f"Sector rotation: ENTER {sym} ({shares} shares @ ${price:.2f})")
+
+        self._state["__sector_rebalance__"] = str(datetime.date.today())
+        self._save_state()
+        logger.info(f"Sector rotation: Rebalance done — {len(orders)} order(s).")
+        return orders

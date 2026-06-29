@@ -210,10 +210,12 @@ class TradeExecutor:
                 self._state[symbol] = state
                 self._save_state()
 
+            is_etf = state.get("is_sector_etf", False)
+
             # 0. Breakdown exit — price fell >4% below entry (gap down, news, fast crash)
-            #    Fires before the broker hard stop to get a cleaner fill
+            #    Skipped for sector ETFs — they use monthly rebalance + trailing stop instead.
             entry_price = state.get("entry_price", 0)
-            if live_price and entry_price and live_price < entry_price * (1 - Config.BREAKDOWN_PCT):
+            if not is_etf and live_price and entry_price and live_price < entry_price * (1 - Config.BREAKDOWN_PCT):
                 logger.warning(
                     f"{symbol}: Breakdown exit — "
                     f"price ${live_price:.2f} is >{Config.BREAKDOWN_PCT:.0%} below entry ${entry_price:.2f}"
@@ -222,8 +224,9 @@ class TradeExecutor:
                 continue
 
             # 1. Soft take-profit — fires if broker bracket order is missing
+            #    Skipped for sector ETFs (target_price is set unreachably high).
             target_price = state.get("target_price", 0)
-            if live_price and target_price and live_price >= target_price:
+            if not is_etf and live_price and target_price and live_price >= target_price:
                 pnl_pct = position["unrealized_plpc"] * 100
                 logger.info(
                     f"{symbol}: Soft take-profit hit — "
@@ -232,9 +235,9 @@ class TradeExecutor:
                 self._exit_position(symbol, position, f"soft take-profit ${target_price:.2f}")
                 continue
 
-            # 2. Time-based exit
+            # 2. Time-based exit — skipped for sector ETFs (rebalance handles exits).
             entry_date_str = state.get("entry_date", "")
-            if entry_date_str:
+            if not is_etf and entry_date_str:
                 try:
                     days_held = (today - datetime.date.fromisoformat(entry_date_str)).days
                     if days_held >= Config.MAX_HOLD_DAYS:

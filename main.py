@@ -10,6 +10,7 @@ from data.pipeline import DataPipeline
 from strategy.scanner import MarketScanner
 from strategy.scorer import TradeScorer
 from strategy.executor import TradeExecutor
+from strategy.sector_rotation import SectorRotationExecutor, rank_sectors
 
 
 def run(execute_entries=True):
@@ -105,6 +106,25 @@ def run(execute_entries=True):
                 print("\n  No trade executed -- no actionable signals or circuit breaker active.")
         else:
             print("\n  Market is closed -- no orders placed.")
+
+    print("\n[ STEP 7.5 ] Sector rotation (monthly rebalance)...")
+    sector_ranked = rank_sectors()
+    if not sector_ranked.empty:
+        print(f"\n  {'RANK':<6} {'ETF':<6} {'SECTOR':<26} {'3M':>7} {'6M':>7} {'SCORE':>8}")
+        print(f"  {'----':<6} {'---':<6} {'------':<26} {'---':>7} {'---':>7} {'-----':>8}")
+        for rank, row in sector_ranked.iterrows():
+            marker = " <-- TOP" if rank <= 3 else ""
+            print(f"  {rank:<6} {row['symbol']:<6} {row['sector']:<26} {row['mom_3m']:>6.1f}% {row['mom_6m']:>6.1f}% {row['composite']:>7.1f}%{marker}")
+    if execute_entries and broker.is_market_open():
+        sector_exec = SectorRotationExecutor()
+        sector_orders = sector_exec.rebalance()
+        if sector_orders:
+            for o in sector_orders:
+                print(f"\n  SECTOR ORDER: {o['side'].upper()} {o['qty']} shares of {o['symbol']}")
+        else:
+            print("\n  No sector rotation changes needed.")
+    elif execute_entries and not broker.is_market_open():
+        print("\n  Market closed -- sector rotation skipped.")
 
     print("\n[ STEP 8 ] Portfolio summary...")
     positions = broker.get_positions()
