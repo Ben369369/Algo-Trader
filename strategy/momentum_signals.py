@@ -48,7 +48,8 @@ class MomentumSignalDetector:
 
         # Cross-sectional 12-1 momentum: return from ~12 months ago to ~1 month ago.
         # Skip the most recent month to avoid short-term reversal contamination.
-        signals["mom_12_1"] = close.shift(21) / close.shift(252) - 1
+        # fillna(0) so dropna() doesn't wipe rows when fewer than 252 bars are fetched.
+        signals["mom_12_1"] = (close.shift(21) / close.shift(252) - 1).fillna(0.0)
 
         # Trend alignment
         above_sma50  = close > sma50
