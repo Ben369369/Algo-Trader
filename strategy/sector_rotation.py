@@ -14,7 +14,7 @@ from pathlib import Path
 from config.settings import Config
 from utils.logger import logger
 
-SECTOR_ETFS = ["XLK", "XLF", "XLE", "XLV", "XLI", "XLY", "XLP", "XLB", "XLRE", "XLC", "XLU"]
+SECTOR_ETFS = Config.SECTOR_ETF_SYMBOLS
 
 SECTOR_NAMES = {
     "XLK":  "Technology",
@@ -151,6 +151,14 @@ class SectorRotationExecutor:
             logger.warning("Sector rotation: No ranking data — skipping rebalance.")
             return []
 
+        # Absolute-momentum filter: only hold sectors that are actually rising.
+        # In a broad decline the sleeve rotates to cash instead of the
+        # least-bad sector (Antonacci-style dual momentum).
+        if Config.SECTOR_ABS_FILTER:
+            ranked = ranked[ranked["composite"] > 0]
+            if ranked.empty:
+                logger.info("Sector rotation: No sector has positive momentum — staying in cash.")
+
         targets = ranked.head(self.TOP_N)["symbol"].tolist()
         logger.info(f"Sector rotation: Top {self.TOP_N} sectors = {targets}")
 
@@ -158,6 +166,17 @@ class SectorRotationExecutor:
         portfolio_val  = float(acc["portfolio_value"])
         cash           = float(acc["cash"])
         orders         = []
+
+        # Drawdown circuit breaker — same policy as stock entries. Exits from
+        # dropped sectors still happen below; only NEW entries are halted.
+        peak = self._state.get("__portfolio_peak__", portfolio_val)
+        drawdown = (peak - portfolio_val) / peak if peak > 0 else 0.0
+        breaker_active = drawdown > Config.MAX_DRAWDOWN_LIMIT
+        if breaker_active:
+            logger.warning(
+                f"Sector rotation: Portfolio drawdown {drawdown:.1%} exceeds "
+                f"{Config.MAX_DRAWDOWN_LIMIT:.0%} — exits only, no new entries."
+            )
 
         # --- Exit ETFs that dropped out of the top N ---
         for sym, pos in held_etfs.items():
@@ -176,6 +195,8 @@ class SectorRotationExecutor:
         # --- Enter ETFs newly in the top N ---
         alloc = portfolio_val * self.ALLOCATION_PCT
         for sym in targets:
+            if breaker_active:
+                break
             if sym in held_etfs:
                 logger.info(f"Sector rotation: Holding {sym} — no change.")
                 continue
@@ -194,10 +215,9 @@ class SectorRotationExecutor:
                 self._state[sym] = {
                     "entry_date":      str(datetime.date.today()),
                     "entry_price":     price,
-                    "stop_price":      round(price * 0.93, 2),
-                    "target_price":    round(price * 5.0, 2),  # unreachably high — no fixed take-profit
                     "high_water_mark": price,
                     "is_sector_etf":   True,
+                    "strategy":        "sector",
                 }
                 orders.append({"symbol": sym, "side": "buy", "qty": shares})
                 logger.info(f"Sector rotation: ENTER {sym} ({shares} shares @ ${price:.2f})")

@@ -12,11 +12,43 @@ from strategy.scorer import TradeScorer
 from strategy.executor import TradeExecutor
 from strategy.sector_rotation import SectorRotationExecutor, rank_sectors
 
+EASTERN = pytz.timezone("America/New_York")
+
+
+def _print_leaderboard(ranked, kind):
+    print("\n" + "="*60)
+    print("   TRADE LEADERBOARD")
+    print("="*60)
+    if ranked is None or ranked.empty:
+        print("\n  No scan results.")
+        return
+
+    if kind == "momentum":
+        cols = ("RANK", "SYMBOL", "PRICE", "DIR", "SCORE", "RSI", "REL_STR", "VOL_R")
+        last_col = "rel_strength"
+    else:
+        cols = ("RANK", "SYMBOL", "PRICE", "DIR", "SCORE", "RSI", "ZSCORE", "VOL_R")
+        last_col = "zscore"
+
+    print(f"\n  {cols[0]:<6} {cols[1]:<8} {cols[2]:>8} {cols[3]:<8} {cols[4]:>7} {cols[5]:>7} {cols[6]:>8} {cols[7]:>7}")
+    print(f"  {'----':<6} {'------':<8} {'-----':>8} {'---':<8} {'-----':>7} {'---':>7} {'-------':>8} {'-----':>7}")
+    for rank, row in ranked.iterrows():
+        print(
+            f"  {rank:<6} "
+            f"{row['symbol']:<8} "
+            f"${row['price']:>7.2f} "
+            f"{row['direction']:<8} "
+            f"{row['score']:>7.4f} "
+            f"{row['rsi']:>7.2f} "
+            f"{row[last_col]:>8.3f} "
+            f"{row['volume_ratio']:>7.2f}x"
+        )
+
 
 def run(execute_entries=True):
     print("\n" + "="*60)
     label = "FULL RUN" if execute_entries else "EXIT CHECK"
-    print(f"   ALGORITHMIC TRADING BOT v0.4 -- {label}")
+    print(f"   ALGORITHMIC TRADING BOT v0.5 -- {label}")
     print("="*60)
 
     print("\n[ STEP 1 ] Validating config...")
@@ -33,72 +65,47 @@ def run(execute_entries=True):
 
     print("\n[ STEP 3 ] Refreshing market data...")
     pipeline = DataPipeline()
-    pipeline.download_all()
+    pipeline.download_all()   # trading universe + SPY + sector ETFs
 
     print("\n[ STEP 4 ] Detecting market regime and scanning symbols...")
     scanner = MarketScanner()
-    regime = scanner.detect_regime()
+
+    # Both scans run every time so exits can always be evaluated with the
+    # rules of the strategy that ENTERED each position, regardless of the
+    # regime today. Entries only use the regime-appropriate scan.
+    mom_results, regime = scanner.scan_all_momentum()
+    mr_results = scanner.scan_all()
     print(f"  Regime: {regime}")
 
-    if regime == "TRENDING_UP":
-        print("  Strategy: MOMENTUM (buying breakouts)")
-        scan_results, _ = scanner.scan_all_momentum()
-        ranked = TradeScorer.score_momentum(scan_results)
-        leaderboard_cols = ("RANK", "SYMBOL", "PRICE", "DIR", "SCORE", "RSI", "REL_STR", "VOL_R")
-        leaderboard_fmt  = ("----", "------", "-----", "---", "-----", "---", "-------", "-----")
-    else:
-        label = "MEAN-REVERSION (buying dips)" if regime == "RANGING" else "CASH ONLY (death cross -- no new entries)"
-        print(f"  Strategy: {label}")
-        scan_results = scanner.scan_all()
-        ranked = TradeScorer.score(scan_results)
-        leaderboard_cols = ("RANK", "SYMBOL", "PRICE", "DIR", "SCORE", "RSI", "ZSCORE", "VOL_R")
-        leaderboard_fmt  = ("----", "------", "-----", "---", "-----", "---", "------", "-----")
+    ranked_mom = TradeScorer.score_momentum(mom_results) if not mom_results.empty else mom_results
+    ranked_mr  = TradeScorer.score(mr_results) if not mr_results.empty else mr_results
 
     print("\n[ STEP 5 ] Scoring and ranking...")
-
-    print("\n" + "="*60)
-    print("   TRADE LEADERBOARD")
-    print("="*60)
-
     if regime == "TRENDING_UP":
-        print(f"\n  {leaderboard_cols[0]:<6} {leaderboard_cols[1]:<8} {leaderboard_cols[2]:>8} {leaderboard_cols[3]:<8} {leaderboard_cols[4]:>7} {leaderboard_cols[5]:>7} {leaderboard_cols[6]:>8} {leaderboard_cols[7]:>7}")
-        print(f"  {leaderboard_fmt[0]:<6} {leaderboard_fmt[1]:<8} {leaderboard_fmt[2]:>8} {leaderboard_fmt[3]:<8} {leaderboard_fmt[4]:>7} {leaderboard_fmt[5]:>7} {leaderboard_fmt[6]:>8} {leaderboard_fmt[7]:>7}")
-        for rank, row in ranked.iterrows():
-            print(
-                f"  {rank:<6} "
-                f"{row['symbol']:<8} "
-                f"${row['price']:>7.2f} "
-                f"{row['direction']:<8} "
-                f"{row['score']:>7.4f} "
-                f"{row['rsi']:>7.2f} "
-                f"{row['rel_strength']:>8.3f} "
-                f"{row['volume_ratio']:>7.2f}x"
-            )
+        print("  Strategy: MOMENTUM (buying breakouts)")
+        entry_strategy, entry_ranked = "momentum", ranked_mom
+        _print_leaderboard(ranked_mom, "momentum")
+    elif regime == "RANGING":
+        print("  Strategy: MEAN-REVERSION (buying dips)")
+        entry_strategy, entry_ranked = "mean_reversion", ranked_mr
+        _print_leaderboard(ranked_mr, "mean_reversion")
     else:
-        print(f"\n  {leaderboard_cols[0]:<6} {leaderboard_cols[1]:<8} {leaderboard_cols[2]:>8} {leaderboard_cols[3]:<8} {leaderboard_cols[4]:>7} {leaderboard_cols[5]:>7} {leaderboard_cols[6]:>8} {leaderboard_cols[7]:>7}")
-        print(f"  {leaderboard_fmt[0]:<6} {leaderboard_fmt[1]:<8} {leaderboard_fmt[2]:>8} {leaderboard_fmt[3]:<8} {leaderboard_fmt[4]:>7} {leaderboard_fmt[5]:>7} {leaderboard_fmt[6]:>8} {leaderboard_fmt[7]:>7}")
-        for rank, row in ranked.iterrows():
-            print(
-                f"  {rank:<6} "
-                f"{row['symbol']:<8} "
-                f"${row['price']:>7.2f} "
-                f"{row['direction']:<8} "
-                f"{row['score']:>7.4f} "
-                f"{row['rsi']:>7.2f} "
-                f"{row['zscore']:>8.3f} "
-                f"{row['volume_ratio']:>7.2f}x"
-            )
+        print("  Strategy: CASH ONLY (death cross -- no new entries)")
+        entry_strategy, entry_ranked = None, None
+        _print_leaderboard(ranked_mr, "mean_reversion")
 
     print("\n[ STEP 6 ] Checking exit conditions on open positions...")
     executor = TradeExecutor()
-    executor.check_exits(ranked)
+    executor.check_exits({"momentum": ranked_mom, "mean_reversion": ranked_mr})
 
     if execute_entries:
-        print("\n[ STEP 7 ] Executing top trade opportunities (up to 3)...")
-        if regime == "TRENDING_DOWN":
+        max_entries = 5
+        print(f"\n[ STEP 7 ] Executing top trade opportunities (up to {max_entries})...")
+        if entry_strategy is None:
             print("\n  Death cross detected -- no new entries, exits only.")
         elif broker.is_market_open():
-            orders = executor.execute_best(ranked, max_entries=5)
+            orders = executor.execute_best(entry_ranked, max_entries=max_entries,
+                                           strategy=entry_strategy)
             if orders:
                 for order in orders:
                     print(f"\n  ORDER PLACED: {order['side'].upper()} {order['qty']} shares of {order['symbol']}")
@@ -113,7 +120,7 @@ def run(execute_entries=True):
         print(f"\n  {'RANK':<6} {'ETF':<6} {'SECTOR':<26} {'3M':>7} {'6M':>7} {'SCORE':>8}")
         print(f"  {'----':<6} {'---':<6} {'------':<26} {'---':>7} {'---':>7} {'-----':>8}")
         for rank, row in sector_ranked.iterrows():
-            marker = " <-- TOP" if rank <= 3 else ""
+            marker = " <-- TOP" if rank <= 3 and row["composite"] > 0 else ""
             print(f"  {rank:<6} {row['symbol']:<6} {row['sector']:<26} {row['mom_3m']:>6.1f}% {row['mom_6m']:>6.1f}% {row['composite']:>7.1f}%{marker}")
     if execute_entries and broker.is_market_open():
         sector_exec = SectorRotationExecutor()
@@ -147,8 +154,7 @@ def run(execute_entries=True):
 
 
 def _is_weekday():
-    est = pytz.timezone("America/New_York")
-    return datetime.datetime.now(est).weekday() < 5
+    return datetime.datetime.now(EASTERN).weekday() < 5
 
 
 def scheduled_run():
@@ -161,32 +167,44 @@ def scheduled_exit_check():
         run(execute_entries=False)
 
 
-def _add_daily_job(time_str, func):
-    schedule.every().monday.at(time_str).do(func)
-    schedule.every().tuesday.at(time_str).do(func)
-    schedule.every().wednesday.at(time_str).do(func)
-    schedule.every().thursday.at(time_str).do(func)
-    schedule.every().friday.at(time_str).do(func)
+def _et_to_local(hhmm):
+    """
+    Convert an Eastern-time HH:MM to the machine's local HH:MM.
+    The `schedule` library works in local time, so on a UTC server a naive
+    "09:30" would fire at 4:30/5:30am ET. Note: computed once at startup —
+    restart the bot after a DST change to re-align.
+    """
+    h, m = map(int, hhmm.split(":"))
+    now_et = datetime.datetime.now(EASTERN)
+    target_et = now_et.replace(hour=h, minute=m, second=0, microsecond=0)
+    return target_et.astimezone().strftime("%H:%M")
+
+
+def _add_daily_job(et_time_str, func):
+    local_time = _et_to_local(et_time_str)
+    for day in (schedule.every().monday, schedule.every().tuesday,
+                schedule.every().wednesday, schedule.every().thursday,
+                schedule.every().friday):
+        day.at(local_time).do(func)
 
 
 if __name__ == "__main__":
     # Run once immediately on startup
     scheduled_run()
 
-    # 9:30am EST -- full run: data refresh + scan + exits + new entries
+    # 9:30am ET -- full run: data refresh + scan + exits + new entries
     _add_daily_job("09:30", scheduled_run)
 
-    # 12:00pm EST -- mid-session: catch deteriorating signals before afternoon
+    # 12:00pm ET -- mid-session: catch deteriorating signals before afternoon
     _add_daily_job("12:00", scheduled_exit_check)
 
-    # 3:30pm EST -- pre-close: exit weak positions before end of day
+    # 3:30pm ET -- pre-close: exit weak positions before end of day
     _add_daily_job("15:30", scheduled_exit_check)
 
-    est = pytz.timezone("America/New_York")
     while True:
         schedule.run_pending()
         next_run = schedule.next_run()
         if next_run:
-            next_run_est = next_run.astimezone(est) if next_run.tzinfo else next_run
+            next_run_est = next_run.astimezone(EASTERN) if next_run.tzinfo else next_run
             print(f"  Waiting... next run at {next_run_est.strftime('%Y-%m-%d %H:%M %Z')}", end="\r")
         time.sleep(60)

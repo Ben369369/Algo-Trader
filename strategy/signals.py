@@ -5,7 +5,17 @@ from strategy.indicators import Indicators
 class SignalDetector:
 
     @staticmethod
-    def detect(df):
+    def detect(df, variant="v2"):
+        """
+        variant:
+          "v2"     — short-horizon reversal (default): simpler entry (RSI +
+                     zscore + trend), exit when price reverts to its 20-day
+                     mean (zscore >= 0) or RSI recovers above 55. Designed for
+                     2-10 day holds per the short-term reversal literature.
+          "legacy" — six ANDed entry conditions (RSI, zscore, BB, MACD, trend,
+                     volume) with an overbought-based sell. Very few signals;
+                     kept for A/B comparison.
+        """
         signals = pd.DataFrame(index=df.index)
         signals['close'] = df['close']
         signals['rsi'] = Indicators.rsi(df['close'])
@@ -36,23 +46,39 @@ class SignalDetector:
         sma200 = Indicators.sma(df['close'], 200)
         trend_up = (df['close'] > sma200 * 0.95) & (sma50 > sma200)
 
-        # Buy: oversold + below mean + MACD momentum turning up + trend intact
-        # + volume confirmation: above-average volume validates the move
-        # (bounce gate removed — requiring green day + oversold simultaneously is too rare)
-        signals['buy'] = (
-            (signals['rsi'] < 38) &
-            (signals['zscore'] < -1.0) &
-            (signals['bb_position'] < 0.3) &
-            signals['macd_rising'] &
-            trend_up &
-            high_volume
-        )
+        if variant == "v2":
+            # Buy: oversold and stretched below the 20-day mean, inside an
+            # intact long-term uptrend. BB/volume/MACD gates dropped — BB and
+            # zscore measure the same stretch, and IEX volume is unreliable.
+            signals['buy'] = (
+                (signals['rsi'] < 35) &
+                (signals['zscore'] < -1.0) &
+                trend_up
+            )
+            # Sell: reversion complete — price back at/above its 20-day mean,
+            # or RSI recovered. This is the profit-taking exit; the edge decays
+            # within days, so there is no reason to hold for an overbought print.
+            signals['sell'] = (
+                (signals['zscore'] >= 0) |
+                (signals['rsi'] > 55)
+            )
+        else:
+            # Buy: oversold + below mean + MACD momentum turning up + trend intact
+            # + volume confirmation: above-average volume validates the move
+            signals['buy'] = (
+                (signals['rsi'] < 38) &
+                (signals['zscore'] < -1.0) &
+                (signals['bb_position'] < 0.3) &
+                signals['macd_rising'] &
+                trend_up &
+                high_volume
+            )
 
-        # Sell: overbought + above mean + MACD momentum rolling over
-        signals['sell'] = (
-            (signals['rsi'] > 65) &
-            (signals['zscore'] > 1.2) &
-            signals['macd_falling']
-        )
+            # Sell: overbought + above mean + MACD momentum rolling over
+            signals['sell'] = (
+                (signals['rsi'] > 65) &
+                (signals['zscore'] > 1.2) &
+                signals['macd_falling']
+            )
 
         return signals.dropna()

@@ -5,7 +5,7 @@ from strategy.tiger_parser import load_tiger_boosts
 class TradeScorer:
 
     @staticmethod
-    def score(scan_df):
+    def score(scan_df, use_tiger=True):
         df = scan_df.copy()
 
         # RSI score — higher when RSI is far from 50 in either direction
@@ -31,7 +31,7 @@ class TradeScorer:
         )
 
         # Tiger Capital research boost — applied after base score, clipped to [0, 1]
-        tiger_boosts = load_tiger_boosts()
+        tiger_boosts = load_tiger_boosts() if use_tiger else {}
         if tiger_boosts:
             df["tiger_boost"] = df["symbol"].map(tiger_boosts).fillna(0.0)
             df["score"] = (df["score"] + df["tiger_boost"]).clip(0, 1)
@@ -52,7 +52,7 @@ class TradeScorer:
         ]]
 
     @staticmethod
-    def score_momentum(scan_df):
+    def score_momentum(scan_df, use_tiger=True):
         """
         Score momentum candidates. Unlike mean-reversion, higher RSI is better here
         (we want strength, not oversold conditions).
@@ -82,7 +82,7 @@ class TradeScorer:
             df["bb_score"]     * 0.10
         )
 
-        tiger_boosts = load_tiger_boosts()
+        tiger_boosts = load_tiger_boosts() if use_tiger else {}
         if tiger_boosts:
             df["tiger_boost"] = df["symbol"].map(tiger_boosts).fillna(0.0)
             df["score"] = (df["score"] + df["tiger_boost"]).clip(0, 1)

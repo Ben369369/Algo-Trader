@@ -5,13 +5,19 @@ from strategy.indicators import Indicators
 class MomentumSignalDetector:
 
     @staticmethod
-    def detect(df, spy_return_20d=None):
+    def detect(df, spy_return_20d=None, sell_rule="sma50"):
         """
         Momentum signals: buy stocks breaking to new highs with strong trend,
         above-average volume, and positive relative strength vs SPY.
 
-        spy_return_20d: SPY's 20-day return (float) for relative strength comparison.
-                        If None, uses the stock's absolute 20-day return instead.
+        spy_return_20d: SPY's 20-day return for relative strength comparison.
+                        Accepts a float (live: latest value) or a date-indexed
+                        pd.Series (backtest: aligned per-day). If None, uses the
+                        stock's absolute 20-day return instead.
+        sell_rule:      "sma50"     — close below SMA50 (default: let winners
+                                      run; trailing/ATR stops handle downside)
+                        "sma20_rsi" — RSI > 75 or close < SMA20 * 0.99
+                                      (legacy tight exit, kept for A/B)
         """
         signals = pd.DataFrame(index=df.index)
         close = df["close"]
@@ -41,7 +47,9 @@ class MomentumSignalDetector:
 
         # Relative strength vs SPY over 20 days
         stock_return_20d = close.pct_change(20)
-        if spy_return_20d is not None:
+        if isinstance(spy_return_20d, pd.Series):
+            signals["rel_strength"] = stock_return_20d - spy_return_20d.reindex(df.index)
+        elif spy_return_20d is not None:
             signals["rel_strength"] = stock_return_20d - spy_return_20d
         else:
             signals["rel_strength"] = stock_return_20d
@@ -69,10 +77,14 @@ class MomentumSignalDetector:
             (signals["rel_strength"] > 0)
         )
 
-        # Sell: RSI overextended, or price breaks below SMA20 (momentum lost)
-        signals["sell"] = (
-            (signals["rsi"] > 75) |
-            (close < sma20 * 0.99)
-        )
+        # Sell rule (see docstring). "sma50" holds through normal pullbacks;
+        # "sma20_rsi" is the legacy tight exit kept for A/B comparison.
+        if sell_rule == "sma50":
+            signals["sell"] = close < sma50
+        else:
+            signals["sell"] = (
+                (signals["rsi"] > 75) |
+                (close < sma20 * 0.99)
+            )
 
         return signals.dropna()

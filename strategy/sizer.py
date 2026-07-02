@@ -1,4 +1,5 @@
 import math
+from config.settings import Config
 from utils.logger import logger
 
 class PositionSizer:
@@ -32,8 +33,8 @@ class PositionSizer:
 
         shares = max_risk_dollars / risk_per_share
 
-        # Never let one position exceed 10% of portfolio
-        max_shares_by_size = (portfolio_value * 0.10) / price
+        # Never let one position exceed MAX_POSITION_SIZE of portfolio
+        max_shares_by_size = (portfolio_value * Config.MAX_POSITION_SIZE) / price
         shares = min(shares, max_shares_by_size)
         shares = math.floor(shares)
 

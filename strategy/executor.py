@@ -6,8 +6,29 @@ from utils.broker import BrokerConnection
 from strategy.sizer import PositionSizer
 from config.settings import Config
 
-TAKE_PROFIT_PCT = 0.10   # 10% above entry
-STATE_FILE      = Path(__file__).parent.parent / "data" / "positions_state.json"
+STATE_FILE = Path(__file__).parent.parent / "data" / "positions_state.json"
+
+
+def _strategy_params(strategy):
+    """Per-strategy exit parameters (validated by backtest A/B)."""
+    if strategy == "mean_reversion":
+        return {
+            "take_profit_pct": Config.MR_TAKE_PROFIT_PCT,
+            "max_hold_days":   Config.MR_MAX_HOLD_DAYS,
+            "trail_stop_pct":  Config.MR_TRAIL_STOP_PCT,
+        }
+    if strategy == "momentum":
+        return {
+            "take_profit_pct": Config.MOM_TAKE_PROFIT_PCT,
+            "max_hold_days":   Config.MOM_MAX_HOLD_DAYS,
+            "trail_stop_pct":  Config.MOM_TRAIL_STOP_PCT,
+        }
+    # Legacy/untagged positions fall back to global settings
+    return {
+        "take_profit_pct": Config.MOM_TAKE_PROFIT_PCT,
+        "max_hold_days":   Config.MAX_HOLD_DAYS,
+        "trail_stop_pct":  Config.TRAIL_STOP_PCT,
+    }
 
 
 class TradeExecutor:
@@ -18,7 +39,7 @@ class TradeExecutor:
         self._reconcile_state()
 
     # ------------------------------------------------------------------
-    # State file — tracks entry metadata for trailing stops & time exits
+    # State file — tracks entry metadata for stops, targets & time exits
     # ------------------------------------------------------------------
 
     def _reconcile_state(self):
@@ -52,10 +73,11 @@ class TradeExecutor:
     # Entry execution
     # ------------------------------------------------------------------
 
-    def execute_best(self, ranked_df, max_entries=3):
+    def execute_best(self, ranked_df, max_entries=5, strategy="momentum"):
         """
         Finds the top N highest-scored actionable BUY signals and executes them.
         Uses ATR-based stops; enforces a portfolio drawdown circuit breaker.
+        `strategy` tags the resulting positions so exits use the right rules.
         Returns list of placed orders.
         """
         account   = self.broker.get_account()
@@ -92,6 +114,7 @@ class TradeExecutor:
             sector = sector_map.get(p["symbol"], "Other")
             held_sectors[sector] = held_sectors.get(sector, 0) + 1
 
+        params = _strategy_params(strategy)
         orders = []
 
         for _, candidate in actionable.iterrows():
@@ -116,7 +139,7 @@ class TradeExecutor:
                 )
                 continue
 
-            logger.info(f"Candidate: BUY {symbol} @ ${price} | Score: {score} | ATR: {atr}")
+            logger.info(f"Candidate: BUY {symbol} @ ${price} | Score: {score} | ATR: {atr} | {strategy}")
 
             # Use live price for accurate bracket levels
             live_price = self.broker.get_latest_price(symbol)
@@ -135,7 +158,7 @@ class TradeExecutor:
                 continue
 
             stop   = PositionSizer.stop_price(price, atr=atr, atr_multiplier=Config.ATR_STOP_MULT)
-            target = round(price * (1 + TAKE_PROFIT_PCT), 2)
+            target = round(price * (1 + params["take_profit_pct"]), 2)
 
             order = self.broker.place_bracket_order(
                 symbol=symbol,
@@ -152,9 +175,10 @@ class TradeExecutor:
                     "stop_price":      stop,
                     "target_price":    target,
                     "high_water_mark": price,
+                    "strategy":        strategy,
                 }
                 self._save_state()
-                logger.info(f"State saved for {symbol}: entry=${price:.2f} stop=${stop:.2f} target=${target:.2f}")
+                logger.info(f"State saved for {symbol}: entry=${price:.2f} stop=${stop:.2f} target=${target:.2f} [{strategy}]")
                 held_symbols.add(symbol)
                 held_sectors[sector] = held_sectors.get(sector, 0) + 1
                 orders.append(order)
@@ -168,17 +192,29 @@ class TradeExecutor:
     # Exit management
     # ------------------------------------------------------------------
 
-    def check_exits(self, ranked_df):
+    def check_exits(self, ranked_by_strategy):
         """
         Check all open positions for exit conditions in priority order:
-          0. Breakdown exit    — price dropped >BREAKDOWN_PCT below entry (fast crash)
-          1. Soft take-profit  — price >= target_price (fallback if broker bracket is gone)
-          2. Time-based exit   — held > MAX_HOLD_DAYS calendar days
-          3. Trailing stop     — price fell Config.TRAIL_STOP_PCT below high-water mark
-          4. Signal-based exit — SELL signal from scanner
-        Hard stop-loss and take-profit are also enforced by the broker's bracket OCO orders
-        when present. The soft take-profit here acts as a safety net if those orders disappear.
+          1. Soft stop-loss    — price below the ATR-based stop (safety net if
+                                 the broker bracket is gone)
+          2. Soft take-profit  — price >= target_price (same safety net)
+          3. Time-based exit   — held > per-strategy max hold days
+          4. Trailing stop     — price fell trail% below high-water mark
+                                 (momentum only; 0 disables)
+          5. Signal-based exit — SELL signal from the scanner that ENTERED the
+                                 position (regime flips don't change exit rules)
+
+        ranked_by_strategy: dict {"momentum": df, "mean_reversion": df}.
+        A bare DataFrame is also accepted and used for all stock positions.
+        Sector ETF positions (is_sector_etf) are exited by the monthly
+        rebalance; only an optional SECTOR_TRAIL_PCT trailing stop applies.
         """
+        if not isinstance(ranked_by_strategy, dict):
+            ranked_by_strategy = {
+                "momentum":       ranked_by_strategy,
+                "mean_reversion": ranked_by_strategy,
+            }
+
         positions = self.broker.get_positions()
         if not positions:
             return
@@ -197,8 +233,9 @@ class TradeExecutor:
                     "entry_date":      str(today),
                     "entry_price":     entry_price,
                     "stop_price":      round(entry_price * 0.94, 2),
-                    "target_price":    round(entry_price * (1 + TAKE_PROFIT_PCT), 2),
+                    "target_price":    round(entry_price * (1 + Config.MOM_TAKE_PROFIT_PCT), 2),
                     "high_water_mark": entry_price,
+                    "strategy":        "momentum",
                 }
                 self._state[symbol] = state
                 self._save_state()
@@ -210,23 +247,40 @@ class TradeExecutor:
                 self._state[symbol] = state
                 self._save_state()
 
-            is_etf = state.get("is_sector_etf", False)
+            is_etf   = state.get("is_sector_etf", False)
+            strategy = state.get("strategy", "momentum")
+            params   = _strategy_params(strategy)
 
-            # 0. Breakdown exit — price fell >4% below entry (gap down, news, fast crash)
-            #    Skipped for sector ETFs — they use monthly rebalance + trailing stop instead.
-            entry_price = state.get("entry_price", 0)
-            if not is_etf and live_price and entry_price and live_price < entry_price * (1 - Config.BREAKDOWN_PCT):
-                logger.warning(
-                    f"{symbol}: Breakdown exit — "
-                    f"price ${live_price:.2f} is >{Config.BREAKDOWN_PCT:.0%} below entry ${entry_price:.2f}"
-                )
-                self._exit_position(symbol, position, f"breakdown exit (${live_price:.2f} vs entry ${entry_price:.2f})")
+            if is_etf:
+                # Sector ETFs: optional trailing stop only; rebalance handles the rest
+                trail_pct = Config.SECTOR_TRAIL_PCT
+                hwm = state.get("high_water_mark", 0)
+                if trail_pct > 0 and hwm > 0 and live_price:
+                    trail_stop = round(hwm * (1 - trail_pct), 2)
+                    if live_price < trail_stop:
+                        logger.info(
+                            f"{symbol}: Sector trailing stop hit — "
+                            f"price ${live_price:.2f} < stop ${trail_stop:.2f} (HWM ${hwm:.2f})"
+                        )
+                        self._exit_position(symbol, position, f"sector trailing stop ${trail_stop:.2f}")
                 continue
 
-            # 1. Soft take-profit — fires if broker bracket order is missing
-            #    Skipped for sector ETFs (target_price is set unreachably high).
+            # 1. Soft stop-loss — the ATR-based stop from entry, enforced here in
+            #    case the broker bracket leg is missing. Replaces the old fixed
+            #    4% breakdown exit, which fired long before ATR stops on
+            #    volatile names and broke the risk-sizing assumptions.
+            stop_price = state.get("stop_price", 0)
+            if live_price and stop_price and live_price < stop_price:
+                logger.warning(
+                    f"{symbol}: Soft stop hit — "
+                    f"price ${live_price:.2f} < stop ${stop_price:.2f}"
+                )
+                self._exit_position(symbol, position, f"soft stop ${stop_price:.2f}")
+                continue
+
+            # 2. Soft take-profit — fires if broker bracket order is missing
             target_price = state.get("target_price", 0)
-            if not is_etf and live_price and target_price and live_price >= target_price:
+            if live_price and target_price and live_price >= target_price:
                 pnl_pct = position["unrealized_plpc"] * 100
                 logger.info(
                     f"{symbol}: Soft take-profit hit — "
@@ -235,22 +289,23 @@ class TradeExecutor:
                 self._exit_position(symbol, position, f"soft take-profit ${target_price:.2f}")
                 continue
 
-            # 2. Time-based exit — skipped for sector ETFs (rebalance handles exits).
+            # 3. Time-based exit — per-strategy holding period
             entry_date_str = state.get("entry_date", "")
-            if not is_etf and entry_date_str:
+            if entry_date_str:
                 try:
                     days_held = (today - datetime.date.fromisoformat(entry_date_str)).days
-                    if days_held >= Config.MAX_HOLD_DAYS:
-                        logger.info(f"{symbol}: Time-based exit after {days_held} days.")
+                    if days_held >= params["max_hold_days"]:
+                        logger.info(f"{symbol}: Time-based exit after {days_held} days [{strategy}].")
                         self._exit_position(symbol, position, f"time exit ({days_held}d)")
                         continue
                 except ValueError:
                     pass
 
-            # 3. Trailing stop
+            # 4. Trailing stop — per-strategy; 0 disables
+            trail_pct = params["trail_stop_pct"]
             hwm = state.get("high_water_mark", 0)
-            if hwm > 0 and live_price:
-                trail_stop = round(hwm * (1 - Config.TRAIL_STOP_PCT), 2)
+            if trail_pct > 0 and hwm > 0 and live_price:
+                trail_stop = round(hwm * (1 - trail_pct), 2)
                 if live_price < trail_stop:
                     logger.info(
                         f"{symbol}: Trailing stop hit — "
@@ -259,15 +314,18 @@ class TradeExecutor:
                     self._exit_position(symbol, position, f"trailing stop ${trail_stop:.2f}")
                     continue
 
-            # 4. Signal-based exit
+            # 5. Signal-based exit — from the strategy that entered the position
+            ranked_df = ranked_by_strategy.get(strategy)
+            if ranked_df is None or ranked_df.empty:
+                continue
             match = ranked_df[ranked_df["symbol"] == symbol]
             if match.empty:
                 continue
 
             if match.iloc[0]["direction"] == "SELL":
                 pnl_pct = position["unrealized_plpc"] * 100
-                logger.info(f"Exit signal on {symbol} — P&L: {pnl_pct:.2f}%")
-                self._exit_position(symbol, position, "sell signal")
+                logger.info(f"Exit signal on {symbol} [{strategy}] — P&L: {pnl_pct:.2f}%")
+                self._exit_position(symbol, position, f"{strategy} sell signal")
 
     def _exit_position(self, symbol, position, reason):
         """Cancel bracket legs and place a clean market exit."""

@@ -23,7 +23,7 @@ class Config:
     EARNINGS_DAYS_BEFORE  = int(os.getenv("EARNINGS_DAYS_BEFORE", "5"))
     EARNINGS_DAYS_AFTER   = int(os.getenv("EARNINGS_DAYS_AFTER",  "2"))
     USE_SENTIMENT_FILTER  = os.getenv("USE_SENTIMENT_FILTER", "false").lower() == "true"
-    MAX_POSITIONS_PER_SECTOR = int(os.getenv("MAX_POSITIONS_PER_SECTOR", "1"))
+    MAX_POSITIONS_PER_SECTOR = int(os.getenv("MAX_POSITIONS_PER_SECTOR", "2"))
 
     # Sector groupings — used by executor to prevent correlated entries
     SECTOR_MAP = {
@@ -58,9 +58,25 @@ class Config:
     }
     ATR_PERIOD           = int(os.getenv("ATR_PERIOD", "14"))
     ATR_STOP_MULT        = float(os.getenv("ATR_STOP_MULT", "2.0"))   # stop = ATR_STOP_MULT x ATR below entry
-    TRAIL_STOP_PCT       = float(os.getenv("TRAIL_STOP_PCT", "0.07")) # 7% trailing stop below high-water mark
-    MAX_HOLD_DAYS        = int(os.getenv("MAX_HOLD_DAYS", "30"))       # force-exit after N calendar days
-    BREAKDOWN_PCT        = float(os.getenv("BREAKDOWN_PCT", "0.04"))   # sell immediately if price drops >4% below entry
+
+    # Per-strategy exit parameters — values validated by A/B backtest on the
+    # 2020-2026 window (see backtest/engine.py, run_backtest.py):
+    #   momentum: momentum edge needs room — wide trail, long max hold
+    #   mean reversion: short-horizon edge — exit at the mean within days
+    MOM_TAKE_PROFIT_PCT  = float(os.getenv("MOM_TAKE_PROFIT_PCT", "0.20"))
+    MOM_MAX_HOLD_DAYS    = int(os.getenv("MOM_MAX_HOLD_DAYS", "45"))
+    MOM_TRAIL_STOP_PCT   = float(os.getenv("MOM_TRAIL_STOP_PCT", "0.10"))
+    MR_TAKE_PROFIT_PCT   = float(os.getenv("MR_TAKE_PROFIT_PCT", "0.10"))
+    MR_MAX_HOLD_DAYS     = int(os.getenv("MR_MAX_HOLD_DAYS", "10"))
+    MR_TRAIL_STOP_PCT    = float(os.getenv("MR_TRAIL_STOP_PCT", "0.0"))    # 0 = disabled
+
+    # Sector rotation sleeve
+    SECTOR_TRAIL_PCT     = float(os.getenv("SECTOR_TRAIL_PCT", "0.0"))     # 0 = rebalance-only exits
+    SECTOR_ABS_FILTER    = os.getenv("SECTOR_ABS_FILTER", "true").lower() == "true"
+
+    # Legacy fallbacks for positions_state.json entries without a strategy tag
+    TRAIL_STOP_PCT       = float(os.getenv("TRAIL_STOP_PCT", "0.10"))
+    MAX_HOLD_DAYS        = int(os.getenv("MAX_HOLD_DAYS", "45"))
 
     @classmethod
     def alpaca_base_url(cls):
@@ -69,6 +85,11 @@ class Config:
     @classmethod
     def alpaca_data_url(cls):
         return "https://data.alpaca.markets"
+
+    # Sector SPDR ETFs traded by the rotation sleeve (also kept fresh by the
+    # data pipeline). Defined here so data/ and strategy/ share one list.
+    SECTOR_ETF_SYMBOLS = ["XLK", "XLF", "XLE", "XLV", "XLI", "XLY",
+                          "XLP", "XLB", "XLRE", "XLC", "XLU"]
 
     @classmethod
     def symbols(cls):
@@ -91,6 +112,17 @@ class Config:
             "AMT,PLD,EQIX"
         ))
         return [s.strip() for s in raw.split(",") if s.strip()]
+
+    @classmethod
+    def data_symbols(cls):
+        """Everything the pipeline must keep fresh: trading universe + SPY
+        (regime & relative strength) + sector ETFs (rotation sleeve)."""
+        seen, out = set(), []
+        for s in cls.symbols() + ["SPY"] + cls.SECTOR_ETF_SYMBOLS:
+            if s not in seen:
+                seen.add(s)
+                out.append(s)
+        return out
 
     @classmethod
     def validate(cls):

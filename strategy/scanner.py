@@ -65,7 +65,8 @@ class MarketScanner:
                 symbol, Config.EARNINGS_DAYS_BEFORE, Config.EARNINGS_DAYS_AFTER
             ):
                 return None
-            df = self.pipeline.get_latest_bars(symbol, n=250)
+            # 320 bars so mom_12_1 (needs 252+21) is computable, not just NaN->0
+            df = self.pipeline.get_latest_bars(symbol, n=320)
             if df.empty or len(df) < 210:
                 logger.warning(f"{symbol}: Not enough data for momentum scan")
                 return None
