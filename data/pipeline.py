@@ -28,30 +28,17 @@ class DataPipeline:
         )
         init_database()
 
-    def _get_last_stored_date(self, symbol):
-        """Return the most recent timestamp stored for this symbol, or None."""
+    def _get_stored_range(self, symbol):
+        """Return (min_timestamp, max_timestamp) stored for this symbol, or None."""
         with sqlite3.connect(Config.DB_PATH) as conn:
             row = conn.execute(
-                "SELECT MAX(timestamp) FROM ohlcv WHERE symbol=?", (symbol,)
+                "SELECT MIN(timestamp), MAX(timestamp) FROM ohlcv WHERE symbol=?",
+                (symbol,)
             ).fetchone()
-        return row[0] if row and row[0] else None
+        return row if row and row[0] else None
 
-    def download_symbol(self, symbol):
-        end_date = datetime.now()
-
-        # Only fetch bars we don't already have (incremental update)
-        last_stored = self._get_last_stored_date(symbol)
-        if last_stored:
-            start_date = datetime.fromisoformat(last_stored[:10]) + timedelta(days=1)
-            logger.info(f"{symbol}: Incremental fetch from {start_date.date()}")
-        else:
-            start_date = end_date - timedelta(days=365 * Config.LOOKBACK_YEARS)
-            logger.info(f"{symbol}: Full historical fetch from {start_date.date()}")
-
-        if start_date.date() > end_date.date():
-            logger.info(f"{symbol}: Already up to date — skipping download.")
-            return 0
-
+    def _fetch_range(self, symbol, start_date, end_date):
+        """Fetch and store daily bars for [start_date, end_date]. Returns row count."""
         try:
             bars = self.api.get_bars(symbol, TimeFrame.Day,
                 start=start_date.strftime("%Y-%m-%d"),
@@ -68,10 +55,53 @@ class DataPipeline:
             logger.error(f"{symbol}: Download failed — {e}")
             return 0
 
-    def download_all(self):
+    def download_symbol(self, symbol, force_full=False):
+        """
+        Keep a symbol's daily bars current.
+          - New symbol: full fetch over LOOKBACK_YEARS.
+          - Existing:  incremental fetch forward, plus a backfill if the stored
+            history starts later than the LOOKBACK_YEARS window.
+          - force_full: wipe and refetch everything. Use periodically — split/
+            dividend adjustments are as-of fetch time, so stitched ranges drift
+            slightly at the seams until refreshed.
+        """
+        end_date     = datetime.now()
+        target_start = end_date - timedelta(days=365 * Config.LOOKBACK_YEARS)
+
+        if force_full:
+            with sqlite3.connect(Config.DB_PATH) as conn:
+                conn.execute("DELETE FROM ohlcv WHERE symbol=?", (symbol,))
+                conn.commit()
+            logger.info(f"{symbol}: Full refetch from {target_start.date()}")
+            return self._fetch_range(symbol, target_start, end_date)
+
+        stored = self._get_stored_range(symbol)
+        if not stored:
+            logger.info(f"{symbol}: Full historical fetch from {target_start.date()}")
+            return self._fetch_range(symbol, target_start, end_date)
+
+        first_stored, last_stored = stored
+        total = 0
+
+        # Backfill older history if the configured window reaches further back
+        first_dt = datetime.fromisoformat(first_stored[:10])
+        if first_dt - timedelta(days=7) > target_start:
+            logger.info(f"{symbol}: Backfilling {target_start.date()} -> {first_dt.date()}")
+            total += self._fetch_range(symbol, target_start, first_dt - timedelta(days=1))
+
+        # Incremental fetch forward
+        start_date = datetime.fromisoformat(last_stored[:10]) + timedelta(days=1)
+        if start_date.date() <= end_date.date():
+            total += self._fetch_range(symbol, start_date, end_date)
+        else:
+            logger.info(f"{symbol}: Already up to date — skipping download.")
+        return total
+
+    def download_all(self, force_full=False):
+        """Refresh the full data set: trading universe + SPY + sector ETFs."""
         results = {}
-        for symbol in tqdm(Config.symbols(), desc="Downloading"):
-            results[symbol] = self.download_symbol(symbol)
+        for symbol in tqdm(Config.data_symbols(), desc="Downloading"):
+            results[symbol] = self.download_symbol(symbol, force_full=force_full)
         return results
 
     def _store_bars(self, symbol, bars):

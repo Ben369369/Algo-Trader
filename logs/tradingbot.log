@@ -8420,3 +8420,1481 @@ oad.
 2026-06-09 18:01:15 | INFO     | utils.broker:19 | Portfolio value : $104,851.55
 2026-06-09 18:01:15 | INFO     | utils.broker:20 | Cash            : $84,012.27
 2026-06-09 18:01:15 | INFO     | utils.broker:21 | Buying power    : $394,399.06
+2026-06-11 14:32:15 | INFO     | utils.logger:13 | Logger initialized
+2026-06-11 14:32:20 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-11 14:32:20 | INFO     | utils.broker:19 | Portfolio value : $105,084.74
+2026-06-11 14:32:20 | INFO     | utils.broker:20 | Cash            : $84,012.26
+2026-06-11 14:32:20 | INFO     | utils.broker:21 | Buying power    : $395,051.98
+2026-06-11 14:32:20 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-11 14:32:20 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-06-10
+2026-06-11 14:32:20 | INFO     | data.pipeline:85 | AAPL: Stored 2 rows
+2026-06-11 14:32:21 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-06-10
+2026-06-11 14:32:21 | INFO     | data.pipeline:85 | MSFT: Stored 2 rows
+2026-06-11 14:32:21 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-06-10
+2026-06-11 14:32:21 | INFO     | data.pipeline:85 | GOOGL: Stored 2 rows
+2026-06-11 14:32:21 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-06-10
+2026-06-11 14:32:21 | INFO     | data.pipeline:85 | AMZN: Stored 2 rows
+2026-06-11 14:32:21 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-06-10
+2026-06-11 14:32:21 | INFO     | data.pipeline:85 | TSLA: Stored 2 rows
+2026-06-11 14:32:21 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-06-10
+2026-06-11 14:32:21 | INFO     | data.pipeline:85 | NVDA: Stored 2 rows
+2026-06-11 14:32:21 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-06-10
+2026-06-11 14:32:21 | INFO     | data.pipeline:85 | META: Stored 2 rows
+2026-06-11 14:32:21 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-06-10
+2026-06-11 14:32:21 | INFO     | data.pipeline:85 | JPM: Stored 2 rows
+2026-06-11 14:32:21 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-06-10
+2026-06-11 14:32:21 | INFO     | data.pipeline:85 | V: Stored 2 rows
+2026-06-11 14:32:21 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-10
+2026-06-11 14:32:21 | INFO     | data.pipeline:85 | SPY: Stored 2 rows
+2026-06-11 14:32:21 | INFO     | data.pipeline:46 | XOM: Incremental fetch from 2026-06-10
+2026-06-11 14:32:21 | INFO     | data.pipeline:85 | XOM: Stored 2 rows
+2026-06-11 14:32:21 | INFO     | data.pipeline:46 | CVX: Incremental fetch from 2026-06-10
+2026-06-11 14:32:21 | INFO     | data.pipeline:85 | CVX: Stored 2 rows
+2026-06-11 14:32:21 | INFO     | data.pipeline:46 | JNJ: Incremental fetch from 2026-06-10
+2026-06-11 14:32:21 | INFO     | data.pipeline:85 | JNJ: Stored 2 rows
+2026-06-11 14:32:21 | INFO     | data.pipeline:46 | UNH: Incremental fetch from 2026-06-10
+2026-06-11 14:32:21 | INFO     | data.pipeline:85 | UNH: Stored 2 rows
+2026-06-11 14:32:21 | INFO     | data.pipeline:46 | PFE: Incremental fetch from 2026-06-10
+2026-06-11 14:32:22 | INFO     | data.pipeline:85 | PFE: Stored 2 rows
+2026-06-11 14:32:22 | INFO     | data.pipeline:46 | BAC: Incremental fetch from 2026-06-10
+2026-06-11 14:32:22 | INFO     | data.pipeline:85 | BAC: Stored 2 rows
+2026-06-11 14:32:22 | INFO     | data.pipeline:46 | GS: Incremental fetch from 2026-06-10
+2026-06-11 14:32:22 | INFO     | data.pipeline:85 | GS: Stored 2 rows
+2026-06-11 14:32:22 | INFO     | data.pipeline:46 | WFC: Incremental fetch from 2026-06-10
+2026-06-11 14:32:22 | INFO     | data.pipeline:85 | WFC: Stored 2 rows
+2026-06-11 14:32:22 | INFO     | data.pipeline:46 | WMT: Incremental fetch from 2026-06-10
+2026-06-11 14:32:22 | INFO     | data.pipeline:85 | WMT: Stored 2 rows
+2026-06-11 14:32:22 | INFO     | data.pipeline:46 | PG: Incremental fetch from 2026-06-10
+2026-06-11 14:32:22 | INFO     | data.pipeline:85 | PG: Stored 2 rows
+2026-06-11 14:32:22 | INFO     | data.pipeline:46 | KO: Incremental fetch from 2026-06-10
+2026-06-11 14:32:22 | INFO     | data.pipeline:85 | KO: Stored 2 rows
+2026-06-11 14:32:22 | INFO     | data.pipeline:46 | MCD: Incremental fetch from 2026-06-10
+2026-06-11 14:32:22 | INFO     | data.pipeline:85 | MCD: Stored 2 rows
+2026-06-11 14:32:22 | INFO     | data.pipeline:46 | CAT: Incremental fetch from 2026-06-10
+2026-06-11 14:32:22 | INFO     | data.pipeline:85 | CAT: Stored 2 rows
+2026-06-11 14:32:22 | INFO     | data.pipeline:46 | BA: Incremental fetch from 2026-06-10
+2026-06-11 14:32:22 | INFO     | data.pipeline:85 | BA: Stored 2 rows
+2026-06-11 14:32:22 | INFO     | data.pipeline:46 | HON: Incremental fetch from 2026-06-10
+2026-06-11 14:32:22 | INFO     | data.pipeline:85 | HON: Stored 2 rows
+2026-06-11 14:32:22 | INFO     | data.pipeline:46 | AMD: Incremental fetch from 2026-06-10
+2026-06-11 14:32:22 | INFO     | data.pipeline:85 | AMD: Stored 2 rows
+2026-06-11 14:32:22 | INFO     | data.pipeline:46 | INTC: Incremental fetch from 2026-06-10
+2026-06-11 14:32:22 | INFO     | data.pipeline:85 | INTC: Stored 2 rows
+2026-06-11 14:32:22 | INFO     | data.pipeline:46 | AVGO: Incremental fetch from 2026-06-10
+2026-06-11 14:32:22 | INFO     | data.pipeline:85 | AVGO: Stored 2 rows
+2026-06-11 14:32:22 | INFO     | data.pipeline:46 | QQQ: Incremental fetch from 2026-06-10
+2026-06-11 14:32:22 | INFO     | data.pipeline:85 | QQQ: Stored 2 rows
+2026-06-11 14:32:22 | INFO     | data.pipeline:46 | IWM: Incremental fetch from 2026-06-10
+2026-06-11 14:32:23 | INFO     | data.pipeline:85 | IWM: Stored 2 rows
+2026-06-11 14:32:23 | INFO     | data.pipeline:46 | DIA: Incremental fetch from 2026-06-10
+2026-06-11 14:32:23 | INFO     | data.pipeline:85 | DIA: Stored 2 rows
+2026-06-11 14:32:23 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-11 14:32:23 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $735.15 | SMA50 $720.77 | SMA200 $684.81 | RSI 48.9
+2026-06-11 14:32:23 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $735.15 | SMA50 $720.77 | SMA200 $684.81 | RSI 48.9
+2026-06-11 14:32:23 | INFO     | strategy.scanner:104 | Momentum scan: 27 symbols | Regime: TRENDING_UP
+2026-06-11 14:32:25 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-11 14:32:25 | INFO     | utils.broker:19 | Portfolio value : $105,084.74
+2026-06-11 14:32:25 | INFO     | utils.broker:20 | Cash            : $84,012.26
+2026-06-11 14:32:25 | INFO     | utils.broker:21 | Buying power    : $395,051.98
+2026-06-11 14:32:26 | INFO     | strategy.executor:107 | Candidate: BUY BAC @ $55.14 | Score: 0.6232 | ATR: 1.1499
+2026-06-11 14:32:26 | INFO     | strategy.executor:112 | BAC: Using live price $55.15 (last close was $55.14)
+2026-06-11 14:32:26 | INFO     | strategy.sizer:40 | Position size: 190 shares @ $55.15 | Stop: ATR-based (2.0x ATR=$1.15) | Risk: $436.96 | Value: $10477.55
+2026-06-11 14:32:26 | INFO     | utils.broker:88 | Placing bracket BUY: 190 shares of BAC | Stop: $52.85 | Target: $60.66
+2026-06-11 14:32:26 | INFO     | utils.broker:102 | Bracket order placed: 3a3d191b-61c7-4488-a422-d2fbbe80239c | BAC | buy 190
+2026-06-11 14:32:26 | INFO     | strategy.executor:145 | State saved for BAC: entry=$55.15 stop=$52.85 target=$60.66
+2026-06-11 14:32:26 | INFO     | strategy.executor:101 | JPM: Sector 'Finance' already has 1 position(s) — skipping to avoid concentration.
+2026-06-11 14:32:26 | INFO     | strategy.executor:95 | Already holding JNJ — skipping.
+2026-06-11 14:32:26 | INFO     | strategy.executor:107 | Candidate: BUY KO @ $83.26 | Score: 0.4417 | ATR: 1.4955
+2026-06-11 14:32:26 | INFO     | strategy.executor:112 | KO: Using live price $83.26 (last close was $83.26)
+2026-06-11 14:32:26 | INFO     | strategy.sizer:40 | Position size: 126 shares @ $83.26 | Stop: ATR-based (2.0x ATR=$1.50) | Risk: $376.87 | Value: $10490.76
+2026-06-11 14:32:26 | INFO     | utils.broker:88 | Placing bracket BUY: 126 shares of KO | Stop: $80.27 | Target: $91.59
+2026-06-11 14:32:26 | INFO     | utils.broker:102 | Bracket order placed: 425ae79d-c0d1-4d43-adaa-70bb80607268 | KO | buy 126
+2026-06-11 14:32:26 | INFO     | strategy.executor:145 | State saved for KO: entry=$83.26 stop=$80.27 target=$91.59
+2026-06-11 15:30:27 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-11 15:30:27 | INFO     | utils.broker:19 | Portfolio value : $105,223.86
+2026-06-11 15:30:27 | INFO     | utils.broker:20 | Cash            : $63,044.94
+2026-06-11 15:30:27 | INFO     | utils.broker:21 | Buying power    : $370,280.74
+2026-06-11 15:30:27 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | AAPL: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | MSFT: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | GOOGL: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | AMZN: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | TSLA: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | NVDA: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | META: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | JPM: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | V: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | SPY: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | XOM: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | XOM: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | CVX: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | CVX: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | JNJ: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | JNJ: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | UNH: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | UNH: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | PFE: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | PFE: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | BAC: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | BAC: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | GS: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | GS: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | WFC: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | WFC: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | WMT: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | WMT: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | PG: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | PG: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | KO: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | KO: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | MCD: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | MCD: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | CAT: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | CAT: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | BA: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | BA: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | HON: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | HON: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | AMD: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | AMD: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | INTC: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | INTC: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | AVGO: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | AVGO: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | QQQ: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | QQQ: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | IWM: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | IWM: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:46 | DIA: Incremental fetch from 2026-06-12
+2026-06-11 15:30:27 | INFO     | data.pipeline:52 | DIA: Already up to date — skipping download.
+2026-06-11 15:30:27 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-11 15:30:27 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $735.15 | SMA50 $720.77 | SMA200 $684.81 | RSI 48.9
+2026-06-11 15:30:27 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $735.15 | SMA50 $720.77 | SMA200 $684.81 | RSI 48.9
+2026-06-11 15:30:27 | INFO     | strategy.scanner:104 | Momentum scan: 27 symbols | Regime: TRENDING_UP
+2026-06-11 15:30:28 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-11 15:30:28 | INFO     | utils.broker:19 | Portfolio value : $105,223.49
+2026-06-11 15:30:28 | INFO     | utils.broker:20 | Cash            : $63,044.94
+2026-06-11 15:30:28 | INFO     | utils.broker:21 | Buying power    : $370,279.70
+2026-06-12 15:05:39 | INFO     | utils.logger:13 | Logger initialized
+2026-06-12 15:05:46 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-12 15:05:46 | INFO     | utils.broker:19 | Portfolio value : $105,265.69
+2026-06-12 15:05:46 | INFO     | utils.broker:20 | Cash            : $63,044.93
+2026-06-12 15:05:46 | INFO     | utils.broker:21 | Buying power    : $370,397.85
+2026-06-12 15:05:46 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-12 15:05:46 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-06-12
+2026-06-12 15:05:47 | INFO     | data.pipeline:85 | AAPL: Stored 1 rows
+2026-06-12 15:05:47 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-06-12
+2026-06-12 15:05:47 | INFO     | data.pipeline:85 | MSFT: Stored 1 rows
+2026-06-12 15:05:47 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-06-12
+2026-06-12 15:05:47 | INFO     | data.pipeline:85 | GOOGL: Stored 1 rows
+2026-06-12 15:05:47 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-06-12
+2026-06-12 15:05:47 | INFO     | data.pipeline:85 | AMZN: Stored 1 rows
+2026-06-12 15:05:47 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-06-12
+2026-06-12 15:05:48 | INFO     | data.pipeline:85 | TSLA: Stored 1 rows
+2026-06-12 15:05:48 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-06-12
+2026-06-12 15:05:48 | INFO     | data.pipeline:85 | NVDA: Stored 1 rows
+2026-06-12 15:05:48 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-06-12
+2026-06-12 15:05:48 | INFO     | data.pipeline:85 | META: Stored 1 rows
+2026-06-12 15:05:48 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-06-12
+2026-06-12 15:05:48 | INFO     | data.pipeline:85 | JPM: Stored 1 rows
+2026-06-12 15:05:48 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-06-12
+2026-06-12 15:05:48 | INFO     | data.pipeline:85 | V: Stored 1 rows
+2026-06-12 15:05:48 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-12
+2026-06-12 15:05:48 | INFO     | data.pipeline:85 | SPY: Stored 1 rows
+2026-06-12 15:05:48 | INFO     | data.pipeline:46 | XOM: Incremental fetch from 2026-06-12
+2026-06-12 15:05:48 | INFO     | data.pipeline:85 | XOM: Stored 1 rows
+2026-06-12 15:05:48 | INFO     | data.pipeline:46 | CVX: Incremental fetch from 2026-06-12
+2026-06-12 15:05:48 | INFO     | data.pipeline:85 | CVX: Stored 1 rows
+2026-06-12 15:05:48 | INFO     | data.pipeline:46 | JNJ: Incremental fetch from 2026-06-12
+2026-06-12 15:05:48 | INFO     | data.pipeline:85 | JNJ: Stored 1 rows
+2026-06-12 15:05:48 | INFO     | data.pipeline:46 | UNH: Incremental fetch from 2026-06-12
+2026-06-12 15:05:48 | INFO     | data.pipeline:85 | UNH: Stored 1 rows
+2026-06-12 15:05:48 | INFO     | data.pipeline:46 | PFE: Incremental fetch from 2026-06-12
+2026-06-12 15:05:49 | INFO     | data.pipeline:85 | PFE: Stored 1 rows
+2026-06-12 15:05:49 | INFO     | data.pipeline:46 | BAC: Incremental fetch from 2026-06-12
+2026-06-12 15:05:49 | INFO     | data.pipeline:85 | BAC: Stored 1 rows
+2026-06-12 15:05:49 | INFO     | data.pipeline:46 | GS: Incremental fetch from 2026-06-12
+2026-06-12 15:05:49 | INFO     | data.pipeline:85 | GS: Stored 1 rows
+2026-06-12 15:05:49 | INFO     | data.pipeline:46 | WFC: Incremental fetch from 2026-06-12
+2026-06-12 15:05:49 | INFO     | data.pipeline:85 | WFC: Stored 1 rows
+2026-06-12 15:05:49 | INFO     | data.pipeline:46 | WMT: Incremental fetch from 2026-06-12
+2026-06-12 15:05:49 | INFO     | data.pipeline:85 | WMT: Stored 1 rows
+2026-06-12 15:05:49 | INFO     | data.pipeline:46 | PG: Incremental fetch from 2026-06-12
+2026-06-12 15:05:49 | INFO     | data.pipeline:85 | PG: Stored 1 rows
+2026-06-12 15:05:49 | INFO     | data.pipeline:46 | KO: Incremental fetch from 2026-06-12
+2026-06-12 15:05:49 | INFO     | data.pipeline:85 | KO: Stored 1 rows
+2026-06-12 15:05:49 | INFO     | data.pipeline:46 | MCD: Incremental fetch from 2026-06-12
+2026-06-12 15:05:49 | INFO     | data.pipeline:85 | MCD: Stored 1 rows
+2026-06-12 15:05:49 | INFO     | data.pipeline:46 | CAT: Incremental fetch from 2026-06-12
+2026-06-12 15:05:49 | INFO     | data.pipeline:85 | CAT: Stored 1 rows
+2026-06-12 15:05:49 | INFO     | data.pipeline:46 | BA: Incremental fetch from 2026-06-12
+2026-06-12 15:05:49 | INFO     | data.pipeline:85 | BA: Stored 1 rows
+2026-06-12 15:05:49 | INFO     | data.pipeline:46 | HON: Incremental fetch from 2026-06-12
+2026-06-12 15:05:49 | INFO     | data.pipeline:85 | HON: Stored 1 rows
+2026-06-12 15:05:49 | INFO     | data.pipeline:46 | AMD: Incremental fetch from 2026-06-12
+2026-06-12 15:05:49 | INFO     | data.pipeline:85 | AMD: Stored 1 rows
+2026-06-12 15:05:49 | INFO     | data.pipeline:46 | INTC: Incremental fetch from 2026-06-12
+2026-06-12 15:05:49 | INFO     | data.pipeline:85 | INTC: Stored 1 rows
+2026-06-12 15:05:49 | INFO     | data.pipeline:46 | AVGO: Incremental fetch from 2026-06-12
+2026-06-12 15:05:49 | INFO     | data.pipeline:85 | AVGO: Stored 1 rows
+2026-06-12 15:05:49 | INFO     | data.pipeline:46 | QQQ: Incremental fetch from 2026-06-12
+2026-06-12 15:05:49 | INFO     | data.pipeline:85 | QQQ: Stored 1 rows
+2026-06-12 15:05:49 | INFO     | data.pipeline:46 | IWM: Incremental fetch from 2026-06-12
+2026-06-12 15:05:50 | INFO     | data.pipeline:85 | IWM: Stored 1 rows
+2026-06-12 15:05:50 | INFO     | data.pipeline:46 | DIA: Incremental fetch from 2026-06-12
+2026-06-12 15:05:50 | INFO     | data.pipeline:85 | DIA: Stored 1 rows
+2026-06-12 15:05:50 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-12 15:05:50 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $741.99 | SMA50 $722.48 | SMA200 $685.32 | RSI 53.4
+2026-06-12 15:05:50 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $741.99 | SMA50 $722.48 | SMA200 $685.32 | RSI 53.4
+2026-06-12 15:05:50 | INFO     | strategy.scanner:104 | Momentum scan: 27 symbols | Regime: TRENDING_UP
+2026-06-12 15:05:53 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-12 15:05:53 | INFO     | utils.broker:19 | Portfolio value : $105,264.75
+2026-06-12 15:05:53 | INFO     | utils.broker:20 | Cash            : $63,044.93
+2026-06-12 15:05:53 | INFO     | utils.broker:21 | Buying power    : $370,395.22
+2026-06-12 15:05:54 | INFO     | strategy.executor:95 | Already holding BAC — skipping.
+2026-06-12 15:05:54 | INFO     | strategy.executor:101 | JPM: Sector 'Finance' already has 1 position(s) — skipping to avoid concentration.
+2026-06-12 15:05:54 | INFO     | strategy.executor:95 | Already holding JNJ — skipping.
+2026-06-12 15:05:54 | INFO     | strategy.executor:95 | Already holding KO — skipping.
+2026-06-12 15:05:54 | INFO     | strategy.executor:151 | No orders placed.
+2026-06-16 17:18:09 | INFO     | utils.logger:13 | Logger initialized
+2026-06-16 17:18:21 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-16 17:18:21 | INFO     | utils.broker:19 | Portfolio value : $104,542.91
+2026-06-16 17:18:21 | INFO     | utils.broker:20 | Cash            : $73,158.91
+2026-06-16 17:18:21 | INFO     | utils.broker:21 | Buying power    : $380,510.84
+2026-06-16 17:18:22 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-16 17:18:22 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-06-13
+2026-06-16 17:18:23 | INFO     | data.pipeline:85 | AAPL: Stored 2 rows
+2026-06-16 17:18:23 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-06-13
+2026-06-16 17:18:23 | INFO     | data.pipeline:85 | MSFT: Stored 2 rows
+2026-06-16 17:18:23 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-06-13
+2026-06-16 17:18:23 | INFO     | data.pipeline:85 | GOOGL: Stored 2 rows
+2026-06-16 17:18:23 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-06-13
+2026-06-16 17:18:23 | INFO     | data.pipeline:85 | AMZN: Stored 2 rows
+2026-06-16 17:18:23 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-06-13
+2026-06-16 17:18:23 | INFO     | data.pipeline:85 | TSLA: Stored 2 rows
+2026-06-16 17:18:23 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-06-13
+2026-06-16 17:18:23 | INFO     | data.pipeline:85 | NVDA: Stored 2 rows
+2026-06-16 17:18:23 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-06-13
+2026-06-16 17:18:24 | INFO     | data.pipeline:85 | META: Stored 2 rows
+2026-06-16 17:18:24 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-06-13
+2026-06-16 17:18:24 | INFO     | data.pipeline:85 | JPM: Stored 2 rows
+2026-06-16 17:18:24 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-06-13
+2026-06-16 17:18:24 | INFO     | data.pipeline:85 | V: Stored 2 rows
+2026-06-16 17:18:24 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-13
+2026-06-16 17:18:24 | INFO     | data.pipeline:85 | SPY: Stored 2 rows
+2026-06-16 17:18:24 | INFO     | data.pipeline:46 | XOM: Incremental fetch from 2026-06-13
+2026-06-16 17:18:24 | INFO     | data.pipeline:85 | XOM: Stored 2 rows
+2026-06-16 17:18:24 | INFO     | data.pipeline:46 | CVX: Incremental fetch from 2026-06-13
+2026-06-16 17:18:24 | INFO     | data.pipeline:85 | CVX: Stored 2 rows
+2026-06-16 17:18:24 | INFO     | data.pipeline:46 | JNJ: Incremental fetch from 2026-06-13
+2026-06-16 17:18:24 | INFO     | data.pipeline:85 | JNJ: Stored 2 rows
+2026-06-16 17:18:25 | INFO     | data.pipeline:46 | UNH: Incremental fetch from 2026-06-13
+2026-06-16 17:18:25 | INFO     | data.pipeline:85 | UNH: Stored 2 rows
+2026-06-16 17:18:25 | INFO     | data.pipeline:46 | PFE: Incremental fetch from 2026-06-13
+2026-06-16 17:18:25 | INFO     | data.pipeline:85 | PFE: Stored 2 rows
+2026-06-16 17:18:25 | INFO     | data.pipeline:46 | BAC: Incremental fetch from 2026-06-13
+2026-06-16 17:18:25 | INFO     | data.pipeline:85 | BAC: Stored 2 rows
+2026-06-16 17:18:25 | INFO     | data.pipeline:46 | GS: Incremental fetch from 2026-06-13
+2026-06-16 17:18:25 | INFO     | data.pipeline:85 | GS: Stored 2 rows
+2026-06-16 17:18:25 | INFO     | data.pipeline:46 | WFC: Incremental fetch from 2026-06-13
+2026-06-16 17:18:25 | INFO     | data.pipeline:85 | WFC: Stored 2 rows
+2026-06-16 17:18:25 | INFO     | data.pipeline:46 | WMT: Incremental fetch from 2026-06-13
+2026-06-16 17:18:25 | INFO     | data.pipeline:85 | WMT: Stored 2 rows
+2026-06-16 17:18:25 | INFO     | data.pipeline:46 | PG: Incremental fetch from 2026-06-13
+2026-06-16 17:18:25 | INFO     | data.pipeline:85 | PG: Stored 2 rows
+2026-06-16 17:18:25 | INFO     | data.pipeline:46 | KO: Incremental fetch from 2026-06-13
+2026-06-16 17:18:25 | INFO     | data.pipeline:85 | KO: Stored 2 rows
+2026-06-16 17:18:25 | INFO     | data.pipeline:46 | MCD: Incremental fetch from 2026-06-13
+2026-06-16 17:18:25 | INFO     | data.pipeline:85 | MCD: Stored 2 rows
+2026-06-16 17:18:25 | INFO     | data.pipeline:46 | CAT: Incremental fetch from 2026-06-13
+2026-06-16 17:18:25 | INFO     | data.pipeline:85 | CAT: Stored 2 rows
+2026-06-16 17:18:25 | INFO     | data.pipeline:46 | BA: Incremental fetch from 2026-06-13
+2026-06-16 17:18:25 | INFO     | data.pipeline:85 | BA: Stored 2 rows
+2026-06-16 17:18:25 | INFO     | data.pipeline:46 | HON: Incremental fetch from 2026-06-13
+2026-06-16 17:18:26 | INFO     | data.pipeline:85 | HON: Stored 2 rows
+2026-06-16 17:18:26 | INFO     | data.pipeline:46 | AMD: Incremental fetch from 2026-06-13
+2026-06-16 17:18:26 | INFO     | data.pipeline:85 | AMD: Stored 2 rows
+2026-06-16 17:18:26 | INFO     | data.pipeline:46 | INTC: Incremental fetch from 2026-06-13
+2026-06-16 17:18:26 | INFO     | data.pipeline:85 | INTC: Stored 2 rows
+2026-06-16 17:18:26 | INFO     | data.pipeline:46 | AVGO: Incremental fetch from 2026-06-13
+2026-06-16 17:18:26 | INFO     | data.pipeline:85 | AVGO: Stored 2 rows
+2026-06-16 17:18:26 | INFO     | data.pipeline:46 | QQQ: Incremental fetch from 2026-06-13
+2026-06-16 17:18:26 | INFO     | data.pipeline:85 | QQQ: Stored 2 rows
+2026-06-16 17:18:26 | INFO     | data.pipeline:46 | IWM: Incremental fetch from 2026-06-13
+2026-06-16 17:18:26 | INFO     | data.pipeline:85 | IWM: Stored 2 rows
+2026-06-16 17:18:26 | INFO     | data.pipeline:46 | DIA: Incremental fetch from 2026-06-13
+2026-06-16 17:18:26 | INFO     | data.pipeline:85 | DIA: Stored 2 rows
+2026-06-16 17:18:26 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-16 17:18:26 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $750.58 | SMA50 $726.41 | SMA200 $686.40 | RSI 57.5
+2026-06-16 17:18:26 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $750.58 | SMA50 $726.41 | SMA200 $686.40 | RSI 57.5
+2026-06-16 17:18:26 | INFO     | strategy.scanner:104 | Momentum scan: 27 symbols | Regime: TRENDING_UP
+2026-06-16 17:18:31 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-16 17:18:31 | INFO     | utils.broker:19 | Portfolio value : $104,542.91
+2026-06-16 17:18:31 | INFO     | utils.broker:20 | Cash            : $73,158.91
+2026-06-16 17:18:31 | INFO     | utils.broker:21 | Buying power    : $380,510.84
+2026-06-17 09:30:12 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-17 09:30:12 | INFO     | utils.broker:19 | Portfolio value : $104,607.82
+2026-06-17 09:30:12 | INFO     | utils.broker:20 | Cash            : $73,158.91
+2026-06-17 09:30:12 | INFO     | utils.broker:21 | Buying power    : $380,692.59
+2026-06-17 09:30:12 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-17 09:30:12 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-06-17
+2026-06-17 09:30:13 | INFO     | data.pipeline:61 | AAPL: No new bars available yet.
+2026-06-17 09:30:13 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-06-17
+2026-06-17 09:30:14 | INFO     | data.pipeline:61 | MSFT: No new bars available yet.
+2026-06-17 09:30:14 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-06-17
+2026-06-17 09:30:14 | INFO     | data.pipeline:61 | GOOGL: No new bars available yet.
+2026-06-17 09:30:14 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-06-17
+2026-06-17 09:30:14 | INFO     | data.pipeline:61 | AMZN: No new bars available yet.
+2026-06-17 09:30:14 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-06-17
+2026-06-17 09:30:14 | INFO     | data.pipeline:61 | TSLA: No new bars available yet.
+2026-06-17 09:30:14 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-06-17
+2026-06-17 09:30:14 | INFO     | data.pipeline:61 | NVDA: No new bars available yet.
+2026-06-17 09:30:14 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-06-17
+2026-06-17 09:30:14 | INFO     | data.pipeline:61 | META: No new bars available yet.
+2026-06-17 09:30:14 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-06-17
+2026-06-17 09:30:14 | INFO     | data.pipeline:61 | JPM: No new bars available yet.
+2026-06-17 09:30:14 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-06-17
+2026-06-17 09:30:14 | INFO     | data.pipeline:61 | V: No new bars available yet.
+2026-06-17 09:30:14 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-17
+2026-06-17 09:30:14 | INFO     | data.pipeline:61 | SPY: No new bars available yet.
+2026-06-17 09:30:14 | INFO     | data.pipeline:46 | XOM: Incremental fetch from 2026-06-17
+2026-06-17 09:30:14 | INFO     | data.pipeline:61 | XOM: No new bars available yet.
+2026-06-17 09:30:14 | INFO     | data.pipeline:46 | CVX: Incremental fetch from 2026-06-17
+2026-06-17 09:30:14 | INFO     | data.pipeline:61 | CVX: No new bars available yet.
+2026-06-17 09:30:14 | INFO     | data.pipeline:46 | JNJ: Incremental fetch from 2026-06-17
+2026-06-17 09:30:14 | INFO     | data.pipeline:61 | JNJ: No new bars available yet.
+2026-06-17 09:30:14 | INFO     | data.pipeline:46 | UNH: Incremental fetch from 2026-06-17
+2026-06-17 09:30:15 | INFO     | data.pipeline:61 | UNH: No new bars available yet.
+2026-06-17 09:30:15 | INFO     | data.pipeline:46 | PFE: Incremental fetch from 2026-06-17
+2026-06-17 09:30:15 | INFO     | data.pipeline:61 | PFE: No new bars available yet.
+2026-06-17 09:30:15 | INFO     | data.pipeline:46 | BAC: Incremental fetch from 2026-06-17
+2026-06-17 09:30:15 | INFO     | data.pipeline:61 | BAC: No new bars available yet.
+2026-06-17 09:30:15 | INFO     | data.pipeline:46 | GS: Incremental fetch from 2026-06-17
+2026-06-17 09:30:15 | INFO     | data.pipeline:61 | GS: No new bars available yet.
+2026-06-17 09:30:15 | INFO     | data.pipeline:46 | WFC: Incremental fetch from 2026-06-17
+2026-06-17 09:30:15 | INFO     | data.pipeline:61 | WFC: No new bars available yet.
+2026-06-17 09:30:15 | INFO     | data.pipeline:46 | WMT: Incremental fetch from 2026-06-17
+2026-06-17 09:30:15 | INFO     | data.pipeline:61 | WMT: No new bars available yet.
+2026-06-17 09:30:15 | INFO     | data.pipeline:46 | PG: Incremental fetch from 2026-06-17
+2026-06-17 09:30:15 | INFO     | data.pipeline:61 | PG: No new bars available yet.
+2026-06-17 09:30:16 | INFO     | data.pipeline:46 | KO: Incremental fetch from 2026-06-17
+2026-06-17 09:30:16 | INFO     | data.pipeline:61 | KO: No new bars available yet.
+2026-06-17 09:30:16 | INFO     | data.pipeline:46 | MCD: Incremental fetch from 2026-06-17
+2026-06-17 09:30:16 | INFO     | data.pipeline:61 | MCD: No new bars available yet.
+2026-06-17 09:30:16 | INFO     | data.pipeline:46 | CAT: Incremental fetch from 2026-06-17
+2026-06-17 09:30:16 | INFO     | data.pipeline:61 | CAT: No new bars available yet.
+2026-06-17 09:30:16 | INFO     | data.pipeline:46 | BA: Incremental fetch from 2026-06-17
+2026-06-17 09:30:16 | INFO     | data.pipeline:61 | BA: No new bars available yet.
+2026-06-17 09:30:16 | INFO     | data.pipeline:46 | HON: Incremental fetch from 2026-06-17
+2026-06-17 09:30:16 | INFO     | data.pipeline:61 | HON: No new bars available yet.
+2026-06-17 09:30:16 | INFO     | data.pipeline:46 | AMD: Incremental fetch from 2026-06-17
+2026-06-17 09:30:16 | INFO     | data.pipeline:61 | AMD: No new bars available yet.
+2026-06-17 09:30:16 | INFO     | data.pipeline:46 | INTC: Incremental fetch from 2026-06-17
+2026-06-17 09:30:16 | INFO     | data.pipeline:61 | INTC: No new bars available yet.
+2026-06-17 09:30:16 | INFO     | data.pipeline:46 | AVGO: Incremental fetch from 2026-06-17
+2026-06-17 09:30:17 | INFO     | data.pipeline:61 | AVGO: No new bars available yet.
+2026-06-17 09:30:17 | INFO     | data.pipeline:46 | QQQ: Incremental fetch from 2026-06-17
+2026-06-17 09:30:17 | INFO     | data.pipeline:61 | QQQ: No new bars available yet.
+2026-06-17 09:30:17 | INFO     | data.pipeline:46 | IWM: Incremental fetch from 2026-06-17
+2026-06-17 09:30:17 | INFO     | data.pipeline:61 | IWM: No new bars available yet.
+2026-06-17 09:30:17 | INFO     | data.pipeline:46 | DIA: Incremental fetch from 2026-06-17
+2026-06-17 09:30:17 | INFO     | data.pipeline:61 | DIA: No new bars available yet.
+2026-06-17 09:30:17 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-17 09:30:17 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $750.58 | SMA50 $726.41 | SMA200 $686.40 | RSI 57.5
+2026-06-17 09:30:17 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $750.58 | SMA50 $726.41 | SMA200 $686.40 | RSI 57.5
+2026-06-17 09:30:17 | INFO     | strategy.scanner:104 | Momentum scan: 27 symbols | Regime: TRENDING_UP
+2026-06-17 09:30:21 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-17 09:30:21 | INFO     | utils.broker:19 | Portfolio value : $104,616.81
+2026-06-17 09:30:21 | INFO     | utils.broker:20 | Cash            : $73,158.91
+2026-06-17 09:30:21 | INFO     | utils.broker:21 | Buying power    : $380,717.76
+2026-06-17 09:30:22 | INFO     | strategy.executor:101 | JPM: Sector 'Finance' already has 1 position(s) — skipping to avoid concentration.
+2026-06-17 09:30:22 | INFO     | strategy.executor:101 | GS: Sector 'Finance' already has 1 position(s) — skipping to avoid concentration.
+2026-06-17 09:30:22 | INFO     | strategy.executor:95 | Already holding BAC — skipping.
+2026-06-17 09:30:22 | INFO     | strategy.executor:107 | Candidate: BUY CAT @ $945.94 | Score: 0.517 | ATR: 31.0395
+2026-06-17 09:30:22 | INFO     | strategy.executor:112 | CAT: Using live price $958.98 (last close was $945.94)
+2026-06-17 09:30:22 | INFO     | strategy.sizer:40 | Position size: 10 shares @ $958.98 | Stop: ATR-based (2.0x ATR=$31.04) | Risk: $620.79 | Value: $9589.80
+2026-06-17 09:30:22 | INFO     | utils.broker:88 | Placing bracket BUY: 10 shares of CAT | Stop: $896.90 | Target: $1054.88
+2026-06-17 09:30:22 | INFO     | utils.broker:102 | Bracket order placed: 15e5dae8-db5a-4ed3-ac2b-3947cb0eee1a | CAT | buy 10
+2026-06-17 09:30:22 | INFO     | strategy.executor:145 | State saved for CAT: entry=$958.98 stop=$896.90 target=$1054.88
+2026-06-17 09:30:22 | INFO     | strategy.executor:101 | BA: Sector 'Industrial' already has 1 position(s) — skipping to avoid concentration.
+2026-06-17 16:55:05 | INFO     | utils.logger:13 | Logger initialized
+2026-06-17 16:55:16 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-17 16:55:16 | INFO     | utils.broker:19 | Portfolio value : $104,685.98
+2026-06-17 16:55:16 | INFO     | utils.broker:20 | Cash            : $74,500.90
+2026-06-17 16:55:16 | INFO     | utils.broker:21 | Buying power    : $382,521.82
+2026-06-17 16:55:16 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-17 16:55:16 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-06-17
+2026-06-17 16:55:17 | INFO     | data.pipeline:85 | AAPL: Stored 1 rows
+2026-06-17 16:55:17 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-06-17
+2026-06-17 16:55:17 | INFO     | data.pipeline:85 | MSFT: Stored 1 rows
+2026-06-17 16:55:17 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-06-17
+2026-06-17 16:55:17 | INFO     | data.pipeline:85 | GOOGL: Stored 1 rows
+2026-06-17 16:55:17 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-06-17
+2026-06-17 16:55:17 | INFO     | data.pipeline:85 | AMZN: Stored 1 rows
+2026-06-17 16:55:17 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-06-17
+2026-06-17 16:55:18 | INFO     | data.pipeline:85 | TSLA: Stored 1 rows
+2026-06-17 16:55:18 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-06-17
+2026-06-17 16:55:18 | INFO     | data.pipeline:85 | NVDA: Stored 1 rows
+2026-06-17 16:55:18 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-06-17
+2026-06-17 16:55:18 | INFO     | data.pipeline:85 | META: Stored 1 rows
+2026-06-17 16:55:18 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-06-17
+2026-06-17 16:55:18 | INFO     | data.pipeline:85 | JPM: Stored 1 rows
+2026-06-17 16:55:18 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-06-17
+2026-06-17 16:55:18 | INFO     | data.pipeline:85 | V: Stored 1 rows
+2026-06-17 16:55:18 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-17
+2026-06-17 16:55:18 | INFO     | data.pipeline:85 | SPY: Stored 1 rows
+2026-06-17 16:55:18 | INFO     | data.pipeline:46 | XOM: Incremental fetch from 2026-06-17
+2026-06-17 16:55:18 | INFO     | data.pipeline:85 | XOM: Stored 1 rows
+2026-06-17 16:55:18 | INFO     | data.pipeline:46 | CVX: Incremental fetch from 2026-06-17
+2026-06-17 16:55:19 | INFO     | data.pipeline:85 | CVX: Stored 1 rows
+2026-06-17 16:55:19 | INFO     | data.pipeline:46 | JNJ: Incremental fetch from 2026-06-17
+2026-06-17 16:55:19 | INFO     | data.pipeline:85 | JNJ: Stored 1 rows
+2026-06-17 16:55:19 | INFO     | data.pipeline:46 | UNH: Incremental fetch from 2026-06-17
+2026-06-17 16:55:19 | INFO     | data.pipeline:85 | UNH: Stored 1 rows
+2026-06-17 16:55:19 | INFO     | data.pipeline:46 | PFE: Incremental fetch from 2026-06-17
+2026-06-17 16:55:19 | INFO     | data.pipeline:85 | PFE: Stored 1 rows
+2026-06-17 16:55:19 | INFO     | data.pipeline:46 | BAC: Incremental fetch from 2026-06-17
+2026-06-17 16:55:19 | INFO     | data.pipeline:85 | BAC: Stored 1 rows
+2026-06-17 16:55:19 | INFO     | data.pipeline:46 | GS: Incremental fetch from 2026-06-17
+2026-06-17 16:55:19 | INFO     | data.pipeline:85 | GS: Stored 1 rows
+2026-06-17 16:55:19 | INFO     | data.pipeline:46 | WFC: Incremental fetch from 2026-06-17
+2026-06-17 16:55:20 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-17 16:55:20 | INFO     | utils.broker:19 | Portfolio value : $104,685.98
+2026-06-17 16:55:20 | INFO     | utils.broker:20 | Cash            : $74,500.90
+2026-06-17 16:55:20 | INFO     | utils.broker:21 | Buying power    : $382,521.82
+2026-06-17 16:55:20 | INFO     | data.pipeline:85 | WFC: Stored 1 rows
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | WMT: Incremental fetch from 2026-06-17
+2026-06-17 16:55:20 | INFO     | data.pipeline:85 | WMT: Stored 1 rows
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | PG: Incremental fetch from 2026-06-17
+2026-06-17 16:55:20 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-17 16:55:20 | INFO     | data.pipeline:85 | PG: Stored 1 rows
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | KO: Incremental fetch from 2026-06-17
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | AAPL: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | MSFT: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | GOOGL: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | AMZN: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | TSLA: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | NVDA: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | META: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | JPM: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | V: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | SPY: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | XOM: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | XOM: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | CVX: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | CVX: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | JNJ: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | JNJ: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | UNH: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | UNH: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | PFE: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | PFE: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | BAC: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | BAC: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | GS: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | GS: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | WFC: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | WFC: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | WMT: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | WMT: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | PG: Incremental fetch from 2026-06-18
+2026-06-17 16:55:20 | INFO     | data.pipeline:52 | PG: Already up to date — skipping download.
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | KO: Incremental fetch from 2026-06-17
+2026-06-17 16:55:20 | INFO     | data.pipeline:85 | KO: Stored 1 rows
+2026-06-17 16:55:20 | INFO     | data.pipeline:46 | MCD: Incremental fetch from 2026-06-17
+2026-06-17 16:55:21 | INFO     | data.pipeline:85 | MCD: Stored 1 rows
+2026-06-17 16:55:21 | INFO     | data.pipeline:46 | CAT: Incremental fetch from 2026-06-17
+2026-06-17 16:55:21 | INFO     | data.pipeline:85 | KO: Stored 1 rows
+2026-06-17 16:55:21 | INFO     | data.pipeline:46 | MCD: Incremental fetch from 2026-06-18
+2026-06-17 16:55:21 | INFO     | data.pipeline:52 | MCD: Already up to date — skipping download.
+2026-06-17 16:55:21 | INFO     | data.pipeline:46 | CAT: Incremental fetch from 2026-06-17
+2026-06-17 16:55:21 | INFO     | data.pipeline:85 | CAT: Stored 1 rows
+2026-06-17 16:55:21 | INFO     | data.pipeline:46 | BA: Incremental fetch from 2026-06-17
+2026-06-17 16:55:21 | INFO     | data.pipeline:85 | CAT: Stored 1 rows
+2026-06-17 16:55:21 | INFO     | data.pipeline:46 | BA: Incremental fetch from 2026-06-17
+2026-06-17 16:55:21 | INFO     | data.pipeline:85 | BA: Stored 1 rows
+2026-06-17 16:55:21 | INFO     | data.pipeline:46 | HON: Incremental fetch from 2026-06-17
+2026-06-17 16:55:21 | INFO     | data.pipeline:85 | BA: Stored 1 rows
+2026-06-17 16:55:21 | INFO     | data.pipeline:46 | HON: Incremental fetch from 2026-06-17
+2026-06-17 16:55:22 | INFO     | data.pipeline:85 | HON: Stored 1 rows
+2026-06-17 16:55:22 | INFO     | data.pipeline:46 | AMD: Incremental fetch from 2026-06-17
+2026-06-17 16:55:22 | INFO     | data.pipeline:85 | HON: Stored 1 rows
+2026-06-17 16:55:22 | INFO     | data.pipeline:46 | AMD: Incremental fetch from 2026-06-17
+2026-06-17 16:55:22 | INFO     | data.pipeline:85 | AMD: Stored 1 rows
+2026-06-17 16:55:22 | INFO     | data.pipeline:46 | INTC: Incremental fetch from 2026-06-17
+2026-06-17 16:55:22 | INFO     | data.pipeline:85 | AMD: Stored 1 rows
+2026-06-17 16:55:22 | INFO     | data.pipeline:46 | INTC: Incremental fetch from 2026-06-17
+2026-06-17 16:55:22 | INFO     | data.pipeline:85 | INTC: Stored 1 rows
+2026-06-17 16:55:22 | INFO     | data.pipeline:85 | INTC: Stored 1 rows
+2026-06-17 16:55:22 | INFO     | data.pipeline:46 | AVGO: Incremental fetch from 2026-06-17
+2026-06-17 16:55:22 | INFO     | data.pipeline:46 | AVGO: Incremental fetch from 2026-06-17
+2026-06-17 16:55:22 | INFO     | data.pipeline:85 | AVGO: Stored 1 rows
+2026-06-17 16:55:22 | INFO     | data.pipeline:46 | QQQ: Incremental fetch from 2026-06-17
+2026-06-17 16:55:22 | INFO     | data.pipeline:85 | AVGO: Stored 1 rows
+2026-06-17 16:55:22 | INFO     | data.pipeline:46 | QQQ: Incremental fetch from 2026-06-17
+2026-06-17 16:55:22 | INFO     | data.pipeline:85 | QQQ: Stored 1 rows
+2026-06-17 16:55:22 | INFO     | data.pipeline:46 | IWM: Incremental fetch from 2026-06-17
+2026-06-17 16:55:22 | INFO     | data.pipeline:85 | QQQ: Stored 1 rows
+2026-06-17 16:55:22 | INFO     | data.pipeline:46 | IWM: Incremental fetch from 2026-06-17
+2026-06-17 16:55:22 | INFO     | data.pipeline:85 | IWM: Stored 1 rows
+2026-06-17 16:55:22 | INFO     | data.pipeline:46 | DIA: Incremental fetch from 2026-06-17
+2026-06-17 16:55:22 | INFO     | data.pipeline:85 | IWM: Stored 1 rows
+2026-06-17 16:55:22 | INFO     | data.pipeline:46 | DIA: Incremental fetch from 2026-06-17
+2026-06-17 16:55:22 | INFO     | data.pipeline:85 | DIA: Stored 1 rows
+2026-06-17 16:55:22 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-17 16:55:22 | INFO     | data.pipeline:85 | DIA: Stored 1 rows
+2026-06-17 16:55:22 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-17 16:55:22 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-18
+2026-06-17 16:55:22 | INFO     | data.pipeline:52 | SPY: Already up to date — skipping download.
+2026-06-17 16:55:22 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $741.02 | SMA50 $728.10 | SMA200 $686.90 | RSI 51.0
+2026-06-17 16:55:22 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $741.02 | SMA50 $728.10 | SMA200 $686.90 | RSI 51.0
+2026-06-17 16:55:22 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-18
+2026-06-17 16:55:22 | INFO     | data.pipeline:52 | SPY: Already up to date — skipping download.
+2026-06-17 16:55:22 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $741.02 | SMA50 $728.10 | SMA200 $686.90 | RSI 51.0
+2026-06-17 16:55:22 | INFO     | strategy.scanner:104 | Momentum scan: 27 symbols | Regime: TRENDING_UP
+2026-06-17 16:55:22 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $741.02 | SMA50 $728.10 | SMA200 $686.90 | RSI 51.0
+2026-06-17 16:55:22 | INFO     | strategy.scanner:106 | Momentum scan: 27 symbols | Regime: TRENDING_UP
+2026-06-17 16:55:25 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-17 16:55:25 | INFO     | utils.broker:19 | Portfolio value : $104,685.98
+2026-06-17 16:55:25 | INFO     | utils.broker:20 | Cash            : $74,500.90
+2026-06-17 16:55:25 | INFO     | utils.broker:21 | Buying power    : $382,521.82
+2026-06-17 16:55:25 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-17 16:55:25 | INFO     | utils.broker:19 | Portfolio value : $104,685.98
+2026-06-17 16:55:25 | INFO     | utils.broker:20 | Cash            : $74,500.90
+2026-06-17 16:55:25 | INFO     | utils.broker:21 | Buying power    : $382,521.82
+2026-06-17 16:55:25 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-17 16:55:25 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-06-18
+2026-06-17 16:55:25 | INFO     | data.pipeline:52 | AAPL: Already up to date — skipping download.
+2026-06-17 16:55:25 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-06-18
+2026-06-17 16:55:25 | INFO     | data.pipeline:52 | MSFT: Already up to date — skipping download.
+2026-06-17 16:55:25 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-06-18
+2026-06-17 16:55:25 | INFO     | data.pipeline:52 | GOOGL: Already up to date — skipping download.
+2026-06-17 16:55:25 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-06-18
+2026-06-17 16:55:25 | INFO     | data.pipeline:52 | AMZN: Already up to date — skipping download.
+2026-06-17 16:55:25 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-06-18
+2026-06-17 16:55:25 | INFO     | data.pipeline:52 | TSLA: Already up to date — skipping download.
+2026-06-17 16:55:25 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-06-18
+2026-06-17 16:55:25 | INFO     | data.pipeline:52 | NVDA: Already up to date — skipping download.
+2026-06-17 16:55:25 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-06-18
+2026-06-17 16:55:25 | INFO     | data.pipeline:52 | META: Already up to date — skipping download.
+2026-06-17 16:55:25 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-06-18
+2026-06-17 16:55:25 | INFO     | data.pipeline:52 | JPM: Already up to date — skipping download.
+2026-06-17 16:55:25 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-06-18
+2026-06-17 16:55:25 | INFO     | data.pipeline:52 | V: Already up to date — skipping download.
+2026-06-17 16:55:25 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-18
+2026-06-17 16:55:25 | INFO     | data.pipeline:52 | SPY: Already up to date — skipping download.
+2026-06-17 16:55:25 | INFO     | data.pipeline:46 | XOM: Incremental fetch from 2026-06-18
+2026-06-17 16:55:25 | INFO     | data.pipeline:52 | XOM: Already up to date — skipping download.
+2026-06-17 16:55:25 | INFO     | data.pipeline:46 | CVX: Incremental fetch from 2026-06-18
+2026-06-17 16:55:25 | INFO     | data.pipeline:52 | CVX: Already up to date — skipping download.
+2026-06-17 16:55:25 | INFO     | data.pipeline:46 | JNJ: Incremental fetch from 2026-06-18
+2026-06-17 16:55:25 | INFO     | data.pipeline:52 | JNJ: Already up to date — skipping download.
+2026-06-17 16:55:25 | INFO     | data.pipeline:46 | UNH: Incremental fetch from 2026-06-18
+2026-06-17 16:55:25 | INFO     | data.pipeline:52 | UNH: Already up to date — skipping download.
+2026-06-17 16:55:25 | INFO     | data.pipeline:46 | PFE: Incremental fetch from 2026-06-18
+2026-06-17 16:55:25 | INFO     | data.pipeline:52 | PFE: Already up to date — skipping download.
+2026-06-17 16:55:25 | INFO     | data.pipeline:46 | BAC: Incremental fetch from 2026-06-18
+2026-06-17 16:55:25 | INFO     | data.pipeline:52 | BAC: Already up to date — skipping download.
+2026-06-17 16:55:25 | INFO     | data.pipeline:46 | GS: Incremental fetch from 2026-06-18
+2026-06-17 16:55:25 | INFO     | data.pipeline:52 | GS: Already up to date — skipping download.
+2026-06-17 16:55:26 | INFO     | data.pipeline:46 | WFC: Incremental fetch from 2026-06-18
+2026-06-17 16:55:26 | INFO     | data.pipeline:52 | WFC: Already up to date — skipping download.
+2026-06-17 16:55:26 | INFO     | data.pipeline:46 | WMT: Incremental fetch from 2026-06-18
+2026-06-17 16:55:26 | INFO     | data.pipeline:52 | WMT: Already up to date — skipping download.
+2026-06-17 16:55:26 | INFO     | data.pipeline:46 | PG: Incremental fetch from 2026-06-18
+2026-06-17 16:55:26 | INFO     | data.pipeline:52 | PG: Already up to date — skipping download.
+2026-06-17 16:55:26 | INFO     | data.pipeline:46 | KO: Incremental fetch from 2026-06-18
+2026-06-17 16:55:26 | INFO     | data.pipeline:52 | KO: Already up to date — skipping download.
+2026-06-17 16:55:26 | INFO     | data.pipeline:46 | MCD: Incremental fetch from 2026-06-18
+2026-06-17 16:55:26 | INFO     | data.pipeline:52 | MCD: Already up to date — skipping download.
+2026-06-17 16:55:26 | INFO     | data.pipeline:46 | CAT: Incremental fetch from 2026-06-18
+2026-06-17 16:55:26 | INFO     | data.pipeline:52 | CAT: Already up to date — skipping download.
+2026-06-17 16:55:26 | INFO     | data.pipeline:46 | BA: Incremental fetch from 2026-06-18
+2026-06-17 16:55:26 | INFO     | data.pipeline:52 | BA: Already up to date — skipping download.
+2026-06-17 16:55:26 | INFO     | data.pipeline:46 | HON: Incremental fetch from 2026-06-18
+2026-06-17 16:55:26 | INFO     | data.pipeline:52 | HON: Already up to date — skipping download.
+2026-06-17 16:55:26 | INFO     | data.pipeline:46 | AMD: Incremental fetch from 2026-06-18
+2026-06-17 16:55:26 | INFO     | data.pipeline:52 | AMD: Already up to date — skipping download.
+2026-06-17 16:55:26 | INFO     | data.pipeline:46 | INTC: Incremental fetch from 2026-06-18
+2026-06-17 16:55:26 | INFO     | data.pipeline:52 | INTC: Already up to date — skipping download.
+2026-06-17 16:55:26 | INFO     | data.pipeline:46 | AVGO: Incremental fetch from 2026-06-18
+2026-06-17 16:55:26 | INFO     | data.pipeline:52 | AVGO: Already up to date — skipping download.
+2026-06-17 16:55:26 | INFO     | data.pipeline:46 | QQQ: Incremental fetch from 2026-06-18
+2026-06-17 16:55:26 | INFO     | data.pipeline:52 | QQQ: Already up to date — skipping download.
+2026-06-17 16:55:26 | INFO     | data.pipeline:46 | IWM: Incremental fetch from 2026-06-18
+2026-06-17 16:55:26 | INFO     | data.pipeline:52 | IWM: Already up to date — skipping download.
+2026-06-17 16:55:26 | INFO     | data.pipeline:46 | DIA: Incremental fetch from 2026-06-18
+2026-06-17 16:55:26 | INFO     | data.pipeline:52 | DIA: Already up to date — skipping download.
+2026-06-17 16:55:26 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-17 16:55:26 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $741.02 | SMA50 $728.10 | SMA200 $686.90 | RSI 51.0
+2026-06-17 16:55:26 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $741.02 | SMA50 $728.10 | SMA200 $686.90 | RSI 51.0
+2026-06-17 16:55:26 | INFO     | strategy.scanner:104 | Momentum scan: 27 symbols | Regime: TRENDING_UP
+2026-06-17 16:55:26 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-17 16:55:26 | INFO     | utils.broker:19 | Portfolio value : $104,685.98
+2026-06-17 16:55:26 | INFO     | utils.broker:20 | Cash            : $74,500.90
+2026-06-17 16:55:26 | INFO     | utils.broker:21 | Buying power    : $382,521.82
+2026-06-17 16:55:27 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-17 16:55:27 | INFO     | utils.broker:19 | Portfolio value : $104,685.98
+2026-06-17 16:55:27 | INFO     | utils.broker:20 | Cash            : $74,500.90
+2026-06-17 16:55:27 | INFO     | utils.broker:21 | Buying power    : $382,521.82
+2026-06-17 16:55:27 | INFO     | strategy.executor:30 | HON: Removing stale state — bracket order closed this position.
+2026-06-17 16:55:27 | INFO     | strategy.executor:30 | BAC: Removing stale state — bracket order closed this position.
+2026-06-17 16:55:27 | INFO     | strategy.executor:30 | KO: Removing stale state — bracket order closed this position.
+2026-06-18 09:30:44 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-18 09:30:44 | INFO     | utils.broker:19 | Portfolio value : $104,720.41
+2026-06-18 09:30:44 | INFO     | utils.broker:20 | Cash            : $74,500.85
+2026-06-18 09:30:44 | INFO     | utils.broker:21 | Buying power    : $382,618.17
+2026-06-18 09:30:44 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-18 09:30:44 | INFO     | utils.broker:19 | Portfolio value : $104,720.41
+2026-06-18 09:30:44 | INFO     | utils.broker:20 | Cash            : $74,500.85
+2026-06-18 09:30:44 | INFO     | utils.broker:21 | Buying power    : $382,618.17
+2026-06-18 09:30:44 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-18 09:30:44 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-18 09:30:44 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-06-18
+2026-06-18 09:30:44 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-06-18
+2026-06-18 09:30:46 | INFO     | data.pipeline:61 | AAPL: No new bars available yet.
+2026-06-18 09:30:46 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-06-18
+2026-06-18 09:30:46 | INFO     | data.pipeline:61 | AAPL: No new bars available yet.
+2026-06-18 09:30:46 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-06-18
+2026-06-18 09:30:46 | INFO     | data.pipeline:61 | MSFT: No new bars available yet.
+2026-06-18 09:30:46 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-06-18
+2026-06-18 09:30:46 | INFO     | data.pipeline:61 | MSFT: No new bars available yet.
+2026-06-18 09:30:46 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-06-18
+2026-06-18 09:30:46 | INFO     | data.pipeline:61 | GOOGL: No new bars available yet.
+2026-06-18 09:30:46 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-06-18
+2026-06-18 09:30:46 | INFO     | data.pipeline:61 | GOOGL: No new bars available yet.
+2026-06-18 09:30:46 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-06-18
+2026-06-18 09:30:46 | INFO     | data.pipeline:61 | AMZN: No new bars available yet.
+2026-06-18 09:30:46 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-06-18
+2026-06-18 09:30:46 | INFO     | data.pipeline:61 | AMZN: No new bars available yet.
+2026-06-18 09:30:46 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-06-18
+2026-06-18 09:30:46 | INFO     | data.pipeline:61 | TSLA: No new bars available yet.
+2026-06-18 09:30:46 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-06-18
+2026-06-18 09:30:46 | INFO     | data.pipeline:61 | TSLA: No new bars available yet.
+2026-06-18 09:30:46 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-06-18
+2026-06-18 09:30:46 | INFO     | data.pipeline:61 | NVDA: No new bars available yet.
+2026-06-18 09:30:46 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-06-18
+2026-06-18 09:30:46 | INFO     | data.pipeline:61 | NVDA: No new bars available yet.
+2026-06-18 09:30:46 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | META: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | META: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | JPM: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | V: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | JPM: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | V: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | SPY: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | XOM: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | SPY: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | XOM: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | XOM: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | CVX: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | XOM: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | CVX: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | CVX: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | JNJ: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | CVX: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | JNJ: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | JNJ: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | UNH: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | UNH: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | PFE: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | JNJ: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | UNH: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | PFE: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | BAC: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | BAC: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | GS: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | UNH: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | PFE: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | PFE: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | BAC: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | GS: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | WFC: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | BAC: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | GS: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | WFC: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | WMT: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | WMT: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | PG: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | GS: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | WFC: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | WFC: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | WMT: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | WMT: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | PG: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | PG: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | KO: Incremental fetch from 2026-06-18
+2026-06-18 09:30:47 | INFO     | data.pipeline:61 | KO: No new bars available yet.
+2026-06-18 09:30:47 | INFO     | data.pipeline:46 | MCD: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | PG: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | KO: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | KO: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | MCD: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | MCD: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | CAT: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | CAT: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | BA: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | BA: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | HON: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | MCD: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | CAT: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | CAT: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | BA: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | HON: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | AMD: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | AMD: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | INTC: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | BA: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | HON: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | INTC: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | AVGO: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | AVGO: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | QQQ: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | HON: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | AMD: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | QQQ: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | IWM: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | AMD: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | INTC: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | IWM: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | DIA: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | INTC: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | AVGO: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | DIA: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | AVGO: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | QQQ: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | QQQ: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | IWM: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | IWM: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | DIA: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | data.pipeline:61 | DIA: No new bars available yet.
+2026-06-18 09:30:48 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-18 09:30:48 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-18
+2026-06-18 09:30:48 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $741.02 | SMA50 $728.10 | SMA200 $686.90 | RSI 51.0
+2026-06-18 09:30:48 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $741.02 | SMA50 $728.10 | SMA200 $686.90 | RSI 51.0
+2026-06-18 09:30:48 | INFO     | strategy.scanner:104 | Momentum scan: 27 symbols | Regime: TRENDING_UP
+2026-06-18 09:30:49 | INFO     | data.pipeline:61 | SPY: No new bars available yet.
+2026-06-18 09:30:49 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $741.02 | SMA50 $728.10 | SMA200 $686.90 | RSI 51.0
+2026-06-18 09:30:49 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-18
+2026-06-18 09:30:49 | INFO     | data.pipeline:61 | SPY: No new bars available yet.
+2026-06-18 09:30:49 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $741.02 | SMA50 $728.10 | SMA200 $686.90 | RSI 51.0
+2026-06-18 09:30:49 | INFO     | strategy.scanner:106 | Momentum scan: 27 symbols | Regime: TRENDING_UP
+2026-06-18 09:30:53 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-18 09:30:53 | INFO     | utils.broker:19 | Portfolio value : $104,711.41
+2026-06-18 09:30:53 | INFO     | utils.broker:20 | Cash            : $74,500.85
+2026-06-18 09:30:53 | INFO     | utils.broker:21 | Buying power    : $382,592.97
+2026-06-18 09:30:53 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-18 09:30:53 | INFO     | utils.broker:19 | Portfolio value : $104,711.41
+2026-06-18 09:30:53 | INFO     | utils.broker:20 | Cash            : $74,500.85
+2026-06-18 09:30:53 | INFO     | utils.broker:21 | Buying power    : $382,592.97
+2026-06-18 09:30:54 | INFO     | strategy.executor:107 | Candidate: BUY JPM @ $333.56 | Score: 0.7 | ATR: 6.6227
+2026-06-18 09:30:54 | INFO     | strategy.executor:112 | JPM: Using live price $336.89 (last close was $333.56)
+2026-06-18 09:30:54 | INFO     | strategy.sizer:40 | Position size: 31 shares @ $336.89 | Stop: ATR-based (2.0x ATR=$6.62) | Risk: $410.61 | Value: $10443.59
+2026-06-18 09:30:54 | INFO     | utils.broker:88 | Placing bracket BUY: 31 shares of JPM | Stop: $323.64 | Target: $370.58
+2026-06-18 09:30:54 | INFO     | utils.broker:102 | Bracket order placed: 9e770bf3-00a1-4ccd-ab4d-e5168962e84b | JPM | buy 31
+2026-06-18 09:30:54 | INFO     | strategy.executor:145 | State saved for JPM: entry=$336.89 stop=$323.64 target=$370.58
+2026-06-18 09:30:54 | INFO     | strategy.executor:101 | GS: Sector 'Finance' already has 1 position(s) — skipping to avoid concentration.
+2026-06-18 09:30:54 | INFO     | strategy.executor:95 | Already holding CAT — skipping.
+2026-06-18 09:30:55 | INFO     | strategy.executor:119 | Candidate: BUY JPM @ $333.56 | Score: 0.7 | ATR: 6.6227
+2026-06-18 09:30:55 | INFO     | strategy.executor:124 | JPM: Using live price $336.89 (last close was $333.56)
+2026-06-18 09:30:55 | INFO     | strategy.sizer:40 | Position size: 31 shares @ $336.89 | Stop: ATR-based (2.0x ATR=$6.62) | Risk: $410.61 | Value: $10443.59
+2026-06-18 09:30:55 | INFO     | utils.broker:88 | Placing bracket BUY: 31 shares of JPM | Stop: $323.64 | Target: $370.58
+2026-06-18 09:30:55 | INFO     | utils.broker:102 | Bracket order placed: d7c6bd3c-f5ef-4f35-baf4-7a7da2f221e7 | JPM | buy 31
+2026-06-18 09:30:55 | INFO     | strategy.executor:157 | State saved for JPM: entry=$336.89 stop=$323.64 target=$370.58
+2026-06-18 09:30:55 | INFO     | strategy.executor:113 | GS: Sector 'Finance' already has 1 position(s) — skipping to avoid concentration.
+2026-06-18 09:30:55 | INFO     | strategy.executor:107 | Already holding CAT — skipping.
+2026-06-18 12:16:34 | ERROR    | utils.broker:23 | Failed to connect: HTTPSConnectionPool(host='paper-api.alpaca.markets', port=443): Max retries exceeded with url: /v2/account (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001E36560B530>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+2026-06-18 12:16:35 | ERROR    | utils.broker:23 | Failed to connect: HTTPSConnectionPool(host='paper-api.alpaca.markets', port=443): Max retries exceeded with url: /v2/account (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x00000262A264CA40>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))
+2026-06-18 12:25:05 | INFO     | utils.logger:13 | Logger initialized
+2026-06-18 12:25:14 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-18 12:25:14 | INFO     | utils.broker:19 | Portfolio value : $103,961.46
+2026-06-18 12:25:14 | INFO     | utils.broker:20 | Cash            : $73,635.42
+2026-06-18 12:25:14 | INFO     | utils.broker:21 | Buying power    : $379,454.59
+2026-06-18 12:25:14 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-18 12:25:14 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-06-18
+2026-06-18 12:25:15 | INFO     | data.pipeline:85 | AAPL: Stored 1 rows
+2026-06-18 12:25:15 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-06-18
+2026-06-18 12:25:15 | INFO     | data.pipeline:85 | MSFT: Stored 1 rows
+2026-06-18 12:25:15 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-06-18
+2026-06-18 12:25:15 | INFO     | data.pipeline:85 | GOOGL: Stored 1 rows
+2026-06-18 12:25:15 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-06-18
+2026-06-18 12:25:15 | INFO     | data.pipeline:85 | AMZN: Stored 1 rows
+2026-06-18 12:25:15 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-06-18
+2026-06-18 12:25:15 | INFO     | data.pipeline:85 | TSLA: Stored 1 rows
+2026-06-18 12:25:15 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-06-18
+2026-06-18 12:25:15 | INFO     | data.pipeline:85 | NVDA: Stored 1 rows
+2026-06-18 12:25:15 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-06-18
+2026-06-18 12:25:15 | INFO     | data.pipeline:85 | META: Stored 1 rows
+2026-06-18 12:25:15 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-06-18
+2026-06-18 12:25:16 | INFO     | data.pipeline:85 | JPM: Stored 1 rows
+2026-06-18 12:25:16 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-06-18
+2026-06-18 12:25:16 | INFO     | data.pipeline:85 | V: Stored 1 rows
+2026-06-18 12:25:16 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-18
+2026-06-18 12:25:16 | INFO     | data.pipeline:85 | SPY: Stored 1 rows
+2026-06-18 12:25:16 | INFO     | data.pipeline:46 | XOM: Incremental fetch from 2026-06-18
+2026-06-18 12:25:16 | INFO     | data.pipeline:85 | XOM: Stored 1 rows
+2026-06-18 12:25:16 | INFO     | data.pipeline:46 | CVX: Incremental fetch from 2026-06-18
+2026-06-18 12:25:16 | INFO     | data.pipeline:85 | CVX: Stored 1 rows
+2026-06-18 12:25:16 | INFO     | data.pipeline:46 | JNJ: Incremental fetch from 2026-06-18
+2026-06-18 12:25:16 | INFO     | data.pipeline:85 | JNJ: Stored 1 rows
+2026-06-18 12:25:16 | INFO     | data.pipeline:46 | UNH: Incremental fetch from 2026-06-18
+2026-06-18 12:25:16 | INFO     | data.pipeline:85 | UNH: Stored 1 rows
+2026-06-18 12:25:16 | INFO     | data.pipeline:46 | PFE: Incremental fetch from 2026-06-18
+2026-06-18 12:25:16 | INFO     | data.pipeline:85 | PFE: Stored 1 rows
+2026-06-18 12:25:16 | INFO     | data.pipeline:46 | BAC: Incremental fetch from 2026-06-18
+2026-06-18 12:25:16 | INFO     | data.pipeline:85 | BAC: Stored 1 rows
+2026-06-18 12:25:16 | INFO     | data.pipeline:46 | GS: Incremental fetch from 2026-06-18
+2026-06-18 12:25:16 | INFO     | data.pipeline:85 | GS: Stored 1 rows
+2026-06-18 12:25:16 | INFO     | data.pipeline:46 | WFC: Incremental fetch from 2026-06-18
+2026-06-18 12:25:16 | INFO     | data.pipeline:85 | WFC: Stored 1 rows
+2026-06-18 12:25:16 | INFO     | data.pipeline:46 | WMT: Incremental fetch from 2026-06-18
+2026-06-18 12:25:16 | INFO     | data.pipeline:85 | WMT: Stored 1 rows
+2026-06-18 12:25:16 | INFO     | data.pipeline:46 | PG: Incremental fetch from 2026-06-18
+2026-06-18 12:25:16 | INFO     | data.pipeline:85 | PG: Stored 1 rows
+2026-06-18 12:25:16 | INFO     | data.pipeline:46 | KO: Incremental fetch from 2026-06-18
+2026-06-18 12:25:17 | INFO     | data.pipeline:85 | KO: Stored 1 rows
+2026-06-18 12:25:17 | INFO     | data.pipeline:46 | MCD: Incremental fetch from 2026-06-18
+2026-06-18 12:25:17 | INFO     | data.pipeline:85 | MCD: Stored 1 rows
+2026-06-18 12:25:17 | INFO     | data.pipeline:46 | CAT: Incremental fetch from 2026-06-18
+2026-06-18 12:25:17 | INFO     | data.pipeline:85 | CAT: Stored 1 rows
+2026-06-18 12:25:17 | INFO     | data.pipeline:46 | BA: Incremental fetch from 2026-06-18
+2026-06-18 12:25:17 | INFO     | data.pipeline:85 | BA: Stored 1 rows
+2026-06-18 12:25:17 | INFO     | data.pipeline:46 | HON: Incremental fetch from 2026-06-18
+2026-06-18 12:25:17 | INFO     | data.pipeline:85 | HON: Stored 1 rows
+2026-06-18 12:25:17 | INFO     | data.pipeline:46 | AMD: Incremental fetch from 2026-06-18
+2026-06-18 12:25:17 | INFO     | data.pipeline:85 | AMD: Stored 1 rows
+2026-06-18 12:25:17 | INFO     | data.pipeline:46 | INTC: Incremental fetch from 2026-06-18
+2026-06-18 12:25:17 | INFO     | data.pipeline:85 | INTC: Stored 1 rows
+2026-06-18 12:25:17 | INFO     | data.pipeline:46 | AVGO: Incremental fetch from 2026-06-18
+2026-06-18 12:25:17 | INFO     | data.pipeline:85 | AVGO: Stored 1 rows
+2026-06-18 12:25:17 | INFO     | data.pipeline:46 | QQQ: Incremental fetch from 2026-06-18
+2026-06-18 12:25:17 | INFO     | data.pipeline:85 | QQQ: Stored 1 rows
+2026-06-18 12:25:17 | INFO     | data.pipeline:46 | IWM: Incremental fetch from 2026-06-18
+2026-06-18 12:25:17 | INFO     | data.pipeline:85 | IWM: Stored 1 rows
+2026-06-18 12:25:17 | INFO     | data.pipeline:46 | DIA: Incremental fetch from 2026-06-18
+2026-06-18 12:25:17 | INFO     | data.pipeline:85 | DIA: Stored 1 rows
+2026-06-18 12:25:17 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-18 12:25:17 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-19
+2026-06-18 12:25:17 | INFO     | data.pipeline:52 | SPY: Already up to date — skipping download.
+2026-06-18 12:25:17 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $746.50 | SMA50 $729.51 | SMA200 $687.45 | RSI 54.2
+2026-06-18 12:25:17 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-19
+2026-06-18 12:25:17 | INFO     | data.pipeline:52 | SPY: Already up to date — skipping download.
+2026-06-18 12:25:17 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $746.50 | SMA50 $729.51 | SMA200 $687.45 | RSI 54.2
+2026-06-18 12:25:17 | INFO     | strategy.scanner:106 | Momentum scan: 27 symbols | Regime: TRENDING_UP
+2026-06-18 12:25:21 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-18 12:25:21 | INFO     | utils.broker:19 | Portfolio value : $103,956.13
+2026-06-18 12:25:21 | INFO     | utils.broker:20 | Cash            : $73,635.42
+2026-06-18 12:25:21 | INFO     | utils.broker:21 | Buying power    : $379,439.67
+2026-06-18 12:25:21 | INFO     | strategy.executor:30 | JNJ: Removing stale state — bracket order closed this position.
+2026-06-18 12:25:22 | INFO     | strategy.executor:107 | Already holding CAT — skipping.
+2026-06-18 12:25:22 | INFO     | strategy.executor:119 | Candidate: BUY INTC @ $132.26 | Score: 0.6129 | ATR: 9.4324
+2026-06-18 12:25:22 | INFO     | strategy.executor:124 | INTC: Using live price $132.38 (last close was $132.26)
+2026-06-18 12:25:22 | INFO     | strategy.sizer:40 | Position size: 78 shares @ $132.38 | Stop: ATR-based (2.0x ATR=$9.43) | Risk: $1471.45 | Value: $10325.64
+2026-06-18 12:25:22 | INFO     | utils.broker:88 | Placing bracket BUY: 78 shares of INTC | Stop: $113.52 | Target: $145.62
+2026-06-18 12:25:22 | INFO     | utils.broker:102 | Bracket order placed: 88c99466-498e-408c-92d3-493a4c2e95b0 | INTC | buy 78
+2026-06-18 12:25:22 | INFO     | strategy.executor:157 | State saved for INTC: entry=$132.38 stop=$113.52 target=$145.62
+2026-06-18 12:25:22 | INFO     | strategy.executor:113 | GS: Sector 'Finance' already has 1 position(s) — skipping to avoid concentration.
+2026-06-18 15:30:16 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-18 15:30:16 | INFO     | utils.broker:19 | Portfolio value : $103,883.58
+2026-06-18 15:30:16 | INFO     | utils.broker:20 | Cash            : $63,312.12
+2026-06-18 15:30:16 | INFO     | utils.broker:21 | Buying power    : $366,848.57
+2026-06-18 15:30:16 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | AAPL: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | MSFT: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | GOOGL: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | AMZN: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | TSLA: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | NVDA: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | META: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | JPM: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | V: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | SPY: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | XOM: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | XOM: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | CVX: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | CVX: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | JNJ: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | JNJ: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | UNH: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | UNH: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | PFE: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | PFE: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | BAC: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | BAC: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | GS: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | GS: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | WFC: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | WFC: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | WMT: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | WMT: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | PG: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | PG: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | KO: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | KO: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | MCD: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | MCD: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | CAT: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | CAT: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | BA: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | BA: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | HON: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | HON: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | AMD: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | AMD: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | INTC: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | INTC: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | AVGO: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | AVGO: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | QQQ: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | QQQ: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | IWM: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | IWM: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | DIA: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | DIA: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | SPY: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $746.50 | SMA50 $729.51 | SMA200 $687.45 | RSI 54.2
+2026-06-18 15:30:16 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-19
+2026-06-18 15:30:16 | INFO     | data.pipeline:52 | SPY: Already up to date — skipping download.
+2026-06-18 15:30:16 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $746.50 | SMA50 $729.51 | SMA200 $687.45 | RSI 54.2
+2026-06-18 15:30:16 | INFO     | strategy.scanner:106 | Momentum scan: 27 symbols | Regime: TRENDING_UP
+2026-06-18 15:30:18 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-18 15:30:18 | INFO     | utils.broker:19 | Portfolio value : $103,881.09
+2026-06-18 15:30:18 | INFO     | utils.broker:20 | Cash            : $63,312.12
+2026-06-18 15:30:18 | INFO     | utils.broker:21 | Buying power    : $366,841.60
+2026-06-19 11:04:02 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-19 11:04:02 | INFO     | utils.broker:19 | Portfolio value : $103,785.15
+2026-06-19 11:04:02 | INFO     | utils.broker:20 | Cash            : $63,312.09
+2026-06-19 11:04:02 | INFO     | utils.broker:21 | Buying power    : $366,572.93
+2026-06-19 11:04:02 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-19 11:04:02 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-06-19
+2026-06-19 11:04:03 | INFO     | data.pipeline:61 | AAPL: No new bars available yet.
+2026-06-19 11:04:03 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-06-19
+2026-06-19 11:04:03 | INFO     | data.pipeline:61 | MSFT: No new bars available yet.
+2026-06-19 11:04:03 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-06-19
+2026-06-19 11:04:03 | INFO     | data.pipeline:61 | GOOGL: No new bars available yet.
+2026-06-19 11:04:03 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-06-19
+2026-06-19 11:04:03 | INFO     | data.pipeline:61 | AMZN: No new bars available yet.
+2026-06-19 11:04:03 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-06-19
+2026-06-19 11:04:03 | INFO     | data.pipeline:61 | TSLA: No new bars available yet.
+2026-06-19 11:04:03 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-06-19
+2026-06-19 11:04:04 | INFO     | data.pipeline:61 | NVDA: No new bars available yet.
+2026-06-19 11:04:04 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-06-19
+2026-06-19 11:04:04 | INFO     | data.pipeline:61 | META: No new bars available yet.
+2026-06-19 11:04:04 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-06-19
+2026-06-19 11:04:04 | INFO     | data.pipeline:61 | JPM: No new bars available yet.
+2026-06-19 11:04:04 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-06-19
+2026-06-19 11:04:04 | INFO     | data.pipeline:61 | V: No new bars available yet.
+2026-06-19 11:04:04 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-19
+2026-06-19 11:04:04 | INFO     | data.pipeline:61 | SPY: No new bars available yet.
+2026-06-19 11:04:04 | INFO     | data.pipeline:46 | XOM: Incremental fetch from 2026-06-19
+2026-06-19 11:04:04 | INFO     | data.pipeline:61 | XOM: No new bars available yet.
+2026-06-19 11:04:04 | INFO     | data.pipeline:46 | CVX: Incremental fetch from 2026-06-19
+2026-06-19 11:04:04 | INFO     | data.pipeline:61 | CVX: No new bars available yet.
+2026-06-19 11:04:04 | INFO     | data.pipeline:46 | JNJ: Incremental fetch from 2026-06-19
+2026-06-19 11:04:04 | INFO     | data.pipeline:61 | JNJ: No new bars available yet.
+2026-06-19 11:04:04 | INFO     | data.pipeline:46 | UNH: Incremental fetch from 2026-06-19
+2026-06-19 11:04:04 | INFO     | data.pipeline:61 | UNH: No new bars available yet.
+2026-06-19 11:04:04 | INFO     | data.pipeline:46 | PFE: Incremental fetch from 2026-06-19
+2026-06-19 11:04:04 | INFO     | data.pipeline:61 | PFE: No new bars available yet.
+2026-06-19 11:04:04 | INFO     | data.pipeline:46 | BAC: Incremental fetch from 2026-06-19
+2026-06-19 11:04:04 | INFO     | data.pipeline:61 | BAC: No new bars available yet.
+2026-06-19 11:04:04 | INFO     | data.pipeline:46 | GS: Incremental fetch from 2026-06-19
+2026-06-19 11:04:04 | INFO     | data.pipeline:61 | GS: No new bars available yet.
+2026-06-19 11:04:05 | INFO     | data.pipeline:46 | WFC: Incremental fetch from 2026-06-19
+2026-06-19 11:04:05 | INFO     | data.pipeline:61 | WFC: No new bars available yet.
+2026-06-19 11:04:05 | INFO     | data.pipeline:46 | WMT: Incremental fetch from 2026-06-19
+2026-06-19 11:04:05 | INFO     | data.pipeline:61 | WMT: No new bars available yet.
+2026-06-19 11:04:05 | INFO     | data.pipeline:46 | PG: Incremental fetch from 2026-06-19
+2026-06-19 11:04:05 | INFO     | data.pipeline:61 | PG: No new bars available yet.
+2026-06-19 11:04:05 | INFO     | data.pipeline:46 | KO: Incremental fetch from 2026-06-19
+2026-06-19 11:04:05 | INFO     | data.pipeline:61 | KO: No new bars available yet.
+2026-06-19 11:04:05 | INFO     | data.pipeline:46 | MCD: Incremental fetch from 2026-06-19
+2026-06-19 11:04:05 | INFO     | data.pipeline:61 | MCD: No new bars available yet.
+2026-06-19 11:04:05 | INFO     | data.pipeline:46 | CAT: Incremental fetch from 2026-06-19
+2026-06-19 11:04:05 | INFO     | data.pipeline:61 | CAT: No new bars available yet.
+2026-06-19 11:04:05 | INFO     | data.pipeline:46 | BA: Incremental fetch from 2026-06-19
+2026-06-19 11:04:05 | INFO     | data.pipeline:61 | BA: No new bars available yet.
+2026-06-19 11:04:05 | INFO     | data.pipeline:46 | HON: Incremental fetch from 2026-06-19
+2026-06-19 11:04:05 | INFO     | data.pipeline:61 | HON: No new bars available yet.
+2026-06-19 11:04:05 | INFO     | data.pipeline:46 | AMD: Incremental fetch from 2026-06-19
+2026-06-19 11:04:05 | INFO     | data.pipeline:61 | AMD: No new bars available yet.
+2026-06-19 11:04:05 | INFO     | data.pipeline:46 | INTC: Incremental fetch from 2026-06-19
+2026-06-19 11:04:05 | INFO     | data.pipeline:61 | INTC: No new bars available yet.
+2026-06-19 11:04:05 | INFO     | data.pipeline:46 | AVGO: Incremental fetch from 2026-06-19
+2026-06-19 11:04:06 | INFO     | data.pipeline:61 | AVGO: No new bars available yet.
+2026-06-19 11:04:06 | INFO     | data.pipeline:46 | QQQ: Incremental fetch from 2026-06-19
+2026-06-19 11:04:06 | INFO     | data.pipeline:61 | QQQ: No new bars available yet.
+2026-06-19 11:04:06 | INFO     | data.pipeline:46 | IWM: Incremental fetch from 2026-06-19
+2026-06-19 11:04:06 | INFO     | data.pipeline:61 | IWM: No new bars available yet.
+2026-06-19 11:04:06 | INFO     | data.pipeline:46 | DIA: Incremental fetch from 2026-06-19
+2026-06-19 11:04:06 | INFO     | data.pipeline:61 | DIA: No new bars available yet.
+2026-06-19 11:04:06 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-19 11:04:06 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-19
+2026-06-19 11:04:08 | INFO     | data.pipeline:61 | SPY: No new bars available yet.
+2026-06-19 11:04:09 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $746.50 | SMA50 $729.51 | SMA200 $687.45 | RSI 54.2
+2026-06-19 11:04:09 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-19
+2026-06-19 11:04:09 | INFO     | data.pipeline:61 | SPY: No new bars available yet.
+2026-06-19 11:04:09 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $746.50 | SMA50 $729.51 | SMA200 $687.45 | RSI 54.2
+2026-06-19 11:04:09 | INFO     | strategy.scanner:106 | Momentum scan: 27 symbols | Regime: TRENDING_UP
+2026-06-19 11:04:12 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-19 11:04:12 | INFO     | utils.broker:19 | Portfolio value : $103,785.15
+2026-06-19 11:04:12 | INFO     | utils.broker:20 | Cash            : $63,312.09
+2026-06-19 11:04:12 | INFO     | utils.broker:21 | Buying power    : $366,572.93
+2026-06-23 09:40:00 | INFO     | utils.logger:13 | Logger initialized
+2026-06-23 09:40:09 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-23 09:40:09 | INFO     | utils.broker:19 | Portfolio value : $103,820.62
+2026-06-23 09:40:09 | INFO     | utils.broker:20 | Cash            : $63,312.09
+2026-06-23 09:40:09 | INFO     | utils.broker:21 | Buying power    : $366,672.25
+2026-06-23 09:40:10 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-23 09:40:10 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-06-19
+2026-06-23 09:40:11 | INFO     | data.pipeline:85 | AAPL: Stored 2 rows
+2026-06-23 09:40:11 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-06-19
+2026-06-23 09:40:11 | INFO     | data.pipeline:85 | MSFT: Stored 2 rows
+2026-06-23 09:40:11 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-06-19
+2026-06-23 09:40:11 | INFO     | data.pipeline:85 | GOOGL: Stored 2 rows
+2026-06-23 09:40:11 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-06-19
+2026-06-23 09:40:12 | INFO     | data.pipeline:85 | AMZN: Stored 2 rows
+2026-06-23 09:40:12 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-06-19
+2026-06-23 09:40:12 | INFO     | data.pipeline:85 | TSLA: Stored 2 rows
+2026-06-23 09:40:12 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-06-19
+2026-06-23 09:40:12 | INFO     | data.pipeline:85 | NVDA: Stored 2 rows
+2026-06-23 09:40:12 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-06-19
+2026-06-23 09:40:12 | INFO     | data.pipeline:85 | META: Stored 2 rows
+2026-06-23 09:40:12 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-06-19
+2026-06-23 09:40:12 | INFO     | data.pipeline:85 | JPM: Stored 2 rows
+2026-06-23 09:40:12 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-06-19
+2026-06-23 09:40:12 | INFO     | data.pipeline:85 | V: Stored 2 rows
+2026-06-23 09:40:12 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-19
+2026-06-23 09:40:12 | INFO     | data.pipeline:85 | SPY: Stored 2 rows
+2026-06-23 09:40:12 | INFO     | data.pipeline:46 | XOM: Incremental fetch from 2026-06-19
+2026-06-23 09:40:12 | INFO     | data.pipeline:85 | XOM: Stored 2 rows
+2026-06-23 09:40:12 | INFO     | data.pipeline:46 | CVX: Incremental fetch from 2026-06-19
+2026-06-23 09:40:12 | INFO     | data.pipeline:85 | CVX: Stored 2 rows
+2026-06-23 09:40:12 | INFO     | data.pipeline:46 | JNJ: Incremental fetch from 2026-06-19
+2026-06-23 09:40:12 | INFO     | data.pipeline:85 | JNJ: Stored 2 rows
+2026-06-23 09:40:12 | INFO     | data.pipeline:46 | UNH: Incremental fetch from 2026-06-19
+2026-06-23 09:40:12 | INFO     | data.pipeline:85 | UNH: Stored 2 rows
+2026-06-23 09:40:12 | INFO     | data.pipeline:46 | PFE: Incremental fetch from 2026-06-19
+2026-06-23 09:40:12 | INFO     | data.pipeline:85 | PFE: Stored 2 rows
+2026-06-23 09:40:12 | INFO     | data.pipeline:46 | BAC: Incremental fetch from 2026-06-19
+2026-06-23 09:40:12 | INFO     | data.pipeline:85 | BAC: Stored 2 rows
+2026-06-23 09:40:12 | INFO     | data.pipeline:46 | GS: Incremental fetch from 2026-06-19
+2026-06-23 09:40:12 | INFO     | data.pipeline:85 | GS: Stored 2 rows
+2026-06-23 09:40:12 | INFO     | data.pipeline:46 | WFC: Incremental fetch from 2026-06-19
+2026-06-23 09:40:12 | INFO     | data.pipeline:85 | WFC: Stored 2 rows
+2026-06-23 09:40:12 | INFO     | data.pipeline:46 | WMT: Incremental fetch from 2026-06-19
+2026-06-23 09:40:12 | INFO     | data.pipeline:85 | WMT: Stored 2 rows
+2026-06-23 09:40:12 | INFO     | data.pipeline:46 | PG: Incremental fetch from 2026-06-19
+2026-06-23 09:40:13 | INFO     | data.pipeline:85 | PG: Stored 2 rows
+2026-06-23 09:40:13 | INFO     | data.pipeline:46 | KO: Incremental fetch from 2026-06-19
+2026-06-23 09:40:13 | INFO     | data.pipeline:85 | KO: Stored 2 rows
+2026-06-23 09:40:13 | INFO     | data.pipeline:46 | MCD: Incremental fetch from 2026-06-19
+2026-06-23 09:40:13 | INFO     | data.pipeline:85 | MCD: Stored 2 rows
+2026-06-23 09:40:13 | INFO     | data.pipeline:46 | CAT: Incremental fetch from 2026-06-19
+2026-06-23 09:40:13 | INFO     | data.pipeline:85 | CAT: Stored 2 rows
+2026-06-23 09:40:13 | INFO     | data.pipeline:46 | BA: Incremental fetch from 2026-06-19
+2026-06-23 09:40:13 | INFO     | data.pipeline:85 | BA: Stored 2 rows
+2026-06-23 09:40:13 | INFO     | data.pipeline:46 | HON: Incremental fetch from 2026-06-19
+2026-06-23 09:40:13 | INFO     | data.pipeline:85 | HON: Stored 2 rows
+2026-06-23 09:40:13 | INFO     | data.pipeline:46 | AMD: Incremental fetch from 2026-06-19
+2026-06-23 09:40:13 | INFO     | data.pipeline:85 | AMD: Stored 2 rows
+2026-06-23 09:40:13 | INFO     | data.pipeline:46 | INTC: Incremental fetch from 2026-06-19
+2026-06-23 09:40:13 | INFO     | data.pipeline:85 | INTC: Stored 2 rows
+2026-06-23 09:40:13 | INFO     | data.pipeline:46 | AVGO: Incremental fetch from 2026-06-19
+2026-06-23 09:40:13 | INFO     | data.pipeline:85 | AVGO: Stored 2 rows
+2026-06-23 09:40:13 | INFO     | data.pipeline:46 | QQQ: Incremental fetch from 2026-06-19
+2026-06-23 09:40:13 | INFO     | data.pipeline:85 | QQQ: Stored 2 rows
+2026-06-23 09:40:13 | INFO     | data.pipeline:46 | IWM: Incremental fetch from 2026-06-19
+2026-06-23 09:40:13 | INFO     | data.pipeline:85 | IWM: Stored 2 rows
+2026-06-23 09:40:13 | INFO     | data.pipeline:46 | DIA: Incremental fetch from 2026-06-19
+2026-06-23 09:40:13 | INFO     | data.pipeline:85 | DIA: Stored 2 rows
+2026-06-23 09:40:13 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-23 09:40:13 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-24
+2026-06-23 09:40:13 | INFO     | data.pipeline:52 | SPY: Already up to date — skipping download.
+2026-06-23 09:40:13 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $734.33 | SMA50 $731.85 | SMA200 $688.42 | RSI 46.6
+2026-06-23 09:40:13 | INFO     | data.pipeline:46 | SPY: Incremental fetch from 2026-06-24
+2026-06-23 09:40:13 | INFO     | data.pipeline:52 | SPY: Already up to date — skipping download.
+2026-06-23 09:40:13 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $734.33 | SMA50 $731.85 | SMA200 $688.42 | RSI 46.6
+2026-06-23 09:40:13 | INFO     | strategy.scanner:106 | Momentum scan: 27 symbols | Regime: TRENDING_UP
+2026-06-23 09:40:17 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-06-23 09:40:17 | INFO     | utils.broker:19 | Portfolio value : $103,846.74
+2026-06-23 09:40:17 | INFO     | utils.broker:20 | Cash            : $63,312.09
+2026-06-23 09:40:17 | INFO     | utils.broker:21 | Buying power    : $366,745.38
+2026-06-23 09:40:17 | INFO     | strategy.executor:119 | Candidate: BUY JNJ @ $235.83 | Score: 0.3078 | ATR: 4.5946
+2026-06-23 09:40:17 | INFO     | strategy.executor:124 | JNJ: Using live price $235.84 (last close was $235.83)
+2026-06-23 09:40:17 | INFO     | strategy.sizer:40 | Position size: 44 shares @ $235.84 | Stop: ATR-based (2.0x ATR=$4.59) | Risk: $404.32 | Value: $10376.96
+2026-06-23 09:40:17 | INFO     | utils.broker:88 | Placing bracket BUY: 44 shares of JNJ | Stop: $226.65 | Target: $259.42
+2026-06-23 09:40:17 | INFO     | utils.broker:102 | Bracket order placed: 877a05f4-022f-4b91-aafa-5886db0a0786 | JNJ | buy 44
+2026-06-23 09:40:17 | INFO     | strategy.executor:157 | State saved for JNJ: entry=$235.84 stop=$226.65 target=$259.42
+2026-06-23 09:40:17 | INFO     | strategy.executor:119 | Candidate: BUY KO @ $80.19 | Score: 0.2464 | ATR: 1.4834
+2026-06-23 09:40:17 | INFO     | strategy.executor:124 | KO: Using live price $80.15 (last close was $80.19)
+2026-06-23 09:40:17 | INFO     | strategy.sizer:40 | Position size: 129 shares @ $80.15 | Stop: ATR-based (2.0x ATR=$1.48) | Risk: $382.72 | Value: $10339.35
+2026-06-23 09:40:17 | INFO     | utils.broker:88 | Placing bracket BUY: 129 shares of KO | Stop: $77.18 | Target: $88.17
+2026-06-23 09:40:18 | INFO     | utils.broker:102 | Bracket order placed: 86f8a93f-b3a0-43c1-8099-985e60514a43 | KO | buy 129
+2026-06-23 09:40:18 | INFO     | strategy.executor:157 | State saved for KO: entry=$80.15 stop=$77.18 target=$88.17
+2026-06-26 18:37:44 | INFO     | utils.logger:13 | Logger initialized
+2026-06-26 18:37:44 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-26 18:37:45 | INFO     | data.pipeline:46 | AAPL: Incremental fetch from 2026-06-24
+2026-06-26 18:37:45 | INFO     | data.pipeline:85 | AAPL: Stored 3 rows
+2026-06-26 18:37:45 | INFO     | data.pipeline:46 | MSFT: Incremental fetch from 2026-06-24
+2026-06-26 18:37:45 | INFO     | data.pipeline:85 | MSFT: Stored 3 rows
+2026-06-26 18:37:45 | INFO     | data.pipeline:46 | GOOGL: Incremental fetch from 2026-06-24
+2026-06-26 18:37:45 | INFO     | data.pipeline:85 | GOOGL: Stored 3 rows
+2026-06-26 18:37:45 | INFO     | data.pipeline:46 | AMZN: Incremental fetch from 2026-06-24
+2026-06-26 18:37:45 | INFO     | data.pipeline:85 | AMZN: Stored 3 rows
+2026-06-26 18:37:45 | INFO     | data.pipeline:46 | NVDA: Incremental fetch from 2026-06-24
+2026-06-26 18:37:45 | INFO     | data.pipeline:85 | NVDA: Stored 3 rows
+2026-06-26 18:37:45 | INFO     | data.pipeline:46 | META: Incremental fetch from 2026-06-24
+2026-06-26 18:37:45 | INFO     | data.pipeline:85 | META: Stored 3 rows
+2026-06-26 18:37:45 | INFO     | data.pipeline:46 | AMD: Incremental fetch from 2026-06-24
+2026-06-26 18:37:45 | INFO     | data.pipeline:85 | AMD: Stored 3 rows
+2026-06-26 18:37:45 | INFO     | data.pipeline:46 | AVGO: Incremental fetch from 2026-06-24
+2026-06-26 18:37:46 | INFO     | data.pipeline:85 | AVGO: Stored 3 rows
+2026-06-26 18:37:46 | INFO     | data.pipeline:46 | INTC: Incremental fetch from 2026-06-24
+2026-06-26 18:37:46 | INFO     | data.pipeline:85 | INTC: Stored 3 rows
+2026-06-26 18:37:46 | INFO     | data.pipeline:49 | NOW: Full historical fetch from 2023-06-27
+2026-06-26 18:37:46 | INFO     | data.pipeline:85 | NOW: Stored 753 rows
+2026-06-26 18:37:46 | INFO     | data.pipeline:49 | CRWD: Full historical fetch from 2023-06-27
+2026-06-26 18:37:46 | INFO     | data.pipeline:85 | CRWD: Stored 753 rows
+2026-06-26 18:37:46 | INFO     | data.pipeline:49 | CRM: Full historical fetch from 2023-06-27
+2026-06-26 18:37:46 | INFO     | data.pipeline:85 | CRM: Stored 753 rows
+2026-06-26 18:37:46 | INFO     | data.pipeline:49 | ORCL: Full historical fetch from 2023-06-27
+2026-06-26 18:37:46 | INFO     | data.pipeline:85 | ORCL: Stored 753 rows
+2026-06-26 18:37:46 | INFO     | data.pipeline:49 | QCOM: Full historical fetch from 2023-06-27
+2026-06-26 18:37:46 | INFO     | data.pipeline:85 | QCOM: Stored 753 rows
+2026-06-26 18:37:46 | INFO     | data.pipeline:49 | AMAT: Full historical fetch from 2023-06-27
+2026-06-26 18:37:46 | INFO     | data.pipeline:85 | AMAT: Stored 753 rows
+2026-06-26 18:37:46 | INFO     | data.pipeline:46 | TSLA: Incremental fetch from 2026-06-24
+2026-06-26 18:37:46 | INFO     | data.pipeline:85 | TSLA: Stored 3 rows
+2026-06-26 18:37:46 | INFO     | data.pipeline:46 | MCD: Incremental fetch from 2026-06-24
+2026-06-26 18:37:47 | INFO     | data.pipeline:85 | MCD: Stored 3 rows
+2026-06-26 18:37:47 | INFO     | data.pipeline:46 | KO: Incremental fetch from 2026-06-24
+2026-06-26 18:37:47 | INFO     | data.pipeline:85 | KO: Stored 3 rows
+2026-06-26 18:37:47 | INFO     | data.pipeline:46 | WMT: Incremental fetch from 2026-06-24
+2026-06-26 18:37:47 | INFO     | data.pipeline:85 | WMT: Stored 3 rows
+2026-06-26 18:37:47 | INFO     | data.pipeline:46 | PG: Incremental fetch from 2026-06-24
+2026-06-26 18:37:47 | INFO     | data.pipeline:85 | PG: Stored 3 rows
+2026-06-26 18:37:47 | INFO     | data.pipeline:49 | COST: Full historical fetch from 2023-06-27
+2026-06-26 18:37:47 | INFO     | data.pipeline:85 | COST: Stored 753 rows
+2026-06-26 18:37:47 | INFO     | data.pipeline:49 | NKE: Full historical fetch from 2023-06-27
+2026-06-26 18:37:47 | INFO     | data.pipeline:85 | NKE: Stored 753 rows
+2026-06-26 18:37:47 | INFO     | data.pipeline:49 | SBUX: Full historical fetch from 2023-06-27
+2026-06-26 18:37:47 | INFO     | data.pipeline:85 | SBUX: Stored 753 rows
+2026-06-26 18:37:47 | INFO     | data.pipeline:49 | TGT: Full historical fetch from 2023-06-27
+2026-06-26 18:37:47 | INFO     | data.pipeline:85 | TGT: Stored 753 rows
+2026-06-26 18:37:47 | INFO     | data.pipeline:49 | LULU: Full historical fetch from 2023-06-27
+2026-06-26 18:37:47 | INFO     | data.pipeline:85 | LULU: Stored 753 rows
+2026-06-26 18:37:47 | INFO     | data.pipeline:46 | JPM: Incremental fetch from 2026-06-24
+2026-06-26 18:37:48 | INFO     | data.pipeline:85 | JPM: Stored 3 rows
+2026-06-26 18:37:48 | INFO     | data.pipeline:46 | BAC: Incremental fetch from 2026-06-24
+2026-06-26 18:37:48 | INFO     | data.pipeline:85 | BAC: Stored 3 rows
+2026-06-26 18:37:48 | INFO     | data.pipeline:46 | GS: Incremental fetch from 2026-06-24
+2026-06-26 18:37:48 | INFO     | data.pipeline:85 | GS: Stored 3 rows
+2026-06-26 18:37:48 | INFO     | data.pipeline:46 | V: Incremental fetch from 2026-06-24
+2026-06-26 18:37:48 | INFO     | data.pipeline:85 | V: Stored 3 rows
+2026-06-26 18:37:48 | INFO     | data.pipeline:46 | WFC: Incremental fetch from 2026-06-24
+2026-06-26 18:37:48 | INFO     | data.pipeline:85 | WFC: Stored 3 rows
+2026-06-26 18:37:48 | INFO     | data.pipeline:49 | MS: Full historical fetch from 2023-06-27
+2026-06-26 18:37:48 | INFO     | data.pipeline:85 | MS: Stored 753 rows
+2026-06-26 18:37:48 | INFO     | data.pipeline:49 | AXP: Full historical fetch from 2023-06-27
+2026-06-26 18:37:48 | INFO     | data.pipeline:85 | AXP: Stored 753 rows
+2026-06-26 18:37:48 | INFO     | data.pipeline:49 | C: Full historical fetch from 2023-06-27
+2026-06-26 18:37:48 | INFO     | data.pipeline:85 | C: Stored 753 rows
+2026-06-26 18:37:48 | INFO     | data.pipeline:49 | BLK: Full historical fetch from 2023-06-27
+2026-06-26 18:37:48 | INFO     | data.pipeline:85 | BLK: Stored 753 rows
+2026-06-26 18:37:48 | INFO     | data.pipeline:49 | CME: Full historical fetch from 2023-06-27
+2026-06-26 18:37:49 | INFO     | data.pipeline:85 | CME: Stored 753 rows
+2026-06-26 18:37:49 | INFO     | data.pipeline:46 | JNJ: Incremental fetch from 2026-06-24
+2026-06-26 18:37:49 | INFO     | data.pipeline:85 | JNJ: Stored 3 rows
+2026-06-26 18:37:49 | INFO     | data.pipeline:46 | PFE: Incremental fetch from 2026-06-24
+2026-06-26 18:37:49 | INFO     | data.pipeline:85 | PFE: Stored 3 rows
+2026-06-26 18:37:49 | INFO     | data.pipeline:46 | UNH: Incremental fetch from 2026-06-24
+2026-06-26 18:37:49 | INFO     | data.pipeline:85 | UNH: Stored 3 rows
+2026-06-26 18:37:49 | INFO     | data.pipeline:49 | MRK: Full historical fetch from 2023-06-27
+2026-06-26 18:37:49 | INFO     | data.pipeline:85 | MRK: Stored 753 rows
+2026-06-26 18:37:49 | INFO     | data.pipeline:49 | ABBV: Full historical fetch from 2023-06-27
+2026-06-26 18:37:49 | INFO     | data.pipeline:85 | ABBV: Stored 753 rows
+2026-06-26 18:37:49 | INFO     | data.pipeline:49 | TMO: Full historical fetch from 2023-06-27
+2026-06-26 18:37:49 | INFO     | data.pipeline:85 | TMO: Stored 753 rows
+2026-06-26 18:37:49 | INFO     | data.pipeline:49 | ISRG: Full historical fetch from 2023-06-27
+2026-06-26 18:37:49 | INFO     | data.pipeline:85 | ISRG: Stored 753 rows
+2026-06-26 18:37:49 | INFO     | data.pipeline:49 | DHR: Full historical fetch from 2023-06-27
+2026-06-26 18:37:49 | INFO     | data.pipeline:85 | DHR: Stored 753 rows
+2026-06-26 18:37:49 | INFO     | data.pipeline:46 | CAT: Incremental fetch from 2026-06-24
+2026-06-26 18:37:49 | INFO     | data.pipeline:85 | CAT: Stored 3 rows
+2026-06-26 18:37:49 | INFO     | data.pipeline:46 | BA: Incremental fetch from 2026-06-24
+2026-06-26 18:37:49 | INFO     | data.pipeline:85 | BA: Stored 3 rows
+2026-06-26 18:37:49 | INFO     | data.pipeline:46 | HON: Incremental fetch from 2026-06-24
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | HON: Stored 3 rows
+2026-06-26 18:37:50 | INFO     | data.pipeline:49 | GE: Full historical fetch from 2023-06-27
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | GE: Stored 753 rows
+2026-06-26 18:37:50 | INFO     | data.pipeline:49 | LMT: Full historical fetch from 2023-06-27
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | LMT: Stored 753 rows
+2026-06-26 18:37:50 | INFO     | data.pipeline:49 | RTX: Full historical fetch from 2023-06-27
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | RTX: Stored 753 rows
+2026-06-26 18:37:50 | INFO     | data.pipeline:49 | DE: Full historical fetch from 2023-06-27
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | DE: Stored 753 rows
+2026-06-26 18:37:50 | INFO     | data.pipeline:49 | ETN: Full historical fetch from 2023-06-27
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | ETN: Stored 753 rows
+2026-06-26 18:37:50 | INFO     | data.pipeline:46 | CVX: Incremental fetch from 2026-06-24
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | CVX: Stored 3 rows
+2026-06-26 18:37:50 | INFO     | data.pipeline:46 | XOM: Incremental fetch from 2026-06-24
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | XOM: Stored 3 rows
+2026-06-26 18:37:50 | INFO     | data.pipeline:49 | SLB: Full historical fetch from 2023-06-27
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | SLB: Stored 753 rows
+2026-06-26 18:37:50 | INFO     | data.pipeline:49 | COP: Full historical fetch from 2023-06-27
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | COP: Stored 753 rows
+2026-06-26 18:37:50 | INFO     | data.pipeline:49 | OXY: Full historical fetch from 2023-06-27
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | OXY: Stored 753 rows
+2026-06-26 18:37:50 | INFO     | data.pipeline:49 | LIN: Full historical fetch from 2023-06-27
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | LIN: Stored 753 rows
+2026-06-26 18:37:50 | INFO     | data.pipeline:49 | APD: Full historical fetch from 2023-06-27
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | APD: Stored 753 rows
+2026-06-26 18:37:50 | INFO     | data.pipeline:49 | FCX: Full historical fetch from 2023-06-27
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | FCX: Stored 753 rows
+2026-06-26 18:37:50 | INFO     | data.pipeline:49 | NEM: Full historical fetch from 2023-06-27
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | NEM: Stored 753 rows
+2026-06-26 18:37:50 | INFO     | data.pipeline:49 | AMT: Full historical fetch from 2023-06-27
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | AMT: Stored 753 rows
+2026-06-26 18:37:50 | INFO     | data.pipeline:49 | PLD: Full historical fetch from 2023-06-27
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | PLD: Stored 753 rows
+2026-06-26 18:37:50 | INFO     | data.pipeline:49 | EQIX: Full historical fetch from 2023-06-27
+2026-06-26 18:37:50 | INFO     | data.pipeline:85 | EQIX: Stored 753 rows
+2026-06-28 13:37:13 | INFO     | utils.logger:13 | Logger initialized
+2026-06-28 13:37:13 | INFO     | data.pipeline:19 | Database ready at: C:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-06-28 13:37:13 | INFO     | data.pipeline:49 | XLK: Full historical fetch from 2023-06-29
+2026-06-28 13:37:13 | INFO     | data.pipeline:85 | XLK: Stored 751 rows
+2026-06-28 13:37:13 | INFO     | data.pipeline:49 | XLF: Full historical fetch from 2023-06-29
+2026-06-28 13:37:13 | INFO     | data.pipeline:85 | XLF: Stored 751 rows
+2026-06-28 13:37:13 | INFO     | data.pipeline:49 | XLE: Full historical fetch from 2023-06-29
+2026-06-28 13:37:13 | INFO     | data.pipeline:85 | XLE: Stored 751 rows
+2026-06-28 13:37:13 | INFO     | data.pipeline:49 | XLV: Full historical fetch from 2023-06-29
+2026-06-28 13:37:13 | INFO     | data.pipeline:85 | XLV: Stored 751 rows
+2026-06-28 13:37:13 | INFO     | data.pipeline:49 | XLI: Full historical fetch from 2023-06-29
+2026-06-28 13:37:13 | INFO     | data.pipeline:85 | XLI: Stored 751 rows
+2026-06-28 13:37:13 | INFO     | data.pipeline:49 | XLY: Full historical fetch from 2023-06-29
+2026-06-28 13:37:13 | INFO     | data.pipeline:85 | XLY: Stored 751 rows
+2026-06-28 13:37:13 | INFO     | data.pipeline:49 | XLP: Full historical fetch from 2023-06-29
+2026-06-28 13:37:13 | INFO     | data.pipeline:85 | XLP: Stored 751 rows
+2026-06-28 13:37:13 | INFO     | data.pipeline:49 | XLB: Full historical fetch from 2023-06-29
+2026-06-28 13:37:13 | INFO     | data.pipeline:85 | XLB: Stored 751 rows
+2026-06-28 13:37:13 | INFO     | data.pipeline:49 | XLRE: Full historical fetch from 2023-06-29
+2026-06-28 13:37:13 | INFO     | data.pipeline:85 | XLRE: Stored 751 rows
+2026-06-28 13:37:13 | INFO     | data.pipeline:49 | XLC: Full historical fetch from 2023-06-29
+2026-06-28 13:37:13 | INFO     | data.pipeline:85 | XLC: Stored 751 rows
+2026-06-28 13:37:13 | INFO     | data.pipeline:49 | XLU: Full historical fetch from 2023-06-29
+2026-06-28 13:37:13 | INFO     | data.pipeline:85 | XLU: Stored 751 rows
+2026-07-01 20:21:12 | INFO     | utils.logger:13 | Logger initialized
+2026-07-02 07:23:41 | INFO     | utils.logger:13 | Logger initialized
+2026-07-02 07:26:05 | INFO     | utils.logger:13 | Logger initialized
+2026-07-02 07:31:01 | INFO     | utils.logger:13 | Logger initialized
+2026-07-02 07:31:01 | INFO     | data.pipeline:19 | Database ready at: c:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data_10y.db
+2026-07-02 07:31:01 | INFO     | data.pipeline:80 | AAPL: Full historical fetch from 2016-07-04
+2026-07-02 07:31:01 | INFO     | data.pipeline:115 | AAPL: Stored 1490 rows
+2026-07-02 07:31:01 | INFO     | data.pipeline:80 | MSFT: Full historical fetch from 2016-07-04
+2026-07-02 07:31:01 | INFO     | data.pipeline:115 | MSFT: Stored 1490 rows
+2026-07-02 07:31:01 | INFO     | data.pipeline:80 | GOOGL: Full historical fetch from 2016-07-04
+2026-07-02 07:31:01 | INFO     | data.pipeline:115 | GOOGL: Stored 1490 rows
+2026-07-02 07:31:01 | INFO     | data.pipeline:80 | AMZN: Full historical fetch from 2016-07-04
+2026-07-02 07:31:02 | INFO     | data.pipeline:115 | AMZN: Stored 1490 rows
+2026-07-02 07:31:02 | INFO     | data.pipeline:80 | NVDA: Full historical fetch from 2016-07-04
+2026-07-02 07:31:02 | INFO     | data.pipeline:115 | NVDA: Stored 1490 rows
+2026-07-02 07:31:02 | INFO     | data.pipeline:80 | META: Full historical fetch from 2016-07-04
+2026-07-02 07:31:02 | INFO     | data.pipeline:115 | META: Stored 1490 rows
+2026-07-02 07:31:02 | INFO     | data.pipeline:80 | AMD: Full historical fetch from 2016-07-04
+2026-07-02 07:31:02 | INFO     | data.pipeline:115 | AMD: Stored 1490 rows
+2026-07-02 07:31:02 | INFO     | data.pipeline:80 | AVGO: Full historical fetch from 2016-07-04
+2026-07-02 07:31:02 | INFO     | data.pipeline:115 | AVGO: Stored 1490 rows
+2026-07-02 07:31:02 | INFO     | data.pipeline:80 | INTC: Full historical fetch from 2016-07-04
+2026-07-02 07:31:02 | INFO     | data.pipeline:115 | INTC: Stored 1490 rows
+2026-07-02 07:31:02 | INFO     | data.pipeline:80 | NOW: Full historical fetch from 2016-07-04
+2026-07-02 07:31:02 | INFO     | data.pipeline:115 | NOW: Stored 1487 rows
+2026-07-02 07:31:02 | INFO     | data.pipeline:80 | CRWD: Full historical fetch from 2016-07-04
+2026-07-02 07:31:02 | INFO     | data.pipeline:115 | CRWD: Stored 1490 rows
+2026-07-02 07:31:02 | INFO     | data.pipeline:80 | CRM: Full historical fetch from 2016-07-04
+2026-07-02 07:31:02 | INFO     | data.pipeline:115 | CRM: Stored 1487 rows
+2026-07-02 07:31:02 | INFO     | data.pipeline:80 | ORCL: Full historical fetch from 2016-07-04
+2026-07-02 07:31:02 | INFO     | data.pipeline:115 | ORCL: Stored 1487 rows
+2026-07-02 07:31:02 | INFO     | data.pipeline:80 | QCOM: Full historical fetch from 2016-07-04
+2026-07-02 07:31:03 | INFO     | data.pipeline:115 | QCOM: Stored 1490 rows
+2026-07-02 07:31:03 | INFO     | data.pipeline:80 | AMAT: Full historical fetch from 2016-07-04
+2026-07-02 07:31:03 | INFO     | data.pipeline:115 | AMAT: Stored 1490 rows
+2026-07-02 07:31:03 | INFO     | data.pipeline:80 | TSLA: Full historical fetch from 2016-07-04
+2026-07-02 07:31:03 | INFO     | data.pipeline:115 | TSLA: Stored 1490 rows
+2026-07-02 07:31:03 | INFO     | data.pipeline:80 | MCD: Full historical fetch from 2016-07-04
+2026-07-02 07:31:03 | INFO     | data.pipeline:115 | MCD: Stored 1487 rows
+2026-07-02 07:31:03 | INFO     | data.pipeline:80 | KO: Full historical fetch from 2016-07-04
+2026-07-02 07:31:03 | INFO     | data.pipeline:115 | KO: Stored 1488 rows
+2026-07-02 07:31:03 | INFO     | data.pipeline:80 | WMT: Full historical fetch from 2016-07-04
+2026-07-02 07:31:03 | INFO     | data.pipeline:115 | WMT: Stored 1487 rows
+2026-07-02 07:31:03 | INFO     | data.pipeline:80 | PG: Full historical fetch from 2016-07-04
+2026-07-02 07:31:03 | INFO     | data.pipeline:115 | PG: Stored 1487 rows
+2026-07-02 07:31:03 | INFO     | data.pipeline:80 | COST: Full historical fetch from 2016-07-04
+2026-07-02 07:31:03 | INFO     | data.pipeline:115 | COST: Stored 1490 rows
+2026-07-02 07:31:03 | INFO     | data.pipeline:80 | NKE: Full historical fetch from 2016-07-04
+2026-07-02 07:31:04 | INFO     | data.pipeline:115 | NKE: Stored 1487 rows
+2026-07-02 07:31:04 | INFO     | data.pipeline:80 | SBUX: Full historical fetch from 2016-07-04
+2026-07-02 07:31:04 | INFO     | data.pipeline:115 | SBUX: Stored 1490 rows
+2026-07-02 07:31:04 | INFO     | data.pipeline:80 | TGT: Full historical fetch from 2016-07-04
+2026-07-02 07:31:04 | INFO     | data.pipeline:115 | TGT: Stored 1487 rows
+2026-07-02 07:31:04 | INFO     | data.pipeline:80 | LULU: Full historical fetch from 2016-07-04
+2026-07-02 07:31:04 | INFO     | data.pipeline:115 | LULU: Stored 1490 rows
+2026-07-02 07:31:04 | INFO     | data.pipeline:80 | JPM: Full historical fetch from 2016-07-04
+2026-07-02 07:31:04 | INFO     | data.pipeline:115 | JPM: Stored 1487 rows
+2026-07-02 07:31:04 | INFO     | data.pipeline:80 | BAC: Full historical fetch from 2016-07-04
+2026-07-02 07:31:04 | INFO     | data.pipeline:115 | BAC: Stored 1487 rows
+2026-07-02 07:31:04 | INFO     | data.pipeline:80 | GS: Full historical fetch from 2016-07-04
+2026-07-02 07:31:04 | INFO     | data.pipeline:115 | GS: Stored 1487 rows
+2026-07-02 07:31:04 | INFO     | data.pipeline:80 | V: Full historical fetch from 2016-07-04
+2026-07-02 07:31:04 | INFO     | data.pipeline:115 | V: Stored 1487 rows
+2026-07-02 07:31:04 | INFO     | data.pipeline:80 | WFC: Full historical fetch from 2016-07-04
+2026-07-02 07:31:04 | INFO     | data.pipeline:115 | WFC: Stored 1487 rows
+2026-07-02 07:31:04 | INFO     | data.pipeline:80 | MS: Full historical fetch from 2016-07-04
+2026-07-02 07:31:04 | INFO     | data.pipeline:115 | MS: Stored 1487 rows
+2026-07-02 07:31:04 | INFO     | data.pipeline:80 | AXP: Full historical fetch from 2016-07-04
+2026-07-02 07:31:05 | INFO     | data.pipeline:115 | AXP: Stored 1487 rows
+2026-07-02 07:31:05 | INFO     | data.pipeline:80 | C: Full historical fetch from 2016-07-04
+2026-07-02 07:31:05 | INFO     | data.pipeline:115 | C: Stored 1487 rows
+2026-07-02 07:31:05 | INFO     | data.pipeline:80 | BLK: Full historical fetch from 2016-07-04
+2026-07-02 07:31:05 | INFO     | data.pipeline:115 | BLK: Stored 1487 rows
+2026-07-02 07:31:05 | INFO     | data.pipeline:80 | CME: Full historical fetch from 2016-07-04
+2026-07-02 07:31:05 | INFO     | data.pipeline:115 | CME: Stored 1490 rows
+2026-07-02 07:31:05 | INFO     | data.pipeline:80 | JNJ: Full historical fetch from 2016-07-04
+2026-07-02 07:31:05 | INFO     | data.pipeline:115 | JNJ: Stored 1487 rows
+2026-07-02 07:31:05 | INFO     | data.pipeline:80 | PFE: Full historical fetch from 2016-07-04
+2026-07-02 07:31:05 | INFO     | data.pipeline:115 | PFE: Stored 1487 rows
+2026-07-02 07:31:05 | INFO     | data.pipeline:80 | UNH: Full historical fetch from 2016-07-04
+2026-07-02 07:31:05 | INFO     | data.pipeline:115 | UNH: Stored 1487 rows
+2026-07-02 07:31:05 | INFO     | data.pipeline:80 | MRK: Full historical fetch from 2016-07-04
+2026-07-02 07:31:06 | INFO     | data.pipeline:115 | MRK: Stored 1487 rows
+2026-07-02 07:31:06 | INFO     | data.pipeline:80 | ABBV: Full historical fetch from 2016-07-04
+2026-07-02 07:31:06 | INFO     | data.pipeline:115 | ABBV: Stored 1488 rows
+2026-07-02 07:31:06 | INFO     | data.pipeline:80 | TMO: Full historical fetch from 2016-07-04
+2026-07-02 07:31:06 | INFO     | data.pipeline:115 | TMO: Stored 1487 rows
+2026-07-02 07:31:06 | INFO     | data.pipeline:80 | ISRG: Full historical fetch from 2016-07-04
+2026-07-02 07:31:06 | INFO     | data.pipeline:115 | ISRG: Stored 1490 rows
+2026-07-02 07:31:06 | INFO     | data.pipeline:80 | DHR: Full historical fetch from 2016-07-04
+2026-07-02 07:31:06 | INFO     | data.pipeline:115 | DHR: Stored 1487 rows
+2026-07-02 07:31:06 | INFO     | data.pipeline:80 | CAT: Full historical fetch from 2016-07-04
+2026-07-02 07:31:06 | INFO     | data.pipeline:115 | CAT: Stored 1487 rows
+2026-07-02 07:31:06 | INFO     | data.pipeline:80 | BA: Full historical fetch from 2016-07-04
+2026-07-02 07:31:06 | INFO     | data.pipeline:115 | BA: Stored 1487 rows
+2026-07-02 07:31:06 | INFO     | data.pipeline:80 | HON: Full historical fetch from 2016-07-04
+2026-07-02 07:31:06 | INFO     | data.pipeline:115 | HON: Stored 1489 rows
+2026-07-02 07:31:06 | INFO     | data.pipeline:80 | GE: Full historical fetch from 2016-07-04
+2026-07-02 07:31:07 | INFO     | data.pipeline:115 | GE: Stored 1488 rows
+2026-07-02 07:31:07 | INFO     | data.pipeline:80 | LMT: Full historical fetch from 2016-07-04
+2026-07-02 07:31:07 | INFO     | data.pipeline:115 | LMT: Stored 1487 rows
+2026-07-02 07:31:07 | INFO     | data.pipeline:80 | RTX: Full historical fetch from 2016-07-04
+2026-07-02 07:31:07 | INFO     | data.pipeline:115 | RTX: Stored 1487 rows
+2026-07-02 07:31:07 | INFO     | data.pipeline:80 | DE: Full historical fetch from 2016-07-04
+2026-07-02 07:31:07 | INFO     | data.pipeline:115 | DE: Stored 1487 rows
+2026-07-02 07:31:07 | INFO     | data.pipeline:80 | ETN: Full historical fetch from 2016-07-04
+2026-07-02 07:31:07 | INFO     | data.pipeline:115 | ETN: Stored 1487 rows
+2026-07-02 07:31:07 | INFO     | data.pipeline:80 | CVX: Full historical fetch from 2016-07-04
+2026-07-02 07:31:07 | INFO     | data.pipeline:115 | CVX: Stored 1487 rows
+2026-07-02 07:31:07 | INFO     | data.pipeline:80 | XOM: Full historical fetch from 2016-07-04
+2026-07-02 07:31:07 | INFO     | data.pipeline:115 | XOM: Stored 1487 rows
+2026-07-02 07:31:07 | INFO     | data.pipeline:80 | SLB: Full historical fetch from 2016-07-04
+2026-07-02 07:31:07 | INFO     | data.pipeline:115 | SLB: Stored 1487 rows
+2026-07-02 07:31:07 | INFO     | data.pipeline:80 | COP: Full historical fetch from 2016-07-04
+2026-07-02 07:31:07 | INFO     | data.pipeline:115 | COP: Stored 1487 rows
+2026-07-02 07:31:07 | INFO     | data.pipeline:80 | OXY: Full historical fetch from 2016-07-04
+2026-07-02 07:31:08 | INFO     | data.pipeline:115 | OXY: Stored 1487 rows
+2026-07-02 07:31:08 | INFO     | data.pipeline:80 | LIN: Full historical fetch from 2016-07-04
+2026-07-02 07:31:08 | INFO     | data.pipeline:115 | LIN: Stored 1487 rows
+2026-07-02 07:31:08 | INFO     | data.pipeline:80 | APD: Full historical fetch from 2016-07-04
+2026-07-02 07:31:08 | INFO     | data.pipeline:115 | APD: Stored 1487 rows
+2026-07-02 07:31:08 | INFO     | data.pipeline:80 | FCX: Full historical fetch from 2016-07-04
+2026-07-02 07:31:08 | INFO     | data.pipeline:115 | FCX: Stored 1487 rows
+2026-07-02 07:31:08 | INFO     | data.pipeline:80 | NEM: Full historical fetch from 2016-07-04
+2026-07-02 07:31:08 | INFO     | data.pipeline:115 | NEM: Stored 1487 rows
+2026-07-02 07:31:08 | INFO     | data.pipeline:80 | AMT: Full historical fetch from 2016-07-04
+2026-07-02 07:31:08 | INFO     | data.pipeline:115 | AMT: Stored 1487 rows
+2026-07-02 07:31:08 | INFO     | data.pipeline:80 | PLD: Full historical fetch from 2016-07-04
+2026-07-02 07:31:08 | INFO     | data.pipeline:115 | PLD: Stored 1487 rows
+2026-07-02 07:31:08 | INFO     | data.pipeline:80 | EQIX: Full historical fetch from 2016-07-04
+2026-07-02 07:31:08 | INFO     | data.pipeline:115 | EQIX: Stored 1490 rows
+2026-07-02 07:31:08 | INFO     | data.pipeline:80 | SPY: Full historical fetch from 2016-07-04
+2026-07-02 07:31:09 | INFO     | data.pipeline:115 | SPY: Stored 1491 rows
+2026-07-02 07:31:09 | INFO     | data.pipeline:80 | XLK: Full historical fetch from 2016-07-04
+2026-07-02 07:31:09 | INFO     | data.pipeline:115 | XLK: Stored 1490 rows
+2026-07-02 07:31:09 | INFO     | data.pipeline:80 | XLF: Full historical fetch from 2016-07-04
+2026-07-02 07:31:09 | INFO     | data.pipeline:115 | XLF: Stored 1490 rows
+2026-07-02 07:31:09 | INFO     | data.pipeline:80 | XLE: Full historical fetch from 2016-07-04
+2026-07-02 07:31:09 | INFO     | data.pipeline:115 | XLE: Stored 1490 rows
+2026-07-02 07:31:09 | INFO     | data.pipeline:80 | XLV: Full historical fetch from 2016-07-04
+2026-07-02 07:31:09 | INFO     | data.pipeline:115 | XLV: Stored 1490 rows
+2026-07-02 07:31:09 | INFO     | data.pipeline:80 | XLI: Full historical fetch from 2016-07-04
+2026-07-02 07:31:09 | INFO     | data.pipeline:115 | XLI: Stored 1490 rows
+2026-07-02 07:31:09 | INFO     | data.pipeline:80 | XLY: Full historical fetch from 2016-07-04
+2026-07-02 07:31:09 | INFO     | data.pipeline:115 | XLY: Stored 1490 rows
+2026-07-02 07:31:09 | INFO     | data.pipeline:80 | XLP: Full historical fetch from 2016-07-04
+2026-07-02 07:31:09 | INFO     | data.pipeline:115 | XLP: Stored 1490 rows
+2026-07-02 07:31:09 | INFO     | data.pipeline:80 | XLB: Full historical fetch from 2016-07-04
+2026-07-02 07:31:09 | INFO     | data.pipeline:115 | XLB: Stored 1490 rows
+2026-07-02 07:31:09 | INFO     | data.pipeline:80 | XLRE: Full historical fetch from 2016-07-04
+2026-07-02 07:31:09 | INFO     | data.pipeline:115 | XLRE: Stored 1490 rows
+2026-07-02 07:31:09 | INFO     | data.pipeline:80 | XLC: Full historical fetch from 2016-07-04
+2026-07-02 07:31:10 | INFO     | data.pipeline:115 | XLC: Stored 1490 rows
+2026-07-02 07:31:10 | INFO     | data.pipeline:80 | XLU: Full historical fetch from 2016-07-04
+2026-07-02 07:31:10 | INFO     | data.pipeline:115 | XLU: Stored 1490 rows
+2026-07-02 07:33:09 | INFO     | utils.logger:13 | Logger initialized
+2026-07-02 07:35:57 | INFO     | utils.logger:13 | Logger initialized
+2026-07-02 07:38:11 | INFO     | utils.logger:13 | Logger initialized
+2026-07-02 07:40:52 | INFO     | utils.logger:13 | Logger initialized
+2026-07-02 07:48:20 | INFO     | utils.logger:13 | Logger initialized
+2026-07-02 07:50:46 | INFO     | utils.logger:13 | Logger initialized
+2026-07-02 07:50:46 | INFO     | data.pipeline:19 | Database ready at: c:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-07-02 07:50:46 | INFO     | data.pipeline:19 | Database ready at: c:\Users\benon\OneDrive - Princeton University\Desktop\tradingbot\data\market_data.db
+2026-07-02 07:50:46 | INFO     | data.pipeline:89 | SPY: Backfilling 2016-07-04 -> 2023-02-27
+2026-07-02 07:50:48 | INFO     | data.pipeline:115 | SPY: Stored 652 rows
+2026-07-02 07:50:48 | INFO     | data.pipeline:115 | SPY: Stored 6 rows
+2026-07-02 07:50:48 | INFO     | strategy.regime:40 | Market regime: TRENDING_UP | SPY $745.66 | SMA50 $736.42 | SMA200 $691.10 | RSI 54.5
+2026-07-02 07:50:48 | INFO     | strategy.scanner:108 | Momentum scan: 63 symbols | Regime: TRENDING_UP
+2026-07-02 07:50:49 | INFO     | strategy.scanner:47 | Scanning 63 symbols...
+2026-07-02 07:50:51 | INFO     | utils.broker:18 | Connected to Alpaca [PAPER]
+2026-07-02 07:50:51 | INFO     | utils.broker:19 | Portfolio value : $104,526.31
+2026-07-02 07:50:51 | INFO     | utils.broker:20 | Cash            : $14,858.16
+2026-07-02 07:50:51 | INFO     | utils.broker:21 | Buying power    : $310,503.46
+2026-07-02 07:50:51 | INFO     | strategy.executor:51 | CAT: Removing stale state — bracket order closed this position.
+2026-07-02 07:50:51 | INFO     | strategy.executor:51 | INTC: Removing stale state — bracket order closed this position.
