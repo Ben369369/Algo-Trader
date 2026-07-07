@@ -82,6 +82,7 @@ class TradeExecutor:
         """
         account   = self.broker.get_account()
         portfolio = account["portfolio_value"]
+        cash      = float(account["cash"])
 
         # --- Drawdown circuit breaker ---
         peak = self._state.get("__portfolio_peak__", portfolio)
@@ -95,6 +96,14 @@ class TradeExecutor:
             logger.warning(
                 f"Portfolio drawdown {drawdown:.1%} exceeds limit "
                 f"{Config.MAX_DRAWDOWN_LIMIT:.0%} — halting new entries."
+            )
+            return []
+
+        # --- Cash floor guard ---
+        if cash < Config.MIN_CASH_BUFFER:
+            logger.warning(
+                f"Cash ${cash:,.2f} is below the minimum buffer "
+                f"${Config.MIN_CASH_BUFFER:,.0f} — halting new entries to avoid margin."
             )
             return []
 
@@ -157,6 +166,14 @@ class TradeExecutor:
                 logger.warning(f"{symbol}: Position size calculated as 0 — skipping.")
                 continue
 
+            trade_cost = shares * price
+            if trade_cost > cash - Config.MIN_CASH_BUFFER:
+                logger.warning(
+                    f"{symbol}: Trade cost ${trade_cost:,.0f} would push cash below "
+                    f"buffer — skipping."
+                )
+                continue
+
             stop   = PositionSizer.stop_price(price, atr=atr, atr_multiplier=Config.ATR_STOP_MULT)
             target = round(price * (1 + params["take_profit_pct"]), 2)
 
@@ -179,6 +196,7 @@ class TradeExecutor:
                 }
                 self._save_state()
                 logger.info(f"State saved for {symbol}: entry=${price:.2f} stop=${stop:.2f} target=${target:.2f} [{strategy}]")
+                cash -= trade_cost
                 held_symbols.add(symbol)
                 held_sectors[sector] = held_sectors.get(sector, 0) + 1
                 orders.append(order)

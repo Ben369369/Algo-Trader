@@ -56,6 +56,7 @@ class Config:
         # REIT
         "AMT": "REIT", "PLD": "REIT", "EQIX": "REIT",
     }
+    MIN_CASH_BUFFER      = float(os.getenv("MIN_CASH_BUFFER", "5000.0"))  # halt entries if cash falls below this
     ATR_PERIOD           = int(os.getenv("ATR_PERIOD", "14"))
     ATR_STOP_MULT        = float(os.getenv("ATR_STOP_MULT", "2.0"))   # stop = ATR_STOP_MULT x ATR below entry
 
