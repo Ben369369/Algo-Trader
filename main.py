@@ -3,6 +3,7 @@ import time
 import datetime
 import schedule
 import pytz
+from pathlib import Path
 from config.settings import Config
 from utils.logger import logger
 from utils.broker import BrokerConnection
@@ -13,6 +14,21 @@ from strategy.executor import TradeExecutor
 from strategy.sector_rotation import SectorRotationExecutor, rank_sectors
 
 EASTERN = pytz.timezone("America/New_York")
+
+_LOCK_DIR = Config.DATA_DIR
+
+
+def _entries_lock_path():
+    today = datetime.datetime.now(EASTERN).strftime("%Y-%m-%d")
+    return _LOCK_DIR / f"entries_ran_{today}.lock"
+
+
+def _entries_already_ran():
+    return _entries_lock_path().exists()
+
+
+def _mark_entries_ran():
+    _entries_lock_path().touch()
 
 
 def _print_leaderboard(ranked, kind):
@@ -101,7 +117,9 @@ def run(execute_entries=True):
     if execute_entries:
         max_entries = 5
         print(f"\n[ STEP 7 ] Executing top trade opportunities (up to {max_entries})...")
-        if entry_strategy is None:
+        if _entries_already_ran():
+            print("\n  Entries already ran today (service restarted mid-day) -- skipping to avoid duplicate entries.")
+        elif entry_strategy is None:
             print("\n  Death cross detected -- no new entries, exits only.")
         elif broker.is_market_open():
             orders = executor.execute_best(entry_ranked, max_entries=max_entries,
@@ -111,6 +129,7 @@ def run(execute_entries=True):
                     print(f"\n  ORDER PLACED: {order['side'].upper()} {order['qty']} shares of {order['symbol']}")
             else:
                 print("\n  No trade executed -- no actionable signals or circuit breaker active.")
+            _mark_entries_ran()
         else:
             print("\n  Market is closed -- no orders placed.")
 
@@ -122,7 +141,7 @@ def run(execute_entries=True):
         for rank, row in sector_ranked.iterrows():
             marker = " <-- TOP" if rank <= 3 and row["composite"] > 0 else ""
             print(f"  {rank:<6} {row['symbol']:<6} {row['sector']:<26} {row['mom_3m']:>6.1f}% {row['mom_6m']:>6.1f}% {row['composite']:>7.1f}%{marker}")
-    if execute_entries and broker.is_market_open():
+    if execute_entries and not _entries_already_ran() and broker.is_market_open():
         sector_exec = SectorRotationExecutor()
         sector_orders = sector_exec.rebalance()
         if sector_orders:
